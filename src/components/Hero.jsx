@@ -86,23 +86,34 @@ export default function Hero() {
 
         <div className="hero-visual">
           <div className="visual-container">
-            {/* NOTHING vertical text with dot matrix style */}
-            <div className="nothing-vertical">
-              {letters.map((letter, i) => (
-                <span
-                  key={i}
-                  className="nothing-letter"
-                  style={{ animationDelay: `${0.8 + i * 0.08}s` }}
-                >
-                  {letter}
-                </span>
-              ))}
+            {/* Desktop: vertical NOTHING */}
+            <div className="nothing-desktop">
+              <div className="nothing-vertical">
+                {letters.map((letter, i) => (
+                  <span
+                    key={i}
+                    className="nothing-letter"
+                    style={{ animationDelay: `${0.8 + i * 0.08}s` }}
+                  >
+                    {letter}
+                  </span>
+                ))}
+              </div>
+              <div className="nothing-deco-dots">
+                {[...Array(7)].map((_, i) => (
+                  <div key={i} className="nothing-deco-dot" style={{ animationDelay: `${1.2 + i * 0.1}s` }} />
+                ))}
+              </div>
             </div>
-            {/* Decorative dots beside text */}
-            <div className="nothing-deco-dots">
-              {[...Array(7)].map((_, i) => (
-                <div key={i} className="nothing-deco-dot" style={{ animationDelay: `${1.2 + i * 0.1}s` }} />
-              ))}
+
+            {/* Mobile: horizontal compact NOTHING */}
+            <div className="nothing-mobile">
+              <span className="nothing-mobile-label">NOTHING</span>
+              <div className="nothing-mobile-dots">
+                {[...Array(3)].map((_, i) => (
+                  <span key={i} className="nothing-mobile-dot" style={{ animationDelay: `${1.0 + i * 0.15}s` }} />
+                ))}
+              </div>
             </div>
           </div>
         </div>
