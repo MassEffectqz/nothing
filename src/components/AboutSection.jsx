@@ -1,17 +1,20 @@
 import { useEffect, useRef, useState } from 'react'
 
 const WORDS = ['TRANSPARENT', 'RADICAL', 'ESSENTIAL', 'BOLD', 'MINIMAL', 'PURE']
-const SKILLS = [
-  { label: 'UI/UX Design', level: 95 },
-  { label: 'Frontend Dev', level: 90 },
-  { label: 'Brand Identity', level: 85 },
-  { label: 'Motion Design', level: 80 },
+
+const MILESTONES = [
+  { year: '2018', title: 'Started Design Journey', desc: 'First freelance projects in UI/UX' },
+  { year: '2020', title: 'Joined Nothing', desc: 'Lead designer for Nothing OS' },
+  { year: '2022', title: 'Phone (1) Launch', desc: 'Glyph interface design system' },
+  { year: '2024', title: 'Creative Director', desc: 'Leading brand identity team' },
 ]
+
+const TOOLS = ['Figma', 'React', 'TypeScript', 'Framer', 'Blender', 'After Effects']
 
 export default function AboutSection() {
   const sectionRef = useRef(null)
   const [visibleWord, setVisibleWord] = useState(0)
-  const [barsAnimated, setBarsAnimated] = useState(false)
+  const [animatedItems, setAnimatedItems] = useState(false)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -26,19 +29,19 @@ export default function AboutSection() {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !barsAnimated) {
-          setTimeout(() => setBarsAnimated(true), 300)
+        if (entry.isIntersecting && !animatedItems) {
+          setTimeout(() => setAnimatedItems(true), 300)
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.15 }
     )
     observer.observe(el)
     return () => observer.disconnect()
-  }, [barsAnimated])
+  }, [animatedItems])
 
   return (
     <section ref={sectionRef} className="about-section" id="about">
-      {/* Large background word cycling */}
+      {/* Cycling background word */}
       <div className="about-bg-word">
         {WORDS.map((word, i) => (
           <span
@@ -50,48 +53,60 @@ export default function AboutSection() {
         ))}
       </div>
 
+      {/* Profile image */}
+      <div className="about-image-col">
+        <div className={`about-image ${animatedItems ? 'visible' : ''}`}>
+          <img src="/media/devices/nothing-phone-4a-pro-white.png" alt="Designer portrait" />
+          <div className="about-image-badge">
+            <span className="badge-dot" />
+            <span className="badge-text">Available for work</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Main content */}
       <div className="about-content">
-        {/* Section number */}
         <span className="about-number">04</span>
-
-        {/* Large ABOUT title */}
         <h2 className="about-title">ABOUT</h2>
-
-        {/* Red accent line */}
         <div className="about-accent-line" />
 
-        {/* Bio text */}
         <div className="about-bio">
           <p className="about-bio-line">
             Multi-disciplinary <span className="text-red">designer</span> and{' '}
-            <span className="text-red">developer</span> crafting digital
-            experiences with a focus on transparency, simplicity, and purpose.
+            <span className="text-red">developer</span> crafting digital experiences
+            with a focus on transparency, simplicity, and purpose.
           </p>
           <p className="about-bio-line">
-            Stripping away the unnecessary to reveal what truly matters.
+            Currently leading creative direction at Nothing, where we strip away
+            the unnecessary to reveal what truly matters.
           </p>
         </div>
 
-        {/* Skills bars */}
-        <div className="about-skills">
-          {SKILLS.map((skill, i) => (
-            <div key={skill.label} className="skill-row">
-              <span className="skill-label">{skill.label}</span>
-              <div className="skill-bar-track">
-                <div
-                  className="skill-bar-fill"
-                  style={{
-                    width: barsAnimated ? `${skill.level}%` : '0%',
-                    transitionDelay: `${i * 0.15}s`,
-                  }}
-                />
+        {/* Tools grid */}
+        <div className={`about-tools ${animatedItems ? 'visible' : ''}`}>
+          <span className="tools-label">Toolkit</span>
+          <div className="tools-list">
+            {TOOLS.map((tool) => (
+              <span key={tool} className="tool-badge">{tool}</span>
+            ))}
+          </div>
+        </div>
+
+        {/* Timeline */}
+        <div className={`about-timeline ${animatedItems ? 'visible' : ''}`}>
+          {MILESTONES.map((ms, i) => (
+            <div key={ms.year} className="timeline-item" style={{ '--delay': `${i * 0.15}s` }}>
+              <span className="timeline-year">{ms.year}</span>
+              <div className="timeline-dot" />
+              <div className="timeline-content">
+                <h4 className="timeline-title">{ms.title}</h4>
+                <p className="timeline-desc">{ms.desc}</p>
               </div>
-              <span className="skill-value">{skill.level}%</span>
             </div>
           ))}
         </div>
 
-        {/* Stats row */}
+        {/* Stats */}
         <div className="about-stats">
           <div className="about-stat">
             <span className="about-stat-number text-red">47</span>
@@ -110,11 +125,8 @@ export default function AboutSection() {
         </div>
       </div>
 
-      {/* Decorative grid */}
+      {/* Decorative elements */}
       <div className="about-grid">
-        <div className="grid-dot" />
-        <div className="grid-dot" />
-        <div className="grid-dot" />
         <div className="grid-line" />
         <div className="grid-circle" />
       </div>
