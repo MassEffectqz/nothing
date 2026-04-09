@@ -41,6 +41,7 @@ export default function ColorsSection() {
   const [hoverColor, setHoverColor] = useState(null)
   const [indicatorsOpacity, setIndicatorsOpacity] = useState(0)
   const [titleVisible, setTitleVisible] = useState(false)
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
   const [phoneStates, setPhoneStates] = useState([
     { opacity: 0, offsetX: -200, offsetY: -250, rotation: -30, blur: 10 },
     { opacity: 0, offsetX: 200, offsetY: -250, rotation: 25, blur: 10 },
@@ -52,8 +53,28 @@ export default function ColorsSection() {
   const handleLeave = useCallback(() => setHoverColor(null), [])
 
   useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768)
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  useEffect(() => {
     const el = sectionRef.current
     if (!el) return
+
+    const flyOffsetsDesktop = {
+      'top-left': { offsetX: -200, offsetY: -250 },
+      'top-right': { offsetX: 200, offsetY: -250 },
+      'bottom-left': { offsetX: -200, offsetY: 250 },
+      'bottom-right': { offsetX: 200, offsetY: 250 },
+    }
+
+    const flyOffsetsMobile = {
+      'top-left': { offsetX: -100, offsetY: -150 },
+      'top-right': { offsetX: 100, offsetY: -150 },
+      'bottom-left': { offsetX: -100, offsetY: 150 },
+      'bottom-right': { offsetX: 100, offsetY: 150 },
+    }
 
     const computeAnimations = () => {
       const rect = el.getBoundingClientRect()
@@ -76,16 +97,12 @@ export default function ColorsSection() {
       setIndicatorsOpacity(heroFullyHidden ? Math.min(1, (progress - 0.1) * 3) : 0)
 
       // Phone animations
+      const flyOffsets = isMobile ? flyOffsetsMobile : flyOffsetsDesktop
+
       const newPhoneStates = PHONE_CONFIGS.map((config, i) => {
         const appearStart = 0.05 + (i * 0.08)
         const appearEnd = appearStart + 0.5
 
-        const flyOffsets = {
-          'top-left': { offsetX: -200, offsetY: -250 },
-          'top-right': { offsetX: 200, offsetY: -250 },
-          'bottom-left': { offsetX: -200, offsetY: 250 },
-          'bottom-right': { offsetX: 200, offsetY: 250 },
-        }
         const initialOffsetX = flyOffsets[config.flyFrom].offsetX
         const initialOffsetY = flyOffsets[config.flyFrom].offsetY
 
@@ -130,7 +147,7 @@ export default function ColorsSection() {
     }
 
     const handleScroll = () => requestAnimationFrame(computeAnimations)
-    
+
     computeAnimations()
     window.addEventListener('scroll', handleScroll, { passive: true })
     window.addEventListener('resize', handleScroll, { passive: true })
@@ -139,7 +156,7 @@ export default function ColorsSection() {
       window.removeEventListener('scroll', handleScroll)
       window.removeEventListener('resize', handleScroll)
     }
-  }, [hoverColor])
+  }, [hoverColor, isMobile])
 
   return (
     <section ref={sectionRef} className="phones-showcase">

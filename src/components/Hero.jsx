@@ -1,8 +1,28 @@
+import { useEffect, useRef, useState } from 'react'
+
 export default function Hero() {
+  const videoRef = useRef(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth <= 768
+      setIsMobile(mobile)
+      if (mobile && videoRef.current) {
+        videoRef.current.pause()
+      }
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
   return (
     <section className="hero">
       <div className="hero-video-bg">
-        <video src="/hero-bg.mp4" autoPlay muted loop playsInline />
+        {!isMobile && (
+          <video ref={videoRef} src="/hero-bg.mp4" autoPlay muted loop playsInline />
+        )}
         <div className="video-overlay" />
       </div>
 
