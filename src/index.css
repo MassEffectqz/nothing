@@ -589,6 +589,7 @@ body {
 }
 
 .color-indicator {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -598,28 +599,50 @@ body {
   height: 80px;
   border: 1px solid var(--color-border);
   border-left: none;
-  transition: all 0.4s var(--transition-smooth);
-  cursor: pointer;
   background: transparent;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.4s var(--transition-smooth);
+  font-family: var(--font-body);
+  color: inherit;
+  padding: 0;
 }
 
 .color-indicator:first-child {
   border-left: 1px solid var(--color-border);
 }
 
+/* Active state - dark background fill */
+.color-indicator::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-surface);
+  transform: translateY(100%);
+  transition: transform 0.5s var(--transition-smooth);
+  z-index: 0;
+}
+
+.color-indicator:hover::before,
+.color-indicator.active::before {
+  transform: translateY(0);
+}
+
 .color-indicator:hover,
 .color-indicator.active {
-  background: var(--color-surface);
   border-color: var(--color-text-primary);
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
 }
 
+/* Color dot with scale animation */
 .color-dot-indicator {
+  position: relative;
+  z-index: 1;
   width: 24px;
   height: 24px;
   border-radius: 6px;
-  transition: all 0.4s var(--transition-smooth);
   opacity: 0.4;
+  transition: all 0.5s var(--transition-smooth);
 }
 
 .color-indicator[data-color="white"] .color-dot-indicator {
@@ -629,22 +652,48 @@ body {
 .color-indicator:hover .color-dot-indicator,
 .color-indicator.active .color-dot-indicator {
   opacity: 1;
-  transform: scale(1.15);
+  transform: scale(1.2) rotate(5deg);
 }
 
+/* Color name */
 .color-name {
+  position: relative;
+  z-index: 1;
   font-family: var(--font-display);
   font-size: 0.55rem;
   letter-spacing: 0.15em;
   color: var(--color-text-secondary);
-  transition: color 0.4s var(--transition-smooth);
   text-transform: uppercase;
+  transition: color 0.4s var(--transition-smooth);
 }
 
 .color-indicator:hover .color-name,
 .color-indicator.active .color-name {
   color: var(--color-text-primary);
 }
+
+/* Active line indicator at bottom */
+.color-active-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--color-text-primary);
+  transform: scaleX(0);
+  transition: transform 0.4s var(--transition-smooth);
+  z-index: 2;
+}
+
+.color-active-line.visible {
+  transform: scaleX(1);
+}
+
+/* Per-color active line colors */
+.color-indicator[data-color="black"] .color-active-line.visible { background: #1a1a1a; }
+.color-indicator[data-color="white"] .color-active-line.visible { background: #e8e8e6; }
+.color-indicator[data-color="pink"] .color-active-line.visible { background: #f0c4c4; }
+.color-indicator[data-color="blue"] .color-active-line.visible { background: #7eb8d4; }
 
 /* Phones Stage */
 .phones-showcase {
@@ -662,26 +711,6 @@ body {
   max-width: 1000px;
   height: 800px;
   overflow: hidden;
-}
-
-/* Dot grid wrapper - covers entire section */
-.dot-grid-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-/* Dot grid background */
-.dot-grid {
-  position: relative;
-  pointer-events: none;
 }
 
 .phone-item {
@@ -942,9 +971,9 @@ body {
 @media (max-width: 768px) {
   .corner-header {
     top: auto;
-    bottom: 1rem;
-    right: 1rem;
-    left: 1rem;
+    bottom: 0.75rem;
+    right: 0.75rem;
+    left: 0.75rem;
   }
 
   .corner-nav {
@@ -954,139 +983,168 @@ body {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
+    padding: 0.35rem;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.9);
   }
 
   .corner-nav::-webkit-scrollbar { display: none; }
 
   .corner-nav-link {
-    padding: 0.6rem 1rem;
-    font-size: 0.65rem;
+    padding: 0.5rem 0.85rem;
+    font-size: 0.6rem;
     flex-shrink: 0;
   }
 
   .rec-indicator {
-    top: 1rem;
-    left: 1rem;
-    padding: 0.35rem 0.8rem;
+    top: 0.75rem;
+    left: 0.75rem;
+    padding: 0.3rem 0.7rem;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.85);
   }
 
-  .rec-dot { width: 8px; height: 8px; }
-  .rec-label { font-size: 0.55rem; }
+  .rec-dot { width: 7px; height: 7px; }
+  .rec-label { font-size: 0.5rem; }
 
-  /* Hero mobile */
+  /* ===== Hero mobile ===== */
   .hero {
     min-height: 100svh;
-    padding: 4rem 1.25rem 2rem;
+    padding: 3.5rem 1.25rem 5rem;
+  }
+
+  .hero-video-bg video {
+    object-position: center 20%;
+  }
+
+  .hero-gradient-overlay {
+    background:
+      radial-gradient(ellipse at 50% 80%, rgba(245, 245, 243, 0.95) 0%, transparent 70%),
+      linear-gradient(180deg, rgba(245, 245, 243, 0.7) 0%, rgba(245, 245, 243, 0.9) 100%);
   }
 
   .hero-grid {
-    gap: 1.5rem;
+    gap: 1.25rem;
   }
 
-  .hero-content { gap: 1.5rem; }
+  .hero-content { gap: 1.25rem; }
 
-  .hero-tag { gap: 0.75rem; }
-  .tag-line { width: 16px; }
-  .hero-tag span:last-child { font-size: 0.6rem; letter-spacing: 0.15em; }
+  .hero-tag { gap: 0.6rem; }
+  .tag-line { width: 14px; }
+  .hero-tag span:last-child { font-size: 0.55rem; letter-spacing: 0.12em; }
 
   .title-line {
-    font-size: clamp(2.25rem, 10vw, 3.5rem);
+    font-size: clamp(2rem, 10vw, 3.25rem);
     letter-spacing: -0.01em;
+    line-height: 0.9;
   }
 
   .hero-description {
-    font-size: 0.95rem;
-    line-height: 1.6;
+    font-size: 0.875rem;
+    line-height: 1.55;
     max-width: 100%;
   }
 
   .hero-cta {
     flex-direction: column;
     align-items: stretch;
-    gap: 0.75rem;
+    gap: 0.6rem;
   }
 
   .btn-primary,
   .btn-secondary {
     justify-content: center;
-    padding: 1rem 1.5rem;
-    font-size: 0.7rem;
+    padding: 0.9rem 1.25rem;
+    font-size: 0.65rem;
   }
 
-  .visual-container { max-width: 180px; min-height: auto; gap: 0.75rem; }
+  /* Mobile hero visual - centered below text */
+  .hero-visual { order: -1; }
+
+  .visual-container {
+    max-width: 160px;
+    min-height: auto;
+    gap: 0.5rem;
+    margin: 0 auto;
+  }
 
   .nothing-vertical {
-    font-size: clamp(2.5rem, 12vw, 3.5rem);
+    font-size: clamp(2rem, 12vw, 3rem);
+    line-height: 0.8;
   }
 
-  .nothing-deco-dot { width: 4px; height: 4px; }
-  .nothing-deco-dots { gap: 0.7rem; }
+  .nothing-letter {
+    font-size: inherit;
+  }
+
+  .nothing-deco-dot { width: 3.5px; height: 3.5px; }
+  .nothing-deco-dots { gap: 0.6rem; }
 
   .hero-scroll {
     position: relative;
     bottom: auto;
     left: auto;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
   }
 
   .hero-stats {
     position: relative;
     bottom: auto;
     right: auto;
-    margin-top: 2rem;
-    gap: 1.25rem;
+    margin-top: 1.5rem;
+    gap: 1rem;
+    justify-content: center;
   }
 
-  .stat-number { font-size: 1.5rem; }
-  .stat-label { font-size: 0.55rem; }
-  .stat-divider { height: 30px; }
+  .stat-number { font-size: 1.25rem; }
+  .stat-label { font-size: 0.5rem; }
+  .stat-divider { height: 25px; }
 
-  /* Colors section mobile */
+  /* ===== Colors section mobile ===== */
   .phones-showcase { height: 100vh; }
   .phones-showcase-content { height: 100vh; }
 
   .phones-header {
-    top: 2.5rem;
-    left: 1.25rem;
-    gap: 1rem;
+    top: 2rem;
+    left: 1rem;
+    gap: 0.75rem;
   }
 
-  .phones-section-number { font-size: 0.6rem; }
-  .phones-title { font-size: clamp(1.5rem, 6vw, 2rem); }
+  .phones-section-number { font-size: 0.55rem; }
+  .phones-title { font-size: clamp(1.25rem, 6vw, 1.75rem); }
 
   .color-indicators {
     top: auto;
-    bottom: 4.5rem;
-    right: 0.75rem;
-    left: 0.75rem;
+    bottom: 4rem;
+    right: 0.5rem;
+    left: 0.5rem;
     justify-content: center;
   }
 
   .color-indicator {
-    width: 56px;
-    height: 56px;
-    gap: 0.5rem;
+    width: 52px;
+    height: 52px;
+    gap: 0.35rem;
   }
 
-  .color-dot-indicator {
-    width: 16px;
-    height: 16px;
-  }
-
-  .color-name { font-size: 0.45rem; }
+  .color-dot-indicator { width: 14px; height: 14px; }
+  .color-name { font-size: 0.4rem; }
+  .color-active-line { height: 2px; }
 
   .phones-stage {
     width: 95vw;
     max-width: none;
-    height: 60vh;
-    top: 55%;
+    height: 55vh;
+    top: 52%;
   }
 
-  .phone-item { width: 150px; }
+  .phone-item { width: 140px; }
 
-  /* Work section mobile */
+  /* ===== Work section mobile ===== */
   .work {
-    padding: 5rem 1.25rem 4rem;
+    padding: 4rem 1.25rem 3.5rem;
   }
 
   .work::before {
@@ -1096,39 +1154,39 @@ body {
 
   .work-header {
     flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 2.5rem;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
   }
 
-  .work-section-number { font-size: 0.6rem; }
+  .work-section-number { font-size: 0.55rem; }
   .work-title {
-    font-size: clamp(2rem, 8vw, 3rem);
-    margin-bottom: 1rem;
+    font-size: clamp(1.75rem, 8vw, 2.75rem);
+    margin-bottom: 0.75rem;
   }
 
   .work-subtitle {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     max-width: 100%;
   }
 
   .work-item {
-    grid-template-columns: 1fr 50px 24px;
-    gap: 0.75rem;
-    padding: 1.25rem 0;
+    grid-template-columns: 1fr 40px 20px;
+    gap: 0.5rem;
+    padding: 1rem 0;
   }
 
   .work-item-index { display: none; }
-  .work-item-name { font-size: 1rem; }
-  .work-item-category { font-size: 0.75rem; }
-  .work-item-year { font-size: 0.6rem; }
-  .work-item-arrow { font-size: 1rem; }
+  .work-item-name { font-size: 0.95rem; }
+  .work-item-category { font-size: 0.7rem; }
+  .work-item-year { font-size: 0.55rem; }
+  .work-item-arrow { font-size: 0.9rem; }
 
   .work-footer {
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 1rem;
     align-items: flex-start;
-    margin-top: 2rem;
-    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
   }
 }
 
