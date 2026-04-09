@@ -12,6 +12,8 @@ function DotGrid({ hoverColor }) {
   const cols = 30
   const rows = 40
   const dotSpacing = 32
+  const totalWidth = cols * dotSpacing
+  const totalHeight = rows * dotSpacing
 
   const dots = useMemo(() => {
     const arr = []
@@ -42,24 +44,32 @@ function DotGrid({ hoverColor }) {
   }, [hoverColor])
 
   return (
-    <svg
+    <div
       className="dot-grid"
-      width={cols * dotSpacing}
-      height={rows * dotSpacing}
+      style={{
+        width: totalWidth + 'px',
+        height: totalHeight + 'px',
+      }}
     >
-      {dots.map((dot, i) => (
-        <circle
-          key={i}
-          cx={dot.x}
-          cy={dot.y}
-          r={1.8}
-          fill={getDotColor(dot)}
-          style={{
-            transition: 'fill 0.4s ease',
-          }}
-        />
-      ))}
-    </svg>
+      <svg
+        width={totalWidth}
+        height={totalHeight}
+        style={{ position: 'absolute', top: 0, left: 0 }}
+      >
+        {dots.map((dot, i) => (
+          <circle
+            key={i}
+            cx={dot.x}
+            cy={dot.y}
+            r={1.8}
+            fill={getDotColor(dot)}
+            style={{
+              transition: 'fill 0.4s ease',
+            }}
+          />
+        ))}
+      </svg>
+    </div>
   )
 }
 
@@ -227,20 +237,25 @@ export default function ColorsSection() {
       })
 
       setPhoneStates(newPhoneStates)
-      state.animFrameId = requestAnimationFrame(computeAnimations)
+      animRef.current.animFrameId = requestAnimationFrame(computeAnimations)
     }
 
-    state.animFrameId = requestAnimationFrame(computeAnimations)
+    animRef.current.animFrameId = requestAnimationFrame(computeAnimations)
 
     return () => {
-      if (state.animFrameId) cancelAnimationFrame(state.animFrameId)
-      state.animFrameId = null
+      if (animRef.current.animFrameId) cancelAnimationFrame(animRef.current.animFrameId)
+      animRef.current.animFrameId = null
     }
   }, [])
 
   return (
     <section ref={sectionRef} className="phones-showcase">
       <div className="phones-showcase-content">
+        {/* Dot grid covering entire section */}
+        <div className="dot-grid-wrapper">
+          <DotGrid hoverColor={hoverColor} />
+        </div>
+
         <div className={`phones-header ${titleVisible ? 'visible' : ''}`}>
           <span className="phones-section-number">02</span>
           <h2 className="phones-title">COLORS</h2>
@@ -265,7 +280,6 @@ export default function ColorsSection() {
         </div>
 
         <div className="phones-stage">
-          <DotGrid hoverColor={hoverColor} indicatorsOpacity={indicatorsOpacity} />
           {PHONE_CONFIGS.map((config, i) => {
             const posStyle = {}
             if (config.finalTop) posStyle.top = config.finalTop
