@@ -1307,17 +1307,17 @@ body {
 
 .project-card:nth-child(1) .project-card-image,
 .project-card:nth-child(4) .project-card-image {
-  padding-bottom: 40%;
+  padding-bottom: 38%;
 }
 
 .project-card-image img {
   position: absolute;
-  top: 50%;
+  top: 58%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: auto;
-  height: 85%;
-  max-width: 90%;
+  height: 100%;
+  max-width: 100%;
   object-fit: contain;
   object-position: center center;
   transition: transform 0.8s var(--transition-smooth), filter 0.8s var(--transition-smooth);
@@ -1342,15 +1342,15 @@ body {
 
 .project-card-reveal {
   position: absolute;
-  bottom: 0;
+  bottom: 12%;
   left: 0;
   right: auto;
-  padding: 1.25rem 1.5rem;
+  padding: 0.75rem 1.25rem;
   opacity: 1;
   transform: translateY(0);
   z-index: 2;
-  background: linear-gradient(90deg, rgba(248, 248, 246, 0.95) 0%, rgba(248, 248, 246, 0.95) 80%, transparent 100%);
-  max-width: 70%;
+  background: linear-gradient(90deg, rgba(248, 248, 246, 0.95) 0%, rgba(248, 248, 246, 0.95) 70%, transparent 100%);
+  max-width: 60%;
 }
 
 .project-card-number {
