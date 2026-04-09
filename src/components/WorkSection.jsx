@@ -1,91 +1,118 @@
+import { useEffect, useRef, useState } from 'react'
+
 const projects = [
   {
     id: 1,
-    index: '01',
-    name: 'Brand Identity',
-    highlight: 'System',
-    category: 'Branding · Visual Identity',
+    number: '01',
+    name: 'Phone (3)',
+    category: 'Smartphone · Flagship',
     year: '2024',
-    image: '/media/wallpapers/nothing-lifestyle-01.jpg',
+    image: '/media/devices/nothing-phone-3-white.png',
   },
   {
     id: 2,
-    index: '02',
-    name: 'E-Commerce',
-    highlight: 'Platform',
-    category: 'Development · UI/UX',
+    number: '02',
+    name: 'Phone (3a)',
+    category: 'Smartphone · Lite',
     year: '2024',
-    image: '/media/wallpapers/nothing-lifestyle-03.jpg',
+    image: '/media/devices/nothing-phone-3a-lite.png',
   },
   {
     id: 3,
-    index: '03',
-    name: 'Mobile App',
-    highlight: 'Experience',
-    category: 'Mobile · Cross-platform',
-    year: '2023',
-    image: '/media/wallpapers/nothing-lifestyle-05.jpg',
+    number: '03',
+    name: 'Phone (4a Pro)',
+    category: 'Smartphone · Pro',
+    year: '2024',
+    image: '/media/devices/nothing-phone-4a-pro-white.png',
   },
   {
     id: 4,
-    index: '04',
-    name: 'Design System',
-    highlight: 'Framework',
-    category: 'Components · Documentation',
-    year: '2023',
-    image: '/media/wallpapers/nothing-lifestyle-08.jpg',
+    number: '04',
+    name: 'Phone (4a)',
+    category: 'Smartphone · Standard',
+    year: '2024',
+    image: '/media/devices/nothing-phone-4a-white.png',
   },
   {
     id: 5,
-    index: '05',
-    name: 'Creative Direction',
-    highlight: 'Vision',
-    category: 'Art Direction · Strategy',
-    year: '2023',
-    image: '/media/wallpapers/nothing-lifestyle-12.jpg',
+    number: '05',
+    name: 'Ear (3)',
+    category: 'Audio · Earbuds',
+    year: '2024',
+    image: '/media/accessories/nothing-ear-3-white.png',
   },
 ]
 
-function WorkItem({ project, index }) {
+function ProjectCard({ project, index }) {
+  const cardRef = useRef(null)
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    const el = cardRef.current
+    if (!el) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => setIsVisible(true), index * 150)
+        }
+      },
+      { threshold: 0.15 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [index])
+
   return (
-    <a href="#" className="work-item" style={{ '--delay': index * 0.1 }}>
-      <div className="work-item-image">
+    <a href="#" className="project-card" ref={cardRef}>
+      <div className="project-card-image">
         <img src={project.image} alt={project.name} loading="lazy" />
-        <div className="work-item-overlay" />
-      </div>
-      <div className="work-item-content">
-        <div className="work-item-index">
-          <span>{project.index}</span>
+        <div className="project-card-overlay" />
+        <div className={`project-card-reveal ${isVisible ? 'visible' : ''}`}>
+          <span className="project-card-number">{project.number}</span>
+          <h3 className="project-card-name">{project.name}</h3>
+          <p className="project-card-category">{project.category}</p>
         </div>
-        <div className="work-item-info">
-          <h3 className="work-item-name">
-            {project.name} <span className="text-red">{project.highlight}</span>
-          </h3>
-          <p className="work-item-category">{project.category}</p>
-        </div>
-        <div className="work-item-year">{project.year}</div>
-        <div className="work-item-arrow">→</div>
       </div>
+      <div className="project-card-year">{project.year}</div>
     </a>
   )
 }
 
 export default function WorkSection() {
+  const sectionRef = useRef(null)
+  const [titleVisible, setTitleVisible] = useState(false)
+
+  useEffect(() => {
+    const el = sectionRef.current
+    if (!el) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTitleVisible(true)
+        }
+      },
+      { threshold: 0.15 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <section className="work" id="work">
+    <section ref={sectionRef} className="work" id="work">
       <div className="work-header">
-        <div className="work-header-left">
-          <span className="work-section-number">05</span>
-        </div>
+        <span className="work-section-number">05</span>
         <div className="work-header-title">
           <h2 className="work-title">WORK</h2>
           <p className="work-subtitle">Selected projects from 2023–2026</p>
         </div>
+        <div className={`work-accent-line ${titleVisible ? 'visible' : ''}`} />
       </div>
 
-      <div className="work-list">
+      <div className="work-grid">
         {projects.map((p, i) => (
-          <WorkItem key={p.id} project={p} index={i} />
+          <ProjectCard key={p.id} project={p} index={i} />
         ))}
       </div>
 
