@@ -967,6 +967,42 @@ body {
   overflow: hidden;
 }
 
+/* Large cycling background word */
+.about-bg-word {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  width: 100%;
+  text-align: center;
+}
+
+.about-bg-word-item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 20vw, 18rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: rgba(255, 255, 255, 0.03);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.8s ease, transform 0.8s var(--transition-smooth);
+  filter: blur(4px);
+}
+
+.about-bg-word-item.active {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  filter: blur(0);
+}
+
+/* Content */
 .about-content {
   position: relative;
   z-index: 2;
@@ -991,27 +1027,88 @@ body {
   letter-spacing: -0.03em;
   line-height: 0.9;
   color: #ffffff;
+  margin: -1rem 0;
 }
 
-.about-divider {
+.about-accent-line {
   width: 60px;
   height: 2px;
   background: var(--color-dot);
+  animation: accentPulse 3s ease-in-out infinite;
 }
 
-.about-text {
+@keyframes accentPulse {
+  0%, 100% { width: 60px; }
+  50% { width: 100px; }
+}
+
+.about-bio {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.about-bio-line {
   font-size: 1.125rem;
   line-height: 1.8;
   color: rgba(255, 255, 255, 0.5);
-  max-width: 600px;
+  max-width: 550px;
 }
 
+/* Skills */
+.about-skills {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.skill-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.skill-label {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.5);
+  min-width: 120px;
+}
+
+.skill-bar-track {
+  flex: 1;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.skill-bar-fill {
+  height: 100%;
+  background: var(--color-dot);
+  border-radius: 1px;
+  width: 0;
+  transition: width 1.2s var(--transition-smooth);
+}
+
+.skill-value {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.35);
+  min-width: 36px;
+  text-align: right;
+}
+
+/* Stats */
 .about-stats {
   display: flex;
   gap: 3rem;
-  margin-top: 2rem;
-  padding-top: 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .about-stat {
@@ -1025,7 +1122,6 @@ body {
   font-size: 2.5rem;
   font-weight: 700;
   line-height: 1;
-  color: var(--color-dot);
 }
 
 .about-stat-label {
@@ -1034,6 +1130,12 @@ body {
   letter-spacing: 0.15em;
   color: rgba(255, 255, 255, 0.35);
   text-transform: uppercase;
+}
+
+.about-stat-divider {
+  width: 1px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.06);
 }
 
 /* Decorative grid */
@@ -1079,23 +1181,29 @@ body {
 @media (max-width: 1024px) {
   .about-section { padding: 6rem 2rem; }
   .about-grid { display: none; }
+  .about-bg-word-item { font-size: clamp(4rem, 18vw, 12rem); }
 }
 
 @media (max-width: 768px) {
   .about-section { padding: 4rem 1.5rem; min-height: auto; }
   .about-content { gap: 1.5rem; }
   .about-title { font-size: clamp(2.5rem, 10vw, 4rem); }
-  .about-text { font-size: 0.95rem; line-height: 1.6; }
+  .about-bio-line { font-size: 0.95rem; line-height: 1.6; }
   .about-stats { gap: 2rem; flex-wrap: wrap; }
   .about-stat-number { font-size: 2rem; }
+  .skill-row { gap: 1rem; }
+  .skill-label { min-width: 90px; font-size: 0.55rem; }
+  .about-bg-word-item { font-size: clamp(3rem, 20vw, 8rem); }
 }
 
 @media (max-width: 480px) {
   .about-section { padding: 3rem 1rem; }
   .about-title { font-size: clamp(2rem, 12vw, 3rem); }
-  .about-text { font-size: 0.85rem; }
+  .about-bio-line { font-size: 0.85rem; }
   .about-stats { gap: 1.5rem; }
   .about-stat-number { font-size: 1.75rem; }
+  .about-stat-divider { height: 35px; }
+  .skill-label { min-width: 70px; font-size: 0.5rem; }
 }
 
 /* ========== WORK SECTION ========== */
