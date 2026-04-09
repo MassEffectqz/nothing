@@ -2,6 +2,7 @@ import Header from './components/Header'
 import Hero from './components/Hero'
 import ColorsSection from './components/ColorsSection'
 import LifestyleSection from './components/LifestyleSection'
+import AboutSection from './components/AboutSection'
 import WorkSection from './components/WorkSection'
 import './index.css'
 
@@ -13,6 +14,7 @@ function App() {
         <Hero />
         <ColorsSection />
         <LifestyleSection />
+        <AboutSection />
         <WorkSection />
       </main>
     </>

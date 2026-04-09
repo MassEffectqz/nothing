@@ -49,7 +49,6 @@ function ColorIndicatorItem({ config, isHovered, isActive, onHover, onLeave }) {
 
 export default function ColorsSection() {
   const sectionRef = useRef(null)
-  const indicatorsRef = useRef(null)
   const [hoverColor, setHoverColor] = useState(null)
   const [titleVisible, setTitleVisible] = useState(false)
   const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 768)
@@ -104,34 +103,6 @@ export default function ColorsSection() {
       // Title visibility
       setTitleVisible(progress > 0.05)
 
-      // ===== Indicators sticky behavior =====
-      const indicatorsEl = indicatorsRef.current
-      if (indicatorsEl) {
-        const sectionTop = rect.top
-        const sectionBottom = rect.bottom
-
-        let translateY = 0
-        let hidden = false
-
-        if (sectionTop > INDICATOR_OFFSET_TOP) {
-          // Section hasn't reached pin point — indicators follow naturally
-          translateY = 0
-        } else if (sectionBottom > 0) {
-          // Section is in viewport past pin point — pin indicators at 6rem from viewport top
-          // indicator viewport Y = sectionTop + INDICATOR_OFFSET_TOP + translateY
-          // We want: indicator viewport Y = INDICATOR_OFFSET_TOP
-          // So: translateY = INDICATOR_OFFSET_TOP - (sectionTop + INDICATOR_OFFSET_TOP) = -sectionTop
-          translateY = -sectionTop
-        } else {
-          // Section has scrolled completely off top — hide
-          hidden = true
-        }
-
-        indicatorsEl.style.transform = `translateY(${translateY}px)`
-        indicatorsEl.style.opacity = hidden ? '0' : '1'
-        indicatorsEl.style.visibility = hidden ? 'hidden' : 'visible'
-      }
-
       // Phone states
       const offsets = isMobile ? MOBILE_OFFSETS : DESKTOP_OFFSETS
 
@@ -184,7 +155,7 @@ export default function ColorsSection() {
           <h2 className="phones-title">COLORS</h2>
         </div>
 
-        <div ref={indicatorsRef} className="color-indicators">
+        <div className="color-indicators">
           {PHONE_CONFIGS.map((cfg, i) => (
             <ColorIndicatorItem
               key={cfg.color}

@@ -7,8 +7,8 @@ export default function Header() {
   const pillTimeoutRef = useRef(null)
 
   useEffect(() => {
-    const sections = ['hero', 'colors', 'lifestyle', 'work']
-    const labels = ['Home', 'Colors', 'PureSound', 'Work']
+    const sections = ['hero', 'colors', 'lifestyle', 'about', 'work']
+    const labels = ['Home', 'Colors', 'PureSound', 'About', 'Work']
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -71,6 +71,7 @@ export default function Header() {
     { label: 'Home', href: '#hero' },
     { label: 'Colors', href: '#colors' },
     { label: 'PureSound', href: '#lifestyle' },
+    { label: 'About', href: '#about' },
     { label: 'Work', href: '#work' },
   ]
 
