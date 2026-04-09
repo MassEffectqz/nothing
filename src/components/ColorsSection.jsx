@@ -49,6 +49,7 @@ function ColorIndicatorItem({ config, isHovered, isActive, onHover, onLeave }) {
 
 export default function ColorsSection() {
   const sectionRef = useRef(null)
+  const indicatorsRef = useRef(null)
   const [hoverColor, setHoverColor] = useState(null)
   const [titleVisible, setTitleVisible] = useState(false)
   const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 768)
@@ -98,6 +99,27 @@ export default function ColorsSection() {
 
       // Title visibility
       setTitleVisible(progress > 0.05)
+
+      // Move indicators with scroll (sticky behavior via JS)
+      const indicatorsEl = indicatorsRef.current
+      if (indicatorsEl) {
+        const sectionTop = rect.top
+        const indicatorTargetTop = 96 // 6rem in px
+
+        let translateY = 0
+        if (sectionTop <= indicatorTargetTop && sectionTop > indicatorTargetTop - sectionHeight) {
+          // Section is in view - pin indicators
+          translateY = indicatorTargetTop - sectionTop
+        } else if (sectionTop > indicatorTargetTop) {
+          // Section hasn't reached yet
+          translateY = 0
+        } else {
+          // Section has passed - hide indicators
+          translateY = -windowHeight
+        }
+
+        indicatorsEl.style.transform = `translateY(${translateY}px)`
+      }
 
       // Phone states
       const offsets = isMobile ? MOBILE_OFFSETS : DESKTOP_OFFSETS
@@ -149,7 +171,7 @@ export default function ColorsSection() {
           <h2 className="phones-title">COLORS</h2>
         </div>
 
-        <div className="color-indicators">
+        <div ref={indicatorsRef} className="color-indicators">
           {PHONE_CONFIGS.map((cfg, i) => (
             <ColorIndicatorItem
               key={cfg.color}

@@ -626,18 +626,19 @@ body {
   color: var(--color-text-primary);
 }
 
-/* Color Indicators - sticky within section */
+/* Color Indicators - positioned by JS */
 .color-indicators {
-  position: sticky;
+  position: absolute;
   top: 6rem;
   right: 2rem;
-  align-self: flex-start;
   display: flex;
   flex-direction: row;
   gap: 0;
   z-index: 50;
   pointer-events: auto;
   flex-shrink: 0;
+  will-change: transform;
+  transition: none;
 }
 
 .color-indicator {
