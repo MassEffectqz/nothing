@@ -37,7 +37,7 @@ export default function Hero() {
   const letters = ['N', 'O', 'T', 'H', 'I', 'N', 'G']
 
   return (
-    <section className="hero">
+    <section className="hero" id="hero">
       <div className="hero-video-bg">
         <video
           ref={videoRef}

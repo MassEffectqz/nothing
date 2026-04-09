@@ -152,7 +152,7 @@ export default function ColorsSection() {
   }, [isMobile])
 
   return (
-    <section ref={sectionRef} className="phones-showcase">
+    <section ref={sectionRef} className="phones-showcase" id="colors">
       <div className="phones-showcase-content">
         <div className={`phones-header ${titleVisible ? 'visible' : ''}`}>
           <span className="phones-section-number">02</span>

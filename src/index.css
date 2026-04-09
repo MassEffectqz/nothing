@@ -946,32 +946,38 @@ body {
 
 /* ========== RESPONSIVE ========== */
 
+/* ===== SAFE AREA (notch/home bar) ===== */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .corner-header { padding-top: env(safe-area-inset-top); }
+}
+
 /* ===== TABLET (1024px) ===== */
 @media (max-width: 1024px) {
   .corner-header { top: 1rem; right: 1rem; }
-  .corner-nav { padding: 0.4rem; }
-  .corner-nav-link { padding: 0.5rem 1rem; font-size: 0.7rem; }
+  .corner-nav { padding: 0.35rem; }
+  .corner-nav-link { padding: 0.5rem 0.9rem; font-size: 0.65rem; }
 
-  .rec-indicator { top: 1rem; left: 1rem; padding: 0.4rem 1rem; }
+  .rec-indicator { top: 1rem; left: 1rem; padding: 0.35rem 0.9rem; }
 
-  .hero { padding: 5rem 2rem 2rem; }
+  .hero { padding: 5rem 2rem 3rem; }
   .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
   .hero-visual { order: -1; }
-  .visual-container { max-width: 250px; gap: 1rem; }
-
-  .nothing-vertical { font-size: clamp(2.5rem, 10vw, 4rem); }
+  .visual-container { max-width: 220px; gap: 1rem; }
+  .nothing-desktop { gap: 1.25rem; }
+  .nothing-vertical { font-size: clamp(2.5rem, 9vw, 3.5rem); }
+  .nothing-letter { font-size: inherit; }
 
   .hero-scroll { left: 2rem; }
   .hero-stats { right: 2rem; }
 
   .phones-showcase { height: 100vh; }
   .phones-showcase-content { height: 100vh; }
-  .phones-header { top: 3rem; left: 2rem; }
+  .phones-header { top: 3rem; left: 2rem; gap: 1.5rem; }
   .color-indicators { top: 4.5rem; right: 1rem; }
-  .color-indicator { width: 65px; height: 65px; }
-  .color-dot-indicator { width: 20px; height: 20px; }
+  .color-indicator { width: 62px; height: 62px; }
+  .color-dot-indicator { width: 18px; height: 18px; }
 
-  .phones-stage { width: 80vw; max-width: 600px; height: 500px; }
+  .phones-stage { width: 75vw; max-width: 650px; height: 550px; }
   .phone-item { width: 200px; }
 
   .work { padding: 8rem 2rem 6rem; }
@@ -980,52 +986,75 @@ body {
   .work-title { font-size: clamp(2.5rem, 6vw, 4rem); }
 }
 
+/* ===== LANDSCAPE TABLET (1024px, landscape) ===== */
+@media (max-width: 1024px) and (orientation: landscape) {
+  .hero { min-height: auto; padding: 5rem 3rem 3rem; }
+  .hero-grid { grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; }
+  .hero-visual { order: 0; }
+  .visual-container { max-width: 200px; }
+  .nothing-vertical { font-size: clamp(2rem, 6vh, 3rem); }
+
+  .hero-scroll { position: absolute; bottom: 2rem; left: 3rem; }
+  .hero-stats { position: absolute; bottom: 2rem; right: 3rem; }
+
+  .phones-showcase { height: auto; min-height: 100vh; }
+  .phones-showcase-content { height: auto; min-height: 100vh; }
+  .phones-stage { height: 70vh; }
+}
+
 /* ===== MOBILE (768px) ===== */
 @media (max-width: 768px) {
+  /* Header: full-width bottom nav */
   .corner-header {
+    position: fixed;
     top: auto;
-    bottom: 1rem;
-    right: 1rem;
-    left: 1rem;
+    bottom: 0;
+    right: 0;
+    left: 0;
     z-index: 200;
+    padding: 0;
+    padding-bottom: env(safe-area-inset-bottom, 0);
   }
 
   .corner-nav {
+    display: flex;
     justify-content: center;
     flex-wrap: nowrap;
-    border-radius: 100px;
+    border-radius: 0;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    padding: 0.3rem 0.4rem;
+    padding: 0.4rem 1rem;
+    padding-bottom: calc(0.4rem + env(safe-area-inset-bottom, 0));
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
-    background: rgba(255, 255, 255, 0.82);
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    box-shadow:
-      0 4px 24px rgba(0, 0, 0, 0.06),
-      0 1px 3px rgba(0, 0, 0, 0.04);
+    background: rgba(255, 255, 255, 0.85);
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.06);
+    gap: 0;
   }
 
   .corner-nav::-webkit-scrollbar { display: none; }
 
   .corner-nav-link {
-    padding: 0.55rem 1rem;
-    font-size: 0.6rem;
+    padding: 0.6rem 1.1rem;
+    font-size: 0.62rem;
     font-weight: 400;
     letter-spacing: 0.08em;
     flex-shrink: 0;
     border-radius: 100px;
     position: relative;
+    white-space: nowrap;
   }
 
   .corner-nav-link::after {
     content: '';
     position: absolute;
-    bottom: 4px;
+    bottom: 2px;
     left: 50%;
     transform: translateX(-50%) scaleX(0);
-    width: 16px;
+    width: 18px;
     height: 2px;
     background: var(--color-text-primary);
     border-radius: 1px;
@@ -1036,56 +1065,50 @@ body {
     transform: translateX(-50%) scaleX(1);
   }
 
+  /* REC indicator: top-left */
   .rec-indicator {
+    position: fixed;
     top: 0.75rem;
     left: 0.75rem;
-    padding: 0.3rem 0.75rem;
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    background: rgba(255, 255, 255, 0.82);
+    padding: 0.3rem 0.7rem;
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    background: rgba(255, 255, 255, 0.85);
     border: 1px solid rgba(0, 0, 0, 0.06);
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
-    border-radius: 100px;
   }
 
   .rec-dot { width: 7px; height: 7px; }
   .rec-label { font-size: 0.5rem; }
 
-  /* ===== Hero mobile ===== */
+  /* Hero */
   .hero {
     min-height: 100svh;
-    padding: 4rem 1.25rem 6rem;
+    padding: 4rem 1.5rem 5rem;
   }
 
-  .hero-video-bg video {
-    object-position: center 20%;
-  }
-
-  /* Mobile video - slightly desaturated, brighter */
+  .hero-video-bg video { object-position: center 25%; }
   .mobile-video {
     filter: saturate(0.4) brightness(1.15) contrast(1.05) !important;
   }
 
   .hero-gradient-overlay {
     background:
-      radial-gradient(ellipse at 50% 70%, rgba(245, 245, 243, 0.92) 0%, transparent 65%),
-      radial-gradient(ellipse at 30% 30%, rgba(229, 0, 0, 0.02) 0%, transparent 40%),
-      linear-gradient(180deg, rgba(245, 245, 243, 0.65) 0%, rgba(245, 245, 243, 0.88) 100%);
+      radial-gradient(ellipse at 50% 65%, rgba(245, 245, 243, 0.9) 0%, transparent 60%),
+      radial-gradient(ellipse at 30% 25%, rgba(229, 0, 0, 0.02) 0%, transparent 40%),
+      linear-gradient(180deg, rgba(245, 245, 243, 0.6) 0%, rgba(245, 245, 243, 0.85) 100%);
     animation: gradientShift 10s ease-in-out infinite alternate;
   }
 
-  .hero-grid {
-    gap: 1.25rem;
-  }
+  .hero-grid { gap: 1rem; }
+  .hero-content { gap: 1rem; }
 
-  .hero-content { gap: 1.25rem; }
-
-  .hero-tag { gap: 0.6rem; }
+  .hero-tag { gap: 0.5rem; }
   .tag-line { width: 14px; }
   .hero-tag span:last-child { font-size: 0.55rem; letter-spacing: 0.12em; }
 
   .title-line {
-    font-size: clamp(2rem, 10vw, 3.25rem);
+    font-size: clamp(2rem, 9vw, 3rem);
     letter-spacing: -0.01em;
     line-height: 0.9;
   }
@@ -1099,17 +1122,17 @@ body {
   .hero-cta {
     flex-direction: column;
     align-items: stretch;
-    gap: 0.6rem;
+    gap: 0.5rem;
   }
 
   .btn-primary,
   .btn-secondary {
     justify-content: center;
-    padding: 0.9rem 1.25rem;
+    padding: 0.85rem 1.25rem;
     font-size: 0.65rem;
   }
 
-  /* Mobile hero visual - compact horizontal NOTHING */
+  /* Hero visual: horizontal NOTHING */
   .hero-visual { order: -1; }
 
   .visual-container {
@@ -1118,23 +1141,21 @@ body {
     gap: 0;
     margin: 0 auto;
     justify-content: center;
-    padding: 0.5rem 0;
+    padding: 0.4rem 0 0.6rem;
   }
 
-  /* Hide desktop vertical */
   .nothing-desktop { display: none; }
 
-  /* Show mobile horizontal */
   .nothing-mobile {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
   }
 
   .nothing-mobile-label {
     font-family: var(--font-display);
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.35em;
     color: var(--color-text-primary);
@@ -1162,14 +1183,14 @@ body {
     position: relative;
     bottom: auto;
     left: auto;
-    margin-top: 1.5rem;
+    margin-top: 1.25rem;
   }
 
   .hero-stats {
     position: relative;
     bottom: auto;
     right: auto;
-    margin-top: 1.5rem;
+    margin-top: 1.25rem;
     gap: 1rem;
     justify-content: center;
   }
@@ -1178,79 +1199,40 @@ body {
   .stat-label { font-size: 0.5rem; }
   .stat-divider { height: 25px; }
 
-  /* ===== Colors section mobile ===== */
+  /* Colors section */
   .phones-showcase { height: 100vh; }
   .phones-showcase-content { height: 100vh; }
 
-  .phones-header {
-    top: 2rem;
-    left: 1rem;
-    gap: 0.75rem;
-  }
-
+  .phones-header { top: 2rem; left: 1.5rem; gap: 0.75rem; }
   .phones-section-number { font-size: 0.55rem; }
   .phones-title { font-size: clamp(1.25rem, 6vw, 1.75rem); }
 
   .color-indicators {
     top: auto;
-    bottom: 4rem;
-    right: 0.5rem;
-    left: 0.5rem;
+    bottom: 5rem;
+    right: 0.75rem;
+    left: 0.75rem;
     justify-content: center;
   }
 
-  .color-indicator {
-    width: 52px;
-    height: 52px;
-    gap: 0.35rem;
-  }
-
+  .color-indicator { width: 54px; height: 54px; gap: 0.35rem; }
   .color-dot-indicator { width: 14px; height: 14px; }
   .color-name { font-size: 0.4rem; }
   .color-active-line { height: 2px; }
 
-  .phones-stage {
-    width: 95vw;
-    max-width: none;
-    height: 55vh;
-    top: 52%;
-  }
-
+  .phones-stage { width: 95vw; max-width: none; height: 55vh; top: 52%; }
   .phone-item { width: 140px; }
 
-  /* ===== Work section mobile ===== */
-  .work {
-    padding: 4rem 1.25rem 3.5rem;
-  }
+  /* Work section */
+  .work { padding: 4rem 1.5rem 5rem; }
+  .work::before { left: 1.5rem; right: 1.5rem; }
 
-  .work::before {
-    left: 1.25rem;
-    right: 1.25rem;
-  }
-
-  .work-header {
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-bottom: 2rem;
-  }
-
+  .work-header { flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
   .work-section-number { font-size: 0.55rem; }
-  .work-title {
-    font-size: clamp(1.75rem, 8vw, 2.75rem);
-    margin-bottom: 0.75rem;
-  }
+  .work-title { font-size: clamp(1.75rem, 8vw, 2.75rem); margin-bottom: 0.75rem; }
+  .work-subtitle { font-size: 0.8rem; max-width: 100%; }
 
-  .work-subtitle {
-    font-size: 0.8rem;
-    max-width: 100%;
-  }
-
-  .work-item {
-    grid-template-columns: 1fr 40px 20px;
-    gap: 0.5rem;
-    padding: 1rem 0;
-  }
-
+  .work-item { grid-template-columns: 1fr 40px 20px; gap: 0.5rem; padding: 1rem 0; }
   .work-item-index { display: none; }
   .work-item-name { font-size: 0.95rem; }
   .work-item-category { font-size: 0.7rem; }
@@ -1266,101 +1248,114 @@ body {
   }
 }
 
+/* ===== LANDSCAPE MOBILE (height ≤ 500px) ===== */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero { min-height: auto; padding: 3rem 2rem 2rem; }
+  .hero-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .hero-visual { order: 0; }
+  .visual-container { max-width: 150px; }
+
+  .nothing-mobile { display: none; }
+  .nothing-desktop { display: flex; }
+  .nothing-vertical { font-size: clamp(1.5rem, 5vh, 2.5rem); }
+  .nothing-letter { font-size: inherit; }
+
+  .hero-scroll { display: none; }
+  .hero-stats { display: none; }
+
+  .phones-showcase { height: auto; }
+  .phones-showcase-content { height: auto; }
+  .phones-stage { height: 80vh; }
+}
+
 /* ===== SMALL MOBILE (480px) ===== */
 @media (max-width: 480px) {
-  .corner-nav-link { padding: 0.5rem 0.75rem; font-size: 0.6rem; }
+  .corner-nav { padding: 0.35rem 0.75rem; }
+  .corner-nav-link { padding: 0.5rem 0.85rem; font-size: 0.58rem; }
 
-  .hero { padding: 3.5rem 1rem 1.5rem; }
-  .hero-grid { gap: 1rem; }
-  .hero-content { gap: 1.25rem; }
+  .rec-indicator { top: 0.5rem; left: 0.5rem; padding: 0.25rem 0.6rem; }
+  .rec-dot { width: 6px; height: 6px; }
+  .rec-label { font-size: 0.45rem; }
 
-  .title-line { font-size: clamp(2rem, 11vw, 3rem); }
+  .hero { padding: 3.5rem 1rem 4.5rem; }
+  .hero-grid { gap: 0.75rem; }
+  .hero-content { gap: 0.75rem; }
 
-  .hero-description { font-size: 0.875rem; }
+  .title-line { font-size: clamp(1.75rem, 10vw, 2.5rem); }
+  .hero-description { font-size: 0.8rem; line-height: 1.5; }
 
   .btn-primary,
-  .btn-secondary {
-    padding: 0.875rem 1.25rem;
-    font-size: 0.65rem;
-  }
+  .btn-secondary { padding: 0.8rem 1rem; font-size: 0.6rem; }
 
-  .visual-container { padding: 0.35rem 0; }
-
-  .nothing-mobile-label { font-size: 0.6rem; letter-spacing: 0.3em; }
+  .visual-container { padding: 0.3rem 0 0.5rem; }
+  .nothing-mobile-label { font-size: 0.65rem; letter-spacing: 0.3em; }
   .nothing-mobile-dot { width: 4px; height: 4px; }
   .nothing-mobile-dots { gap: 0.4rem; }
 
-  .stat-number { font-size: 1.25rem; }
-  .stat-divider { height: 25px; }
+  .stat-number { font-size: 1.125rem; }
+  .stat-divider { height: 20px; }
 
-  /* Colors on small screens */
-  .phones-header { top: 2rem; left: 1rem; }
-  .phones-title { font-size: clamp(1.25rem, 7vw, 1.75rem); }
+  .phones-header { top: 1.5rem; left: 1rem; }
+  .phones-title { font-size: clamp(1.1rem, 7vw, 1.5rem); }
 
-  .color-indicators { bottom: 4rem; }
+  .color-indicators { bottom: 4.5rem; }
+  .color-indicator { width: 48px; height: 48px; }
+  .color-dot-indicator { width: 12px; height: 12px; }
+  .color-name { font-size: 0.35rem; }
 
-  .color-indicator {
-    width: 48px;
-    height: 48px;
-    gap: 0.35rem;
-  }
-
-  .color-dot-indicator { width: 14px; height: 14px; }
-  .color-name { font-size: 0.4rem; letter-spacing: 0.1em; }
-
-  .phones-stage { height: 50vh; top: 55%; }
+  .phones-stage { height: 50vh; }
   .phone-item { width: 120px; }
 
-  /* Work on small screens */
-  .work { padding: 4rem 1rem 3rem; }
+  .work { padding: 3.5rem 1rem 4.5rem; }
   .work::before { left: 1rem; right: 1rem; }
-  .work-title { font-size: clamp(1.75rem, 9vw, 2.5rem); }
-  .work-subtitle { font-size: 0.8rem; }
-
-  .work-item {
-    padding: 1rem 0;
-    gap: 0.5rem;
-  }
-
-  .work-item-name { font-size: 0.9rem; }
-  .work-item-category { font-size: 0.7rem; }
-  .work-item-year { font-size: 0.55rem; }
+  .work-title { font-size: clamp(1.5rem, 9vw, 2.25rem); }
+  .work-subtitle { font-size: 0.75rem; }
+  .work-item { padding: 0.85rem 0; }
+  .work-item-name { font-size: 0.85rem; }
+  .work-item-category { font-size: 0.65rem; }
 }
 
 /* ===== TINY MOBILE (360px) ===== */
 @media (max-width: 360px) {
-  .corner-nav { padding: 0.3rem; }
-  .corner-nav-link { padding: 0.4rem 0.6rem; font-size: 0.55rem; }
+  .corner-nav { padding: 0.3rem 0.5rem; }
+  .corner-nav-link { padding: 0.45rem 0.7rem; font-size: 0.52rem; letter-spacing: 0.05em; }
+  .corner-nav-link::after { width: 14px; }
 
-  .rec-indicator { padding: 0.3rem 0.6rem; }
-  .rec-dot { width: 6px; height: 6px; }
-  .rec-label { font-size: 0.5rem; }
+  .rec-indicator { padding: 0.2rem 0.5rem; }
+  .rec-dot { width: 5px; height: 5px; }
+  .rec-label { font-size: 0.4rem; }
 
-  .hero { padding: 3rem 0.75rem 1rem; }
+  .hero { padding: 3rem 0.75rem 4rem; }
+  .title-line { font-size: clamp(1.5rem, 11vw, 2.25rem); }
+  .hero-description { font-size: 0.75rem; line-height: 1.45; }
 
-  .title-line { font-size: clamp(1.75rem, 12vw, 2.5rem); }
-  .hero-description { font-size: 0.8rem; line-height: 1.5; }
+  .btn-primary,
+  .btn-secondary { padding: 0.7rem 0.85rem; font-size: 0.55rem; }
 
-  .visual-container { padding: 0.25rem 0; }
   .nothing-mobile-label { font-size: 0.55rem; letter-spacing: 0.25em; }
   .nothing-mobile-dot { width: 3px; height: 3px; }
   .nothing-mobile-dots { gap: 0.35rem; }
 
-  .stat-number { font-size: 1.125rem; }
-  .stat-label { font-size: 0.5rem; }
-  .stat-divider { height: 20px; }
+  .stat-number { font-size: 1rem; }
+  .stat-label { font-size: 0.45rem; }
+  .stat-divider { height: 18px; }
 
-  .phones-title { font-size: clamp(1.1rem, 8vw, 1.5rem); }
+  .phones-header { top: 1.25rem; left: 0.75rem; gap: 0.5rem; }
+  .phones-title { font-size: clamp(1rem, 8vw, 1.35rem); }
 
-  .color-indicator { width: 42px; height: 42px; }
-  .color-dot-indicator { width: 12px; height: 12px; }
+  .color-indicators { bottom: 4rem; }
+  .color-indicator { width: 42px; height: 42px; gap: 0.25rem; }
+  .color-dot-indicator { width: 10px; height: 10px; }
   .color-name { display: none; }
 
-  .phones-stage { height: 45vh; }
+  .phones-stage { height: 45vh; top: 50%; }
   .phone-item { width: 100px; }
 
-  .work-title { font-size: clamp(1.5rem, 10vw, 2rem); }
-  .work-subtitle { font-size: 0.75rem; }
-  .work-item-name { font-size: 0.85rem; }
+  .work { padding: 3rem 0.75rem 4rem; }
+  .work::before { left: 0.75rem; right: 0.75rem; }
+  .work-title { font-size: clamp(1.35rem, 10vw, 2rem); }
+  .work-subtitle { font-size: 0.7rem; }
+  .work-item { padding: 0.75rem 0; }
+  .work-item-name { font-size: 0.8rem; }
 }
 
