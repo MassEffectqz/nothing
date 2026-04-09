@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react'
+import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
 
 const PHONE_CONFIGS = [
   { color: 'black', speed: 0.4, rotation: -30, hex: '#1a1a1a', flyFrom: 'top-left', finalTop: '18%', finalLeft: '28%' },
@@ -6,6 +6,81 @@ const PHONE_CONFIGS = [
   { color: 'pink', speed: 0.5, rotation: -20, hex: '#f0c4c4', flyFrom: 'bottom-left', finalTop: '48%', finalLeft: '25%' },
   { color: 'blue', speed: 0.7, rotation: 15, hex: '#7eb8d4', flyFrom: 'bottom-right', finalTop: '52%', finalLeft: '48%' },
 ]
+
+// Dot grid background
+function DotGrid({ hoverColor, indicatorsOpacity }) {
+  const cols = 20
+  const rows = 30
+  const dotSpacing = 40
+
+  const dots = useMemo(() => {
+    const arr = []
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        arr.push({ x: c * dotSpacing, y: r * dotSpacing, row: r, col: c })
+      }
+    }
+    return arr
+  }, [])
+
+  const getDotColor = useCallback((dot) => {
+    if (!hoverColor) return 'rgba(0,0,0,0.06)'
+
+    const colorMap = {
+      black: '#1a1a1a',
+      white: '#ffffff',
+      pink: '#f0c4c4',
+      blue: '#7eb8d4',
+    }
+
+    const hoveredHex = colorMap[hoverColor]
+    const isLight = ['white', 'pink', 'blue'].includes(hoverColor)
+
+    // Create a wave pattern from center based on hover
+    const centerX = cols / 2
+    const centerY = rows / 2
+    const distFromCenter = Math.sqrt(
+      Math.pow(dot.col - centerX, 2) + Math.pow(dot.row - centerY, 2)
+    )
+    const maxDist = Math.sqrt(centerX * centerX + centerY * centerY)
+    const normalizedDist = distFromCenter / maxDist
+
+    // Alternate between base color and contrast
+    const isAlt = (dot.row + dot.col) % 3 === 0
+    const baseOpacity = 0.06
+    const activeOpacity = isAlt ? 0.15 : 0.08
+
+    if (isLight) {
+      return isAlt ? `rgba(26,26,26,${activeOpacity * indicatorsOpacity})` : `rgba(26,26,26,${baseOpacity})`
+    } else {
+      return isAlt ? `rgba(255,255,255,${activeOpacity * indicatorsOpacity})` : `rgba(255,255,255,${baseOpacity})`
+    }
+  }, [hoverColor, indicatorsOpacity])
+
+  return (
+    <svg
+      className="dot-grid"
+      width={cols * dotSpacing}
+      height={rows * dotSpacing}
+      style={{
+        opacity: indicatorsOpacity,
+      }}
+    >
+      {dots.map((dot, i) => (
+        <circle
+          key={i}
+          cx={dot.x}
+          cy={dot.y}
+          r={1.5}
+          fill={getDotColor(dot)}
+          style={{
+            transition: 'fill 0.4s ease',
+          }}
+        />
+      ))}
+    </svg>
+  )
+}
 
 function PhoneItem({ config, style }) {
   return (
@@ -185,6 +260,7 @@ export default function ColorsSection() {
         </div>
 
         <div className="phones-stage">
+          <DotGrid hoverColor={hoverColor} indicatorsOpacity={indicatorsOpacity} />
           {PHONE_CONFIGS.map((config, i) => {
             const posStyle = {}
             if (config.finalTop) posStyle.top = config.finalTop

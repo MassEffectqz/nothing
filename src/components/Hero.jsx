@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 export default function Hero() {
   const videoRef = useRef(null)
   const [isMobile, setIsMobile] = useState(false)
+  const [scrollProgress, setScrollProgress] = useState(0)
 
   useEffect(() => {
     const checkMobile = () => {
@@ -17,13 +18,40 @@ export default function Hero() {
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const heroEl = document.querySelector('.hero')
+      if (!heroEl) return
+      const rect = heroEl.getBoundingClientRect()
+      const progress = Math.max(0, Math.min(1, -rect.top / (window.innerHeight * 0.5)))
+      setScrollProgress(progress)
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const letters = ['N', 'O', 'T', 'H', 'I', 'N', 'G']
+
   return (
     <section className="hero">
       <div className="hero-video-bg">
         {!isMobile && (
           <video ref={videoRef} src="/hero-bg.mp4" autoPlay muted loop playsInline />
         )}
-        <div className="video-overlay" />
+        {/* Animated gradient overlay */}
+        <div className="hero-gradient-overlay" />
+        {/* Scan line effect */}
+        <div className="hero-scanlines" />
+      </div>
+
+      {/* Expanding line transition to colors */}
+      <div className="hero-transition-line">
+        <div
+          className="hero-transition-line-inner"
+          style={{
+            transform: `scaleX(${scrollProgress})`,
+          }}
+        />
       </div>
 
       <div className="hero-grid">
@@ -58,14 +86,23 @@ export default function Hero() {
 
         <div className="hero-visual">
           <div className="visual-container">
-            <div className="vertical-text">
-              <span>N</span>
-              <span>O</span>
-              <span>T</span>
-              <span>H</span>
-              <span>I</span>
-              <span>N</span>
-              <span>G</span>
+            {/* NOTHING vertical text with dot matrix style */}
+            <div className="nothing-vertical">
+              {letters.map((letter, i) => (
+                <span
+                  key={i}
+                  className="nothing-letter"
+                  style={{ animationDelay: `${0.8 + i * 0.08}s` }}
+                >
+                  {letter}
+                </span>
+              ))}
+            </div>
+            {/* Decorative dots beside text */}
+            <div className="nothing-deco-dots">
+              {[...Array(7)].map((_, i) => (
+                <div key={i} className="nothing-deco-dot" style={{ animationDelay: `${1.2 + i * 0.1}s` }} />
+              ))}
             </div>
           </div>
         </div>
