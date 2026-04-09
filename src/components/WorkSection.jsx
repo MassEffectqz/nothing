@@ -45,30 +45,13 @@ const projects = [
 
 function ProjectCard({ project, index }) {
   const cardRef = useRef(null)
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-    const el = cardRef.current
-    if (!el) return
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => setIsVisible(true), index * 150)
-        }
-      },
-      { threshold: 0.15 }
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [index])
 
   return (
-    <a href="#" className="project-card" ref={cardRef}>
+    <a href="#" className="project-card" ref={cardRef} style={{ '--delay': `${index * 0.1}s` }}>
       <div className="project-card-image">
         <img src={project.image} alt={project.name} loading="lazy" />
         <div className="project-card-overlay" />
-        <div className={`project-card-reveal ${isVisible ? 'visible' : ''}`}>
+        <div className="project-card-reveal">
           <span className="project-card-number">{project.number}</span>
           <h3 className="project-card-name">{project.name}</h3>
           <p className="project-card-category">{project.category}</p>
