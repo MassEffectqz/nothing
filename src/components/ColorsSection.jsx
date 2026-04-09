@@ -237,14 +237,14 @@ export default function ColorsSection() {
       })
 
       setPhoneStates(newPhoneStates)
-      animRef.current.animFrameId = requestAnimationFrame(computeAnimations)
+      animStateRef.current.animFrameId = requestAnimationFrame(computeAnimations)
     }
 
-    animRef.current.animFrameId = requestAnimationFrame(computeAnimations)
+    animStateRef.current.animFrameId = requestAnimationFrame(computeAnimations)
 
     return () => {
-      if (animRef.current.animFrameId) cancelAnimationFrame(animRef.current.animFrameId)
-      animRef.current.animFrameId = null
+      if (animStateRef.current.animFrameId) cancelAnimationFrame(animStateRef.current.animFrameId)
+      animStateRef.current.animFrameId = null
     }
   }, [])
 
