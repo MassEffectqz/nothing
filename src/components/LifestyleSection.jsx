@@ -41,7 +41,7 @@ export default function LifestyleSection() {
       <div className="lifestyle-overlay" />
 
       <div className="lifestyle-content">
-        {/* Text content */}
+        {/* Left: text content */}
         <div
           className="lifestyle-text"
           style={{
@@ -73,6 +73,9 @@ export default function LifestyleSection() {
             </div>
           </div>
         </div>
+
+        {/* Right: empty */}
+        <div className="lifestyle-visual" />
       </div>
 
       {/* Decorative elements */}
