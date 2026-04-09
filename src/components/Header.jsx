@@ -6,8 +6,8 @@ export default function Header() {
   const navRef = useRef(null)
 
   useEffect(() => {
-    const sections = ['hero', 'colors', 'work']
-    const labels = ['Home', 'Colors', 'Work']
+    const sections = ['hero', 'colors', 'lifestyle', 'work']
+    const labels = ['Home', 'Colors', 'PureSound', 'Work']
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -60,6 +60,7 @@ export default function Header() {
   const navItems = [
     { label: 'Home', href: '#hero' },
     { label: 'Colors', href: '#colors' },
+    { label: 'PureSound', href: '#lifestyle' },
     { label: 'Work', href: '#work' },
   ]
 

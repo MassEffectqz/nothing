@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import RecIndicator from './RecIndicator'
 
 export default function Hero() {
   const videoRef = useRef(null)
@@ -38,6 +39,7 @@ export default function Hero() {
 
   return (
     <section className="hero" id="hero">
+      <RecIndicator />
       <div className="hero-video-bg">
         <video
           ref={videoRef}
