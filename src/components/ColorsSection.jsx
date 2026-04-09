@@ -104,21 +104,29 @@ export default function ColorsSection() {
       const indicatorsEl = indicatorsRef.current
       if (indicatorsEl) {
         const sectionTop = rect.top
+        const sectionBottom = rect.bottom
         const indicatorTargetTop = 96 // 6rem in px
 
+        // Natural viewport Y of indicators = sectionTop + indicatorTargetTop
+        // To pin them at indicatorTargetTop: translateY = indicatorTargetTop - (sectionTop + indicatorTargetTop) = -sectionTop
         let translateY = 0
-        if (sectionTop <= indicatorTargetTop && sectionTop > indicatorTargetTop - sectionHeight) {
-          // Section is in view - pin indicators
-          translateY = indicatorTargetTop - sectionTop
-        } else if (sectionTop > indicatorTargetTop) {
-          // Section hasn't reached yet
-          translateY = 0
-        } else {
-          // Section has passed - hide indicators
+        let visible = true
+
+        if (sectionTop > windowHeight) {
+          // Section completely below viewport
           translateY = -windowHeight
+          visible = false
+        } else if (sectionBottom < 0) {
+          // Section completely above viewport
+          translateY = -windowHeight
+          visible = false
+        } else {
+          // Section is in viewport - pin indicators at 6rem from top
+          translateY = -sectionTop
         }
 
         indicatorsEl.style.transform = `translateY(${translateY}px)`
+        indicatorsEl.style.opacity = visible ? '1' : '0'
       }
 
       // Phone states
