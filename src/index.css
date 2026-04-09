@@ -586,7 +586,7 @@ body {
 }
 
 .phones-showcase-content {
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   width: 100%;
@@ -626,11 +626,12 @@ body {
   color: var(--color-text-primary);
 }
 
-/* Color Indicators - always visible */
+/* Color Indicators - sticky within section */
 .color-indicators {
-  position: absolute;
+  position: sticky;
   top: 6rem;
   right: 2rem;
+  align-self: flex-start;
   display: flex;
   flex-direction: row;
   gap: 0;
@@ -1419,6 +1420,7 @@ body {
     right: 0.75rem;
     left: 0.75rem;
     justify-content: center;
+    align-self: flex-end;
   }
 
   .color-indicator { width: 54px; height: 54px; gap: 0.35rem; }
