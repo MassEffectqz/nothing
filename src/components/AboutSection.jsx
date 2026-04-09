@@ -61,6 +61,15 @@ export default function AboutSection() {
 
       {/* Left: visual column */}
       <div className="about-image-col">
+        {/* Floating dots */}
+        <div className="about-left-dots">
+          <div className="left-dot" />
+          <div className="left-dot" />
+          <div className="left-dot" />
+          <div className="left-dot" />
+          <div className="left-dot" />
+        </div>
+
         {/* Large number */}
         <div className="about-col-number">04</div>
 

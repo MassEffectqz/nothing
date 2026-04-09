@@ -110,8 +110,8 @@
 
 .about-visual-stack {
   position: relative;
-  width: 200px;
-  height: 300px;
+  width: 260px;
+  height: 360px;
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 0.8s ease 0.2s, transform 0.8s $transition-smooth 0.2s;
@@ -139,23 +139,25 @@
 
   &.visual-earbuds {
     top: 0;
-    left: -30px;
-    width: 120px;
-    transform: rotate(-10deg);
+    left: -20px;
+    width: 140px;
+    transform: rotate(-12deg);
+    z-index: 2;
 
     .about-visual-stack:hover & {
-      transform: rotate(-15deg) translateY(-10px);
+      transform: rotate(-18deg) translateY(-15px);
     }
   }
 
   &.visual-phone {
-    bottom: 0;
-    right: -20px;
-    width: 140px;
-    transform: rotate(5deg);
+    bottom: 10px;
+    right: -10px;
+    width: 160px;
+    transform: rotate(8deg);
+    z-index: 1;
 
     .about-visual-stack:hover & {
-      transform: rotate(0deg) translateY(-5px);
+      transform: rotate(3deg) translateY(-8px);
     }
   }
 }
@@ -230,6 +232,34 @@
   background: $color-dot;
   border-radius: 50%;
   animation: accentPulse 3s ease-in-out infinite;
+}
+
+// Decorative floating dots in left column
+.about-left-dots {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+
+  .left-dot {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    animation: floatDot 6s ease-in-out infinite;
+
+    &:nth-child(1) { top: 15%; left: 20%; animation-delay: 0s; }
+    &:nth-child(2) { top: 40%; right: 15%; animation-delay: 1s; }
+    &:nth-child(3) { bottom: 30%; left: 25%; animation-delay: 2s; }
+    &:nth-child(4) { top: 60%; right: 25%; animation-delay: 3s; width: 4px; height: 4px; }
+    &:nth-child(5) { top: 80%; left: 15%; animation-delay: 4s; }
+  }
+}
+
+@keyframes floatDot {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.5; }
+  50% { transform: translateY(-10px) scale(1.2); opacity: 1; }
 }
 
 // Right: content column

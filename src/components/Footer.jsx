@@ -26,14 +26,24 @@ export default function Footer() {
         {/* Contact */}
         <div className="footer-contact">
           <span className="footer-links-title">Get in Touch</span>
-          <a href="mailto:hello@nothing.design" className="footer-email">
-            hello@nothing.design
+          <a
+            href="https://t.me/Aezqsm"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-email"
+          >
+            @Aezqsm
           </a>
           <div className="footer-socials">
-            <a href="#" className="footer-social" aria-label="Twitter">X</a>
-            <a href="#" className="footer-social" aria-label="GitHub">GH</a>
-            <a href="#" className="footer-social" aria-label="LinkedIn">IN</a>
-            <a href="#" className="footer-social" aria-label="Dribbble">DR</a>
+            <a
+              href="https://t.me/Aezqsm"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-social"
+              aria-label="Telegram"
+            >
+              TG
+            </a>
           </div>
         </div>
       </div>
@@ -47,6 +57,12 @@ export default function Footer() {
           <span>Back to top</span>
           <span className="footer-back-top-arrow">↑</span>
         </a>
+      </div>
+
+      {/* Axiom branding */}
+      <div className="footer-axiom">
+        <img src="/axiom-logo.png" alt="Axiom" />
+        <span>made by Axiom developer</span>
       </div>
     </footer>
   )

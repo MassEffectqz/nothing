@@ -51,6 +51,7 @@ export default function ColorsSection() {
   const sectionRef = useRef(null)
   const [hoverColor, setHoverColor] = useState(null)
   const [titleVisible, setTitleVisible] = useState(false)
+  const [indicatorsVisible, setIndicatorsVisible] = useState(false)
   const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 768)
   const [phoneStates, setPhoneStates] = useState(() =>
     PHONE_CONFIGS.map((cfg, i) => ({
@@ -76,6 +77,21 @@ export default function ColorsSection() {
     const check = () => setIsMobile(window.innerWidth <= 768)
     window.addEventListener('resize', check)
     return () => window.removeEventListener('resize', check)
+  }, [])
+
+  // Track section visibility for indicators
+  useEffect(() => {
+    const el = sectionRef.current
+    if (!el) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIndicatorsVisible(entry.isIntersecting)
+      },
+      { threshold: 0.05 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
   }, [])
 
   // Main animation loop
@@ -155,7 +171,7 @@ export default function ColorsSection() {
           <h2 className="phones-title">COLORS</h2>
         </div>
 
-        <div className="color-indicators">
+        <div className={`color-indicators ${indicatorsVisible ? 'visible' : ''}`}>
           {PHONE_CONFIGS.map((cfg, i) => (
             <ColorIndicatorItem
               key={cfg.color}
