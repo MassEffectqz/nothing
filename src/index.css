@@ -72,6 +72,43 @@ body {
   border: 1px solid var(--color-border);
   border-radius: 100px;
   padding: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated pill / liquid indicator */
+.nav-pill {
+  position: absolute;
+  top: 0.35rem;
+  bottom: 0.35rem;
+  left: 0;
+  height: auto;
+  background: var(--color-text-primary);
+  border-radius: 100px;
+  transition:
+    transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+    width 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    border-radius 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 0;
+  animation: pillMorph 0.6s ease-in-out;
+}
+
+@keyframes pillMorph {
+  0% {
+    border-radius: 100px;
+  }
+  25% {
+    border-radius: 60px 100px 100px 60px;
+  }
+  50% {
+    border-radius: 80px 60px 60px 80px;
+  }
+  75% {
+    border-radius: 100px 80px 80px 100px;
+  }
+  100% {
+    border-radius: 100px;
+  }
 }
 
 .corner-nav-link {
@@ -84,8 +121,10 @@ body {
   font-weight: 400;
   letter-spacing: 0.05em;
   border-radius: 100px;
-  transition: all 0.3s var(--transition-smooth);
+  transition: color 0.3s var(--transition-smooth);
   white-space: nowrap;
+  position: relative;
+  z-index: 1;
 }
 
 .corner-nav-link:hover {
@@ -93,7 +132,6 @@ body {
 }
 
 .corner-nav-link.active {
-  background: var(--color-text-primary);
   color: var(--color-bg);
 }
 
@@ -1024,11 +1062,11 @@ body {
     justify-content: center;
     flex-wrap: nowrap;
     border-radius: 0;
-    overflow-x: auto;
+    overflow: hidden;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    padding: 0.4rem 1rem;
-    padding-bottom: calc(0.4rem + env(safe-area-inset-bottom, 0));
+    padding: 0.35rem 1rem;
+    padding-bottom: calc(0.35rem + env(safe-area-inset-bottom, 0));
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
     background: rgba(255, 255, 255, 0.85);
@@ -1036,12 +1074,22 @@ body {
     border-top: 1px solid rgba(0, 0, 0, 0.06);
     box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.06);
     gap: 0;
+    position: relative;
   }
 
   .corner-nav::-webkit-scrollbar { display: none; }
 
+  /* Mobile pill indicator */
+  .nav-pill {
+    top: 0.3rem;
+    bottom: calc(0.3rem + env(safe-area-inset-bottom, 0));
+    background: var(--color-text-primary);
+    border-radius: 100px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
   .corner-nav-link {
-    padding: 0.6rem 1.1rem;
+    padding: 0.55rem 1rem;
     font-size: 0.62rem;
     font-weight: 400;
     letter-spacing: 0.08em;
@@ -1049,23 +1097,7 @@ body {
     border-radius: 100px;
     position: relative;
     white-space: nowrap;
-  }
-
-  .corner-nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: 2px;
-    left: 50%;
-    transform: translateX(-50%) scaleX(0);
-    width: 18px;
-    height: 2px;
-    background: var(--color-text-primary);
-    border-radius: 1px;
-    transition: transform 0.3s var(--transition-smooth);
-  }
-
-  .corner-nav-link.active::after {
-    transform: translateX(-50%) scaleX(1);
+    transition: color 0.3s var(--transition-smooth);
   }
 
   /* REC indicator: top-left */
@@ -1324,7 +1356,6 @@ body {
 @media (max-width: 360px) {
   .corner-nav { padding: 0.3rem 0.5rem; }
   .corner-nav-link { padding: 0.45rem 0.7rem; font-size: 0.52rem; letter-spacing: 0.05em; }
-  .corner-nav-link::after { width: 14px; }
 
   .rec-indicator { padding: 0.2rem 0.5rem; }
   .rec-dot { width: 5px; height: 5px; }
