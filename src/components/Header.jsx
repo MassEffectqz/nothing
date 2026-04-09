@@ -1,9 +1,10 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 
 export default function Header() {
   const [activeSection, setActiveSection] = useState('hero')
   const [pillStyle, setPillStyle] = useState({ left: 0, width: 0 })
   const navRef = useRef(null)
+  const pillTimeoutRef = useRef(null)
 
   useEffect(() => {
     const sections = ['hero', 'colors', 'lifestyle', 'work']
@@ -29,33 +30,42 @@ export default function Header() {
     return () => observer.disconnect()
   }, [])
 
-  // Update pill position when active section changes or on resize
+  const updatePill = useCallback(() => {
+    const nav = navRef.current
+    if (!nav) return
+
+    const activeLink = nav.querySelector(`.corner-nav-link.active`)
+    if (!activeLink) return
+
+    const navRect = nav.getBoundingClientRect()
+    const linkRect = activeLink.getBoundingClientRect()
+
+    setPillStyle({
+      left: linkRect.left - navRect.left,
+      width: linkRect.width,
+    })
+  }, [])
+
+  // Update pill when active section changes
   useEffect(() => {
-    const updatePill = () => {
-      const nav = navRef.current
-      if (!nav) return
-
-      const activeLink = nav.querySelector(`.corner-nav-link.active`)
-      if (!activeLink) return
-
-      const navRect = nav.getBoundingClientRect()
-      const linkRect = activeLink.getBoundingClientRect()
-
-      setPillStyle({
-        left: linkRect.left - navRect.left,
-        width: linkRect.width,
-      })
-    }
-
-    // Initial position with small delay for DOM layout
-    const timer = setTimeout(updatePill, 50)
-
-    window.addEventListener('resize', updatePill)
+    if (pillTimeoutRef.current) cancelAnimationFrame(pillTimeoutRef.current)
+    pillTimeoutRef.current = requestAnimationFrame(updatePill)
     return () => {
-      clearTimeout(timer)
-      window.removeEventListener('resize', updatePill)
+      if (pillTimeoutRef.current) cancelAnimationFrame(pillTimeoutRef.current)
     }
-  }, [activeSection])
+  }, [activeSection, updatePill])
+
+  // Update pill on resize
+  useEffect(() => {
+    window.addEventListener('resize', updatePill)
+    return () => window.removeEventListener('resize', updatePill)
+  }, [updatePill])
+
+  // Initial position
+  useEffect(() => {
+    const timer = setTimeout(updatePill, 100)
+    return () => clearTimeout(timer)
+  }, [updatePill])
 
   const navItems = [
     { label: 'Home', href: '#hero' },
