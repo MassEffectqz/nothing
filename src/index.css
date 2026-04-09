@@ -1305,14 +1305,10 @@ body {
   overflow: hidden;
 }
 
-/* Adjust heights for specific cards to match image proportions */
+/* Adjust heights for wide cards */
 .project-card:nth-child(1) .project-card-image,
 .project-card:nth-child(4) .project-card-image {
   padding-bottom: 28%;
-}
-
-.project-card:nth-child(2) .project-card-image {
-  padding-bottom: 45%;
 }
 
 .project-card-image img {
