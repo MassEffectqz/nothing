@@ -1,17 +1,17 @@
 import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
 
 const PHONE_CONFIGS = [
-  { color: 'black', speed: 0.4, rotation: -30, hex: '#1a1a1a', flyFrom: 'top-left', finalTop: '18%', finalLeft: '28%' },
-  { color: 'white', speed: 0.6, rotation: 25, hex: '#e8e8e6', flyFrom: 'top-right', finalTop: '22%', finalLeft: '52%' },
-  { color: 'pink', speed: 0.5, rotation: -20, hex: '#f0c4c4', flyFrom: 'bottom-left', finalTop: '48%', finalLeft: '25%' },
-  { color: 'blue', speed: 0.7, rotation: 15, hex: '#7eb8d4', flyFrom: 'bottom-right', finalTop: '52%', finalLeft: '48%' },
+  { color: 'black', speed: 0.4, rotation: -30, hex: '#1a1a1a', flyFrom: 'top-left', finalTop: '10%', finalLeft: '15%' },
+  { color: 'white', speed: 0.6, rotation: 25, hex: '#e8e8e6', flyFrom: 'top-right', finalTop: '15%', finalLeft: '55%' },
+  { color: 'pink', speed: 0.5, rotation: -20, hex: '#f0c4c4', flyFrom: 'bottom-left', finalTop: '55%', finalLeft: '12%' },
+  { color: 'blue', speed: 0.7, rotation: 15, hex: '#7eb8d4', flyFrom: 'bottom-right', finalTop: '60%', finalLeft: '50%' },
 ]
 
 // Dot grid background
-function DotGrid({ hoverColor, indicatorsOpacity }) {
-  const cols = 24
-  const rows = 30
-  const dotSpacing = 36
+function DotGrid({ hoverColor }) {
+  const cols = 30
+  const rows = 40
+  const dotSpacing = 32
 
   const dots = useMemo(() => {
     const arr = []
@@ -24,37 +24,35 @@ function DotGrid({ hoverColor, indicatorsOpacity }) {
   }, [])
 
   const getDotColor = useCallback((dot) => {
-    if (!hoverColor) return 'rgba(0,0,0,0.12)'
-
-    const isLight = ['white', 'pink', 'blue'].includes(hoverColor)
-
-    // Alternate between base color and contrast for a pattern
+    // Always visible black dots with alternating pattern
     const isAlt = (dot.row + dot.col) % 3 === 0
-    const baseOpacity = 0.08
-    const activeOpacity = 0.25
 
-    if (isLight) {
-      return isAlt ? `rgba(26,26,26,${activeOpacity * indicatorsOpacity})` : `rgba(26,26,26,${baseOpacity})`
-    } else {
-      return isAlt ? `rgba(26,26,26,${activeOpacity * indicatorsOpacity})` : `rgba(26,26,26,${baseOpacity})`
+    if (hoverColor) {
+      // When hovering, make alt dots darker based on phone color
+      const isLightColor = ['white', 'pink', 'blue'].includes(hoverColor)
+      if (isLightColor) {
+        return isAlt ? 'rgba(26,26,26,0.4)' : 'rgba(26,26,26,0.1)'
+      } else {
+        return isAlt ? 'rgba(26,26,26,0.5)' : 'rgba(26,26,26,0.1)'
+      }
     }
-  }, [hoverColor, indicatorsOpacity])
+
+    // Default: clearly visible dots
+    return isAlt ? 'rgba(0,0,0,0.35)' : 'rgba(0,0,0,0.1)'
+  }, [hoverColor])
 
   return (
     <svg
       className="dot-grid"
       width={cols * dotSpacing}
       height={rows * dotSpacing}
-      style={{
-        opacity: indicatorsOpacity,
-      }}
     >
       {dots.map((dot, i) => (
         <circle
           key={i}
           cx={dot.x}
           cy={dot.y}
-          r={2}
+          r={1.8}
           fill={getDotColor(dot)}
           style={{
             transition: 'fill 0.4s ease',
@@ -110,8 +108,20 @@ export default function ColorsSection() {
   const handleHover = useCallback((color) => setHoverColor(color), [])
   const handleLeave = useCallback(() => setHoverColor(null), [])
 
+  // Refs for animation state that must persist across re-renders
+  const animStateRef = useRef({
+    animFrameId: null,
+    startTime: null,
+    phoneFinishedTime: [null, null, null, null],
+    isMobile: window.innerWidth <= 768,
+    progress: 0,
+  })
+
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768)
+    const checkMobile = () => {
+      animStateRef.current.isMobile = window.innerWidth <= 768
+      setIsMobile(animStateRef.current.isMobile)
+    }
     window.addEventListener('resize', checkMobile)
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
@@ -134,39 +144,41 @@ export default function ColorsSection() {
       'bottom-right': { offsetX: 100, offsetY: 150 },
     }
 
-    const computeAnimations = () => {
+    const FLOAT_AMPLITUDES = [14, 18, 12, 20]
+    const FLOAT_SPEEDS = [0.4, 0.5, 0.45, 0.55]
+
+    const computeAnimations = (timestamp) => {
+      const state = animStateRef.current
+      if (!state.startTime) state.startTime = timestamp
+      const elapsed = (timestamp - state.startTime) / 1000
+
       const rect = el.getBoundingClientRect()
       const sectionHeight = el.offsetHeight
       const windowHeight = window.innerHeight
 
-      // Progress 0->1 as section enters viewport
       const startThreshold = windowHeight * 0.8
       const endThreshold = -sectionHeight * 0.3
       const rawProgress = (startThreshold - rect.top) / (startThreshold - endThreshold)
       const progress = Math.max(0, Math.min(1, rawProgress))
+      state.progress = progress
 
-      // Title appears early
       setTitleVisible(progress > 0.05)
 
-      // Indicators fade in
       const heroSection = document.querySelector('.hero')
       const heroRect = heroSection ? heroSection.getBoundingClientRect() : { bottom: 0 }
-      
+
       let indicatorsTarget = 0
-      if (isMobile) {
-        // On mobile: start showing when phones section is 20% visible
+      if (state.isMobile) {
         const sectionVisibleRatio = Math.max(0, Math.min(1, (windowHeight - rect.top) / sectionHeight))
         indicatorsTarget = Math.max(0, (sectionVisibleRatio - 0.2) * 2)
       } else {
-        // On desktop: show when hero is fully gone
         const heroFullyHidden = heroRect.bottom <= 0
         indicatorsTarget = heroFullyHidden ? Math.min(1, (progress - 0.1) * 3) : 0
       }
-      
+
       setIndicatorsOpacity(Math.min(1, indicatorsTarget))
 
-      // Phone animations
-      const flyOffsets = isMobile ? flyOffsetsMobile : flyOffsetsDesktop
+      const flyOffsets = state.isMobile ? flyOffsetsMobile : flyOffsetsDesktop
 
       const newPhoneStates = PHONE_CONFIGS.map((config, i) => {
         const appearStart = 0.05 + (i * 0.08)
@@ -176,7 +188,7 @@ export default function ColorsSection() {
         const initialOffsetY = flyOffsets[config.flyFrom].offsetY
 
         if (progress < appearStart) {
-          // Before animation - phones off-screen
+          state.phoneFinishedTime[i] = null
           return {
             opacity: 0,
             offsetX: initialOffsetX,
@@ -187,9 +199,12 @@ export default function ColorsSection() {
         }
 
         if (progress > appearEnd) {
-          // After animation - phones in final position with slight float
-          const floatT = (progress - appearEnd) / (1 - appearEnd)
-          const floatY = Math.sin(floatT * Math.PI * 2) * 8
+          if (state.phoneFinishedTime[i] === null) {
+            state.phoneFinishedTime[i] = elapsed
+          }
+          const floatTime = elapsed - state.phoneFinishedTime[i]
+          const floatY = Math.sin(floatTime * FLOAT_SPEEDS[i] * Math.PI * 2) * FLOAT_AMPLITUDES[i]
+
           return {
             opacity: 1,
             offsetX: 0,
@@ -199,9 +214,8 @@ export default function ColorsSection() {
           }
         }
 
-        // During animation - smooth easing
         const t = (progress - appearStart) / (appearEnd - appearStart)
-        const eased = 1 - Math.pow(1 - t, 3) // easeOutCubic
+        const eased = 1 - Math.pow(1 - t, 3)
 
         return {
           opacity: eased,
@@ -213,19 +227,16 @@ export default function ColorsSection() {
       })
 
       setPhoneStates(newPhoneStates)
+      state.animFrameId = requestAnimationFrame(computeAnimations)
     }
 
-    const handleScroll = () => requestAnimationFrame(computeAnimations)
-
-    computeAnimations()
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    window.addEventListener('resize', handleScroll, { passive: true })
+    state.animFrameId = requestAnimationFrame(computeAnimations)
 
     return () => {
-      window.removeEventListener('scroll', handleScroll)
-      window.removeEventListener('resize', handleScroll)
+      if (state.animFrameId) cancelAnimationFrame(state.animFrameId)
+      state.animFrameId = null
     }
-  }, [hoverColor, isMobile])
+  }, [])
 
   return (
     <section ref={sectionRef} className="phones-showcase">
