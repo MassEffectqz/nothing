@@ -9,7 +9,13 @@ const MILESTONES = [
   { year: '2024', title: 'Creative Director', desc: 'Leading brand identity team' },
 ]
 
-const TOOLS = ['Figma', 'React', 'TypeScript', 'Framer', 'Blender', 'After Effects']
+const TOOLS = ['Figma', 'React', 'TypeScript', 'Framer', 'Blender', 'After Effects', 'Next.js', 'Tailwind']
+
+const PHILOSOPHY = [
+  { title: 'Transparency', desc: 'Design that reveals its nature. No hidden complexity, no unnecessary decoration.' },
+  { title: 'Essentialism', desc: 'Every element must earn its place. If it doesn\'t serve a purpose, it doesn\'t exist.' },
+  { title: 'Craft', desc: 'Attention to the smallest detail. Pixels, timing, motion — everything matters.' },
+]
 
 export default function AboutSection() {
   const sectionRef = useRef(null)
@@ -33,7 +39,7 @@ export default function AboutSection() {
           setTimeout(() => setAnimatedItems(true), 300)
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.1 }
     )
     observer.observe(el)
     return () => observer.disconnect()
@@ -53,24 +59,37 @@ export default function AboutSection() {
         ))}
       </div>
 
-      {/* Profile image */}
+      {/* Left: visual column */}
       <div className="about-image-col">
         <div className={`about-image ${animatedItems ? 'visible' : ''}`}>
-          <img src="/media/devices/nothing-phone-4a-pro-white.png" alt="Designer portrait" />
+          <img src="/media/accessories/nothing-headphone-1-white.png" alt="Nothing product" />
           <div className="about-image-badge">
             <span className="badge-dot" />
             <span className="badge-text">Available for work</span>
           </div>
         </div>
+
+        {/* Decorative stats on image side */}
+        <div className={`about-side-stats ${animatedItems ? 'visible' : ''}`}>
+          <div className="side-stat">
+            <span className="side-stat-value">47</span>
+            <span className="side-stat-label">Projects</span>
+          </div>
+          <div className="side-stat">
+            <span className="side-stat-value">12</span>
+            <span className="side-stat-label">Awards</span>
+          </div>
+        </div>
       </div>
 
-      {/* Main content */}
+      {/* Right: content column */}
       <div className="about-content">
         <span className="about-number">04</span>
         <h2 className="about-title">ABOUT</h2>
         <div className="about-accent-line" />
 
-        <div className="about-bio">
+        {/* Bio */}
+        <div className={`about-bio ${animatedItems ? 'visible' : ''}`}>
           <p className="about-bio-line">
             Multi-disciplinary <span className="text-red">designer</span> and{' '}
             <span className="text-red">developer</span> crafting digital experiences
@@ -78,11 +97,25 @@ export default function AboutSection() {
           </p>
           <p className="about-bio-line">
             Currently leading creative direction at Nothing, where we strip away
-            the unnecessary to reveal what truly matters.
+            the unnecessary to reveal what truly matters. Every pixel intentional,
+            every interaction purposeful.
           </p>
         </div>
 
-        {/* Tools grid */}
+        {/* Design philosophy */}
+        <div className={`about-philosophy ${animatedItems ? 'visible' : ''}`}>
+          <span className="philosophy-label">Philosophy</span>
+          <div className="philosophy-grid">
+            {PHILOSOPHY.map((p, i) => (
+              <div key={p.title} className="philosophy-item" style={{ '--delay': `${i * 0.1}s` }}>
+                <h4 className="philosophy-title">{p.title}</h4>
+                <p className="philosophy-desc">{p.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Tools */}
         <div className={`about-tools ${animatedItems ? 'visible' : ''}`}>
           <span className="tools-label">Toolkit</span>
           <div className="tools-list">
@@ -94,6 +127,7 @@ export default function AboutSection() {
 
         {/* Timeline */}
         <div className={`about-timeline ${animatedItems ? 'visible' : ''}`}>
+          <span className="timeline-section-label">Journey</span>
           {MILESTONES.map((ms, i) => (
             <div key={ms.year} className="timeline-item" style={{ '--delay': `${i * 0.15}s` }}>
               <span className="timeline-year">{ms.year}</span>
@@ -107,7 +141,7 @@ export default function AboutSection() {
         </div>
 
         {/* Stats */}
-        <div className="about-stats">
+        <div className={`about-stats ${animatedItems ? 'visible' : ''}`}>
           <div className="about-stat">
             <span className="about-stat-number text-red">47</span>
             <span className="about-stat-label">Projects</span>

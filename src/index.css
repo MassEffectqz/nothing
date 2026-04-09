@@ -1071,6 +1071,43 @@ body {
   color: rgba(255, 255, 255, 0.6);
 }
 
+/* Side stats below image */
+.about-side-stats {
+  display: flex;
+  gap: 2rem;
+  margin-top: 3rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease 0.4s, transform 0.6s var(--transition-smooth) 0.4s;
+}
+
+.about-side-stats.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.side-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.side-stat-value {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-dot);
+  line-height: 1;
+}
+
+.side-stat-label {
+  font-family: var(--font-display);
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.35);
+  text-transform: uppercase;
+}
+
 /* Right: content column */
 .about-content {
   position: relative;
@@ -1115,6 +1152,14 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s var(--transition-smooth);
+}
+
+.about-bio.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .about-bio-line {
@@ -1122,6 +1167,66 @@ body {
   line-height: 1.7;
   color: rgba(255, 255, 255, 0.5);
   max-width: 500px;
+}
+
+/* Design philosophy */
+.about-philosophy {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease 0.1s, transform 0.6s var(--transition-smooth) 0.1s;
+}
+
+.about-philosophy.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.philosophy-label {
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--color-dot);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.philosophy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.philosophy-item {
+  padding: 1.25rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  opacity: 0;
+  transform: translateY(15px);
+  animation: philosophyItemReveal 0.5s var(--transition-smooth) forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes philosophyItemReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.philosophy-title {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.philosophy-desc {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.35);
 }
 
 /* Tools */
@@ -1182,6 +1287,16 @@ body {
 .about-timeline.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+.timeline-section-label {
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--color-dot);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.75rem;
 }
 
 .timeline-item {
@@ -1256,6 +1371,14 @@ body {
   margin-top: auto;
   padding-top: 2rem;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease 0.5s, transform 0.6s var(--transition-smooth) 0.5s;
+}
+
+.about-stats.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .about-stat {
@@ -1321,11 +1444,15 @@ body {
   .about-image-col {
     padding: 3rem 2rem;
     min-height: 300px;
+    flex-direction: column;
+    align-items: center;
   }
 
   .about-image { width: 220px; }
+  .about-side-stats { margin-top: 2rem; justify-content: center; }
   .about-content { padding: 3rem 2rem; }
   .about-grid { display: none; }
+  .philosophy-grid { grid-template-columns: 1fr; gap: 1rem; }
 }
 
 @media (max-width: 768px) {
@@ -1338,6 +1465,7 @@ body {
   .about-stats { gap: 2rem; flex-wrap: wrap; }
   .about-stat-number { font-size: 2rem; }
   .timeline-item { grid-template-columns: 40px 16px 1fr; }
+  .philosophy-item { padding: 1rem; }
 }
 
 @media (max-width: 480px) {
@@ -1351,6 +1479,8 @@ body {
   .about-stat-number { font-size: 1.75rem; }
   .about-stat-divider { height: 35px; }
   .tool-badge { font-size: 0.6rem; padding: 0.25rem 0.65rem; }
+  .about-side-stats { gap: 1.5rem; }
+  .side-stat-value { font-size: 1.5rem; }
 }
 
 /* ========== WORK SECTION ========== */
