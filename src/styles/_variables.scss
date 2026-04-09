@@ -1,0 +1,36 @@
+// ========== COLORS ==========
+$color-bg: #f5f5f3;
+$color-surface: #ffffff;
+$color-surface-dark: #0a0a0a;
+$color-surface-darker: #0d0d0d;
+$color-border: rgba(0, 0, 0, 0.08);
+$color-border-dark: rgba(255, 255, 255, 0.08);
+$color-border-light: rgba(255, 255, 255, 0.04);
+$color-text-primary: #1a1a1a;
+$color-text-secondary: rgba(0, 0, 0, 0.45);
+$color-text-dark: #ffffff;
+$color-text-dark-secondary: rgba(255, 255, 255, 0.5);
+$color-text-dark-muted: rgba(255, 255, 255, 0.35);
+$color-accent: #1a1a1a;
+$color-dot: #e50000;
+$color-dot-green: #00ff88;
+
+// ========== FONTS ==========
+$font-display: 'Nothing Dot', monospace;
+$font-body: 'IBM Plex Mono', monospace;
+
+// ========== TRANSITIONS ==========
+$transition-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+$transition-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+// ========== SPACING ==========
+$section-padding-desktop: 8rem 4rem;
+$section-padding-tablet: 6rem 2rem;
+$section-padding-mobile: 4rem 1.5rem;
+$section-padding-small: 3rem 1rem;
+
+// ========== BREAKPOINTS ==========
+$bp-tablet: 1024px;
+$bp-mobile: 768px;
+$bp-small: 480px;
+$bp-tiny: 360px;

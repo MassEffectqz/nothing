@@ -1,0 +1,142 @@
+@use 'variables' as *;
+
+// ========== RESPONSIVE MIXINS ==========
+@mixin tablet {
+  @media (max-width: $bp-tablet) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: $bp-mobile) {
+    @content;
+  }
+}
+
+@mixin small {
+  @media (max-width: $bp-small) {
+    @content;
+  }
+}
+
+@mixin tiny {
+  @media (max-width: $bp-tiny) {
+    @content;
+  }
+}
+
+// ========== SECTION PADDING ==========
+@mixin section-padding {
+  padding: $section-padding-desktop;
+
+  @include tablet {
+    padding: $section-padding-tablet;
+  }
+
+  @include mobile {
+    padding: $section-padding-mobile;
+  }
+
+  @include small {
+    padding: $section-padding-small;
+  }
+}
+
+// ========== ANIMATIONS ==========
+@mixin fade-in-up($delay: 0s) {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease $delay, transform 0.6s $transition-smooth $delay;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@mixin stagger-reveal($delay: 0s) {
+  opacity: 0;
+  transform: translateX(-20px);
+  animation: staggerReveal 0.5s $transition-smooth forwards;
+  animation-delay: $delay;
+}
+
+@mixin hover-lift {
+  transition: transform 0.3s $transition-smooth;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+}
+
+@mixin hover-scale {
+  transition: transform 0.6s $transition-smooth;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+// ========== TEXT ==========
+@mixin display-heading {
+  font-family: $font-display;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+@mixin body-text {
+  font-family: $font-body;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+@mixin label-text {
+  font-family: $font-display;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+// ========== LAYOUT ==========
+@mixin container {
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// ========== DECORATIVE ==========
+@mixin red-accent-pulse {
+  width: 60px;
+  height: 2px;
+  background: $color-dot;
+  animation: accentPulse 3s ease-in-out infinite;
+}
+
+@mixin dot-grid {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  grid-template-rows: repeat(20, 1fr);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+// ========== KEYFRAMES ==========
+@mixin keyframes($name) {
+  @keyframes #{$name} {
+    @content;
+  }
+}

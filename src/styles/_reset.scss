@@ -1,0 +1,82 @@
+@use 'variables' as *;
+
+// ========== FONTS ==========
+@font-face {
+  font-family: 'Nothing Dot';
+  src: url('/fonts/DOTMATRI.TTF') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Nothing Dot';
+  src: url('/fonts/DOTMBold.TTF') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+// ========== CSS RESET ==========
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+body {
+  background-color: $color-bg;
+  color: $color-text-primary;
+  font-family: $font-body;
+  font-weight: 300;
+  line-height: 1.6;
+  overflow-x: hidden;
+  width: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// ========== KEYFRAMES ==========
+@keyframes accentPulse {
+  0%, 100% { width: 60px; }
+  50% { width: 100px; }
+}
+
+@keyframes badgePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes staggerReveal {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+// ========== UTILITY ==========
+.text-red {
+  color: $color-dot;
+  font-weight: 500;
+}

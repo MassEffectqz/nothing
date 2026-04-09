@@ -1,0 +1,210 @@
+@use '_variables' as *;
+@use '_mixins' as *;
+
+// ========== LIFESTYLE SECTION ==========
+.lifestyle-section {
+  position: relative;
+  height: 100vh;
+  min-height: 700px;
+  overflow: hidden;
+  background: $color-surface-dark;
+
+  @include tablet {
+    height: auto;
+    min-height: auto;
+    padding: 4rem 0;
+  }
+
+  @include mobile {
+    padding: 3rem 0;
+  }
+
+  @include small {
+    padding: 2rem 0;
+  }
+}
+
+.lifestyle-bg {
+  position: absolute;
+  inset: -10%;
+  background: url('/media/wallpapers/nothing-phone-lifestyle-5.jpg') center/cover no-repeat;
+  will-change: transform;
+  z-index: 0;
+
+  @include mobile {
+    inset: -20%;
+  }
+}
+
+.lifestyle-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(26, 26, 26, 0.92) 0%,
+    rgba(26, 26, 26, 0.7) 50%,
+    rgba(26, 26, 26, 0.85) 100%
+  );
+  z-index: 1;
+
+  @include mobile {
+    background: linear-gradient(
+      180deg,
+      rgba(26, 26, 26, 0.95) 0%,
+      rgba(26, 26, 26, 0.85) 100%
+    );
+  }
+}
+
+.lifestyle-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 4rem;
+
+  @include tablet {
+    grid-template-columns: 1fr;
+    padding: 0 2rem;
+  }
+
+  @include mobile {
+    padding: 0 1.5rem;
+  }
+
+  @include small {
+    padding: 0 1rem;
+  }
+}
+
+.lifestyle-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.lifestyle-visual {
+  height: 100%;
+
+  @include tablet {
+    display: none;
+  }
+}
+
+.lifestyle-section-number {
+  font-family: $font-display;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: $color-dot;
+}
+
+.lifestyle-title {
+  font-family: $font-display;
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: $color-text-dark;
+
+  @include mobile {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+
+  @include small {
+    font-size: clamp(1.75rem, 9vw, 2.5rem);
+  }
+}
+
+.lifestyle-description {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 400px;
+
+  @include mobile {
+    font-size: 0.9rem;
+  }
+
+  @include small {
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+}
+
+.lifestyle-features {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.feature-icon {
+  font-size: 0.6rem;
+  color: $color-dot;
+  line-height: 1;
+}
+
+.feature-label {
+  font-family: $font-display;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.7);
+
+  @include small {
+    font-size: 0.6rem;
+  }
+}
+
+.lifestyle-deco {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.deco-circle {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+
+  &-1 {
+    width: 400px;
+    height: 400px;
+    top: 10%;
+    right: -10%;
+
+    @include mobile {
+      width: 250px;
+      height: 250px;
+    }
+  }
+
+  &-2 {
+    width: 250px;
+    height: 250px;
+    bottom: 15%;
+    left: 5%;
+
+    @include mobile {
+      display: none;
+    }
+  }
+}
+
+.deco-line {
+  position: absolute;
+  top: 20%;
+  left: 40%;
+  width: 1px;
+  height: 60%;
+  background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.08) 50%, transparent 100%);
+}

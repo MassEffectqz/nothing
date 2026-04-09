@@ -61,15 +61,20 @@ export default function AboutSection() {
 
       {/* Left: visual column */}
       <div className="about-image-col">
-        <div className={`about-image ${animatedItems ? 'visible' : ''}`}>
-          <img src="/media/accessories/nothing-headphone-1-white.png" alt="Nothing product" />
-          <div className="about-image-badge">
-            <span className="badge-dot" />
-            <span className="badge-text">Available for work</span>
+        {/* Large number */}
+        <div className="about-col-number">04</div>
+
+        {/* Product showcase */}
+        <div className={`about-visual-stack ${animatedItems ? 'visible' : ''}`}>
+          <div className="visual-item visual-earbuds">
+            <img src="/media/accessories/nothing-ear-3-white.png" alt="Nothing Ear" />
+          </div>
+          <div className="visual-item visual-phone">
+            <img src="/media/devices/nothing-phone-4a-white.png" alt="Nothing Phone" />
           </div>
         </div>
 
-        {/* Decorative stats on image side */}
+        {/* Stats */}
         <div className={`about-side-stats ${animatedItems ? 'visible' : ''}`}>
           <div className="side-stat">
             <span className="side-stat-value">47</span>
@@ -79,82 +84,100 @@ export default function AboutSection() {
             <span className="side-stat-value">12</span>
             <span className="side-stat-label">Awards</span>
           </div>
+          <div className="side-stat">
+            <span className="side-stat-value">8+</span>
+            <span className="side-stat-label">Years</span>
+          </div>
         </div>
+
+        {/* Decorative line */}
+        <div className="about-col-line" />
+        <div className="about-red-accent" />
       </div>
 
       {/* Right: content column */}
       <div className="about-content">
-        <span className="about-number">04</span>
-        <h2 className="about-title">ABOUT</h2>
-        <div className="about-accent-line" />
-
-        {/* Bio */}
-        <div className={`about-bio ${animatedItems ? 'visible' : ''}`}>
-          <p className="about-bio-line">
-            Multi-disciplinary <span className="text-red">designer</span> and{' '}
-            <span className="text-red">developer</span> crafting digital experiences
-            with a focus on transparency, simplicity, and purpose.
-          </p>
-          <p className="about-bio-line">
-            Currently leading creative direction at Nothing, where we strip away
-            the unnecessary to reveal what truly matters. Every pixel intentional,
-            every interaction purposeful.
-          </p>
-        </div>
-
-        {/* Design philosophy */}
-        <div className={`about-philosophy ${animatedItems ? 'visible' : ''}`}>
-          <span className="philosophy-label">Philosophy</span>
-          <div className="philosophy-grid">
-            {PHILOSOPHY.map((p, i) => (
-              <div key={p.title} className="philosophy-item" style={{ '--delay': `${i * 0.1}s` }}>
-                <h4 className="philosophy-title">{p.title}</h4>
-                <p className="philosophy-desc">{p.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Tools */}
-        <div className={`about-tools ${animatedItems ? 'visible' : ''}`}>
-          <span className="tools-label">Toolkit</span>
-          <div className="tools-list">
-            {TOOLS.map((tool) => (
-              <span key={tool} className="tool-badge">{tool}</span>
-            ))}
-          </div>
-        </div>
-
-        {/* Timeline */}
-        <div className={`about-timeline ${animatedItems ? 'visible' : ''}`}>
-          <span className="timeline-section-label">Journey</span>
-          {MILESTONES.map((ms, i) => (
-            <div key={ms.year} className="timeline-item" style={{ '--delay': `${i * 0.15}s` }}>
-              <span className="timeline-year">{ms.year}</span>
-              <div className="timeline-dot" />
-              <div className="timeline-content">
-                <h4 className="timeline-title">{ms.title}</h4>
-                <p className="timeline-desc">{ms.desc}</p>
-              </div>
-            </div>
+        {/* Dot grid background */}
+        <div className="about-content-grid">
+          {[...Array(400)].map((_, i) => (
+            <div key={i} className="content-grid-dot" />
           ))}
         </div>
 
-        {/* Stats */}
-        <div className={`about-stats ${animatedItems ? 'visible' : ''}`}>
-          <div className="about-stat">
-            <span className="about-stat-number text-red">47</span>
-            <span className="about-stat-label">Projects</span>
+        {/* Content */}
+        <div className="about-content-inner">
+          <span className="about-number">04</span>
+          <h2 className="about-title">ABOUT</h2>
+          <div className="about-accent-line" />
+
+          {/* Bio */}
+          <div className={`about-bio ${animatedItems ? 'visible' : ''}`}>
+            <p className="about-bio-line">
+              Multi-disciplinary <span className="text-red">designer</span> and{' '}
+              <span className="text-red">developer</span> crafting digital experiences
+              with a focus on transparency, simplicity, and purpose.
+            </p>
+            <p className="about-bio-line">
+              Currently leading creative direction at Nothing, where we strip away
+              the unnecessary to reveal what truly matters. Every pixel intentional,
+              every interaction purposeful.
+            </p>
           </div>
-          <div className="about-stat-divider" />
-          <div className="about-stat">
-            <span className="about-stat-number text-red">8+</span>
-            <span className="about-stat-label">Years</span>
+
+          {/* Design philosophy */}
+          <div className={`about-philosophy ${animatedItems ? 'visible' : ''}`}>
+            <span className="philosophy-label">Philosophy</span>
+            <div className="philosophy-grid">
+              {PHILOSOPHY.map((p, i) => (
+                <div key={p.title} className="philosophy-item" style={{ '--delay': `${i * 0.1}s` }}>
+                  <h4 className="philosophy-title">{p.title}</h4>
+                  <p className="philosophy-desc">{p.desc}</p>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="about-stat-divider" />
-          <div className="about-stat">
-            <span className="about-stat-number text-red">∞</span>
-            <span className="about-stat-label">Curiosity</span>
+
+          {/* Tools */}
+          <div className={`about-tools ${animatedItems ? 'visible' : ''}`}>
+            <span className="tools-label">Toolkit</span>
+            <div className="tools-list">
+              {TOOLS.map((tool) => (
+                <span key={tool} className="tool-badge">{tool}</span>
+              ))}
+            </div>
+          </div>
+
+          {/* Timeline */}
+          <div className={`about-timeline ${animatedItems ? 'visible' : ''}`}>
+            <span className="timeline-section-label">Journey</span>
+            {MILESTONES.map((ms, i) => (
+              <div key={ms.year} className="timeline-item" style={{ '--delay': `${i * 0.15}s` }}>
+                <span className="timeline-year">{ms.year}</span>
+                <div className="timeline-dot" />
+                <div className="timeline-content">
+                  <h4 className="timeline-title">{ms.title}</h4>
+                  <p className="timeline-desc">{ms.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Stats */}
+          <div className={`about-stats ${animatedItems ? 'visible' : ''}`}>
+            <div className="about-stat">
+              <span className="about-stat-number text-red">47</span>
+              <span className="about-stat-label">Projects</span>
+            </div>
+            <div className="about-stat-divider" />
+            <div className="about-stat">
+              <span className="about-stat-number text-red">8+</span>
+              <span className="about-stat-label">Years</span>
+            </div>
+            <div className="about-stat-divider" />
+            <div className="about-stat">
+              <span className="about-stat-number text-red">∞</span>
+              <span className="about-stat-label">Curiosity</span>
+            </div>
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@ import LifestyleSection from './components/LifestyleSection'
 import AboutSection from './components/AboutSection'
 import WorkSection from './components/WorkSection'
 import Footer from './components/Footer'
-import './index.css'
+import './styles/index.scss'
 
 function App() {
   return (
