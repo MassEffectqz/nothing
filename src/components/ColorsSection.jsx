@@ -50,7 +50,6 @@ function ColorIndicatorItem({ config, isHovered, isActive, onHover, onLeave }) {
 export default function ColorsSection() {
   const sectionRef = useRef(null)
   const [hoverColor, setHoverColor] = useState(null)
-  const [indicatorsOpacity, setIndicatorsOpacity] = useState(0)
   const [titleVisible, setTitleVisible] = useState(false)
   const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 768)
   const [phoneStates, setPhoneStates] = useState(() =>
@@ -99,15 +98,6 @@ export default function ColorsSection() {
 
       // Title visibility
       setTitleVisible(progress > 0.05)
-
-      // Indicators opacity
-      const heroRect = document.querySelector('.hero')?.getBoundingClientRect() ?? { bottom: 0 }
-      if (isMobile) {
-        const visibleRatio = Math.max(0, Math.min(1, (windowHeight - rect.top) / sectionHeight))
-        setIndicatorsOpacity(Math.min(1, Math.max(0, (visibleRatio - 0.2) * 2)))
-      } else {
-        setIndicatorsOpacity(heroRect.bottom <= 0 ? Math.min(1, Math.max(0, (progress - 0.1) * 3)) : 0)
-      }
 
       // Phone states
       const offsets = isMobile ? MOBILE_OFFSETS : DESKTOP_OFFSETS
@@ -159,10 +149,7 @@ export default function ColorsSection() {
           <h2 className="phones-title">COLORS</h2>
         </div>
 
-        <div
-          className="color-indicators"
-          style={{ opacity: indicatorsOpacity, visibility: indicatorsOpacity > 0 ? 'visible' : 'hidden' }}
-        >
+        <div className="color-indicators">
           {PHONE_CONFIGS.map((cfg, i) => (
             <ColorIndicatorItem
               key={cfg.color}
