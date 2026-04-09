@@ -626,9 +626,9 @@ body {
   color: var(--color-text-primary);
 }
 
-/* Color Indicators - fixed position */
+/* Color Indicators - absolute within section */
 .color-indicators {
-  position: fixed;
+  position: absolute;
   top: 6rem;
   right: 2rem;
   display: flex;
