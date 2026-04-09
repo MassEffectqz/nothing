@@ -2,32 +2,36 @@ import { useEffect, useRef, useState } from 'react'
 
 export default function Hero() {
   const videoRef = useRef(null)
-  const [isMobile, setIsMobile] = useState(false)
-  const [scrollProgress, setScrollProgress] = useState(0)
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 768)
 
   useEffect(() => {
     const checkMobile = () => {
       const mobile = window.innerWidth <= 768
       setIsMobile(mobile)
-      if (mobile && videoRef.current) {
-        videoRef.current.pause()
-      }
     }
     checkMobile()
     window.addEventListener('resize', checkMobile)
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
+  // Video: on desktop always play, on mobile pause when not visible (battery saving)
   useEffect(() => {
-    const handleScroll = () => {
-      const heroEl = document.querySelector('.hero')
-      if (!heroEl) return
-      const rect = heroEl.getBoundingClientRect()
-      const progress = Math.max(0, Math.min(1, -rect.top / (window.innerHeight * 0.5)))
-      setScrollProgress(progress)
-    }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    const video = videoRef.current
+    if (!video) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => {})
+        } else {
+          video.pause()
+        }
+      },
+      { threshold: 0.1 }
+    )
+
+    observer.observe(video.parentElement)
+    return () => observer.disconnect()
   }, [])
 
   const letters = ['N', 'O', 'T', 'H', 'I', 'N', 'G']
@@ -35,23 +39,20 @@ export default function Hero() {
   return (
     <section className="hero">
       <div className="hero-video-bg">
-        {!isMobile && (
-          <video ref={videoRef} src="/hero-bg.mp4" autoPlay muted loop playsInline />
-        )}
+        <video
+          ref={videoRef}
+          src="/hero-bg.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          className={isMobile ? 'mobile-video' : ''}
+        />
         {/* Animated gradient overlay */}
         <div className="hero-gradient-overlay" />
         {/* Scan line effect */}
         <div className="hero-scanlines" />
-      </div>
-
-      {/* Expanding line transition to colors */}
-      <div className="hero-transition-line">
-        <div
-          className="hero-transition-line-inner"
-          style={{
-            transform: `scaleX(${scrollProgress})`,
-          }}
-        />
       </div>
 
       <div className="hero-grid">
