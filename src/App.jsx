@@ -4,6 +4,7 @@ import ColorsSection from './components/ColorsSection'
 import LifestyleSection from './components/LifestyleSection'
 import AboutSection from './components/AboutSection'
 import WorkSection from './components/WorkSection'
+import Footer from './components/Footer'
 import './index.css'
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <AboutSection />
         <WorkSection />
       </main>
+      <Footer />
     </>
   )
 }

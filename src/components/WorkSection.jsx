@@ -6,6 +6,7 @@ const projects = [
     highlight: 'System',
     category: 'Branding · Visual Identity',
     year: '2024',
+    image: '/media/wallpapers/nothing-lifestyle-01.jpg',
   },
   {
     id: 2,
@@ -14,47 +15,57 @@ const projects = [
     highlight: 'Platform',
     category: 'Development · UI/UX',
     year: '2024',
+    image: '/media/wallpapers/nothing-lifestyle-03.jpg',
   },
   {
     id: 3,
     index: '03',
-    name: 'Mobile',
-    highlight: 'Application',
+    name: 'Mobile App',
+    highlight: 'Experience',
     category: 'Mobile · Cross-platform',
     year: '2023',
+    image: '/media/wallpapers/nothing-lifestyle-05.jpg',
   },
   {
     id: 4,
     index: '04',
-    name: 'Design',
-    highlight: 'System',
+    name: 'Design System',
+    highlight: 'Framework',
     category: 'Components · Documentation',
     year: '2023',
+    image: '/media/wallpapers/nothing-lifestyle-08.jpg',
   },
   {
     id: 5,
     index: '05',
-    name: 'Creative',
-    highlight: 'Direction',
+    name: 'Creative Direction',
+    highlight: 'Vision',
     category: 'Art Direction · Strategy',
     year: '2023',
+    image: '/media/wallpapers/nothing-lifestyle-12.jpg',
   },
 ]
 
-function WorkItem({ project }) {
+function WorkItem({ project, index }) {
   return (
-    <a href="#" className="work-item">
-      <div className="work-item-index">
-        <span>{project.index}</span>
+    <a href="#" className="work-item" style={{ '--delay': index * 0.1 }}>
+      <div className="work-item-image">
+        <img src={project.image} alt={project.name} loading="lazy" />
+        <div className="work-item-overlay" />
       </div>
-      <div className="work-item-info">
-        <h3 className="work-item-name">
-          {project.name} <span className="text-red">{project.highlight}</span>
-        </h3>
-        <p className="work-item-category">{project.category}</p>
+      <div className="work-item-content">
+        <div className="work-item-index">
+          <span>{project.index}</span>
+        </div>
+        <div className="work-item-info">
+          <h3 className="work-item-name">
+            {project.name} <span className="text-red">{project.highlight}</span>
+          </h3>
+          <p className="work-item-category">{project.category}</p>
+        </div>
+        <div className="work-item-year">{project.year}</div>
+        <div className="work-item-arrow">→</div>
       </div>
-      <div className="work-item-year">{project.year}</div>
-      <div className="work-item-arrow">→</div>
     </a>
   )
 }
@@ -64,7 +75,7 @@ export default function WorkSection() {
     <section className="work" id="work">
       <div className="work-header">
         <div className="work-header-left">
-          <span className="work-section-number">03</span>
+          <span className="work-section-number">05</span>
         </div>
         <div className="work-header-title">
           <h2 className="work-title">WORK</h2>
@@ -73,8 +84,8 @@ export default function WorkSection() {
       </div>
 
       <div className="work-list">
-        {projects.map((p) => (
-          <WorkItem key={p.id} project={p} />
+        {projects.map((p, i) => (
+          <WorkItem key={p.id} project={p} index={i} />
         ))}
       </div>
 
