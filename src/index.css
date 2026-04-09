@@ -1305,14 +1305,19 @@ body {
   overflow: hidden;
 }
 
+/* Adjust heights for specific cards to match image proportions */
 .project-card:nth-child(1) .project-card-image,
 .project-card:nth-child(4) .project-card-image {
-  padding-bottom: 38%;
+  padding-bottom: 28%;
+}
+
+.project-card:nth-child(2) .project-card-image {
+  padding-bottom: 45%;
 }
 
 .project-card-image img {
   position: absolute;
-  top: 58%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: auto;
@@ -1322,6 +1327,13 @@ body {
   object-position: center center;
   transition: transform 0.8s var(--transition-smooth), filter 0.8s var(--transition-smooth);
   filter: grayscale(100%) brightness(0.9);
+}
+
+/* Adjust image sizing for wide cards */
+.project-card:nth-child(1) .project-card-image img,
+.project-card:nth-child(4) .project-card-image img {
+  height: 90%;
+  width: auto;
 }
 
 .project-card:hover .project-card-image img {
@@ -1342,15 +1354,23 @@ body {
 
 .project-card-reveal {
   position: absolute;
-  bottom: 12%;
+  top: 50%;
   left: 0;
   right: auto;
+  transform: translateY(-50%);
   padding: 0.75rem 1.25rem;
   opacity: 1;
-  transform: translateY(0);
   z-index: 2;
   background: linear-gradient(90deg, rgba(248, 248, 246, 0.95) 0%, rgba(248, 248, 246, 0.95) 70%, transparent 100%);
   max-width: 60%;
+}
+
+/* Text overlay positioned top-left for wide cards */
+.project-card:nth-child(1) .project-card-reveal,
+.project-card:nth-child(4) .project-card-reveal {
+  top: 1.25rem;
+  transform: none;
+  max-width: 50%;
 }
 
 .project-card-number {
