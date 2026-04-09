@@ -9,9 +9,9 @@ const PHONE_CONFIGS = [
 
 // Dot grid background
 function DotGrid({ hoverColor, indicatorsOpacity }) {
-  const cols = 20
+  const cols = 24
   const rows = 30
-  const dotSpacing = 40
+  const dotSpacing = 36
 
   const dots = useMemo(() => {
     const arr = []
@@ -24,36 +24,19 @@ function DotGrid({ hoverColor, indicatorsOpacity }) {
   }, [])
 
   const getDotColor = useCallback((dot) => {
-    if (!hoverColor) return 'rgba(0,0,0,0.06)'
+    if (!hoverColor) return 'rgba(0,0,0,0.12)'
 
-    const colorMap = {
-      black: '#1a1a1a',
-      white: '#ffffff',
-      pink: '#f0c4c4',
-      blue: '#7eb8d4',
-    }
-
-    const hoveredHex = colorMap[hoverColor]
     const isLight = ['white', 'pink', 'blue'].includes(hoverColor)
 
-    // Create a wave pattern from center based on hover
-    const centerX = cols / 2
-    const centerY = rows / 2
-    const distFromCenter = Math.sqrt(
-      Math.pow(dot.col - centerX, 2) + Math.pow(dot.row - centerY, 2)
-    )
-    const maxDist = Math.sqrt(centerX * centerX + centerY * centerY)
-    const normalizedDist = distFromCenter / maxDist
-
-    // Alternate between base color and contrast
+    // Alternate between base color and contrast for a pattern
     const isAlt = (dot.row + dot.col) % 3 === 0
-    const baseOpacity = 0.06
-    const activeOpacity = isAlt ? 0.15 : 0.08
+    const baseOpacity = 0.08
+    const activeOpacity = 0.25
 
     if (isLight) {
       return isAlt ? `rgba(26,26,26,${activeOpacity * indicatorsOpacity})` : `rgba(26,26,26,${baseOpacity})`
     } else {
-      return isAlt ? `rgba(255,255,255,${activeOpacity * indicatorsOpacity})` : `rgba(255,255,255,${baseOpacity})`
+      return isAlt ? `rgba(26,26,26,${activeOpacity * indicatorsOpacity})` : `rgba(26,26,26,${baseOpacity})`
     }
   }, [hoverColor, indicatorsOpacity])
 
@@ -71,7 +54,7 @@ function DotGrid({ hoverColor, indicatorsOpacity }) {
           key={i}
           cx={dot.x}
           cy={dot.y}
-          r={1.5}
+          r={2}
           fill={getDotColor(dot)}
           style={{
             transition: 'fill 0.4s ease',
@@ -165,11 +148,22 @@ export default function ColorsSection() {
       // Title appears early
       setTitleVisible(progress > 0.05)
 
-      // Indicators fade in when hero is fully gone
+      // Indicators fade in
       const heroSection = document.querySelector('.hero')
       const heroRect = heroSection ? heroSection.getBoundingClientRect() : { bottom: 0 }
-      const heroFullyHidden = heroRect.bottom <= 0
-      setIndicatorsOpacity(heroFullyHidden ? Math.min(1, (progress - 0.1) * 3) : 0)
+      
+      let indicatorsTarget = 0
+      if (isMobile) {
+        // On mobile: start showing when phones section is 20% visible
+        const sectionVisibleRatio = Math.max(0, Math.min(1, (windowHeight - rect.top) / sectionHeight))
+        indicatorsTarget = Math.max(0, (sectionVisibleRatio - 0.2) * 2)
+      } else {
+        // On desktop: show when hero is fully gone
+        const heroFullyHidden = heroRect.bottom <= 0
+        indicatorsTarget = heroFullyHidden ? Math.min(1, (progress - 0.1) * 3) : 0
+      }
+      
+      setIndicatorsOpacity(Math.min(1, indicatorsTarget))
 
       // Phone animations
       const flyOffsets = isMobile ? flyOffsetsMobile : flyOffsetsDesktop

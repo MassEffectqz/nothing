@@ -684,6 +684,32 @@ body {
   z-index: 1;
 }
 
+.phone-item.phone-black { animation: phoneFloat1 6s ease-in-out infinite; }
+.phone-item.phone-white { animation: phoneFloat2 7s ease-in-out infinite; }
+.phone-item.phone-pink { animation: phoneFloat3 6.5s ease-in-out infinite; }
+.phone-item.phone-blue { animation: phoneFloat4 5.5s ease-in-out infinite; }
+
+/* Staggered floating animations for each phone */
+@keyframes phoneFloat1 {
+  0%, 100% { transform: translateY(0) rotate(-30deg); }
+  50% { transform: translateY(-12px) rotate(-28deg); }
+}
+
+@keyframes phoneFloat2 {
+  0%, 100% { transform: translateY(0) rotate(25deg); }
+  50% { transform: translateY(-10px) rotate(27deg); }
+}
+
+@keyframes phoneFloat3 {
+  0%, 100% { transform: translateY(0) rotate(-20deg); }
+  50% { transform: translateY(-14px) rotate(-18deg); }
+}
+
+@keyframes phoneFloat4 {
+  0%, 100% { transform: translateY(0) rotate(15deg); }
+  50% { transform: translateY(-8px) rotate(17deg); }
+}
+
 .phone-item img {
   width: 100%;
   height: auto;
