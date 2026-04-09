@@ -818,20 +818,20 @@ body {
   position: relative;
   z-index: 2;
   height: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
+  display: flex;
   align-items: center;
+  justify-content: center;
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 4rem;
 }
 
-/* Left: text */
+/* Text */
 .lifestyle-text {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  max-width: 600px;
 }
 
 .lifestyle-section-number {
@@ -883,119 +883,6 @@ body {
   color: rgba(255, 255, 255, 0.7);
 }
 
-/* Right: floating products */
-.lifestyle-products {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 500px;
-}
-
-.product-phone {
-  position: absolute;
-  width: 200px;
-  z-index: 2;
-  will-change: transform, opacity;
-}
-
-.product-phone img {
-  width: 100%;
-  height: auto;
-  filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.5));
-}
-
-.phone-glow {
-  position: absolute;
-  inset: -30%;
-  background: radial-gradient(ellipse, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-  animation: phoneGlow 4s ease-in-out infinite alternate;
-}
-
-@keyframes phoneGlow {
-  0% { opacity: 0.5; transform: scale(0.9); }
-  100% { opacity: 1; transform: scale(1.1); }
-}
-
-/* Earbuds */
-.product-buds {
-  position: absolute;
-  right: -20px;
-  bottom: 20px;
-  width: 180px;
-  z-index: 3;
-  will-change: transform, opacity;
-}
-
-.buds-case {
-  width: 80px;
-  height: 60px;
-  background: linear-gradient(145deg, #e8e8e6 0%, #d0d0ce 100%);
-  border-radius: 20px;
-  position: relative;
-  margin: 0 auto;
-  box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-.buds-led {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.buds-led-green {
-  left: 20px;
-  background: #00ff88;
-  box-shadow: 0 0 8px #00ff88;
-  animation: ledBlink 2s ease-in-out infinite;
-}
-
-.buds-led-red {
-  right: 20px;
-  background: #ff3366;
-  box-shadow: 0 0 8px #ff3366;
-}
-
-@keyframes ledBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
-
-.bud-left,
-.bud-right {
-  position: absolute;
-  width: 30px;
-  height: 30px;
-  background: linear-gradient(145deg, #e8e8e6 0%, #c0c0be 100%);
-  border-radius: 50%;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.bud-left {
-  left: -20px;
-  top: 10px;
-}
-
-.bud-right {
-  right: -20px;
-  top: 10px;
-}
-
-.buds-glow {
-  position: absolute;
-  inset: -40%;
-  background: radial-gradient(ellipse, rgba(255, 255, 255, 0.06) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-}
-
 /* Decorative elements */
 .lifestyle-deco {
   position: absolute;
@@ -1036,18 +923,8 @@ body {
 /* ========== RESPONSIVE: LIFESTYLE ========== */
 @media (max-width: 1024px) {
   .lifestyle-section { height: auto; min-height: auto; padding: 4rem 0; }
-  .lifestyle-content {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-    padding: 0 2rem;
-    text-align: center;
-  }
-  .lifestyle-text { align-items: center; }
-  .lifestyle-description { max-width: 100%; }
-  .lifestyle-features { align-items: center; }
-  .lifestyle-products { height: 350px; }
-  .product-phone { width: 160px; }
-  .product-buds { width: 140px; right: 0; }
+  .lifestyle-content { padding: 0 2rem; }
+  .lifestyle-text { text-align: center; align-items: center; }
 }
 
 @media (max-width: 768px) {
@@ -1060,28 +937,18 @@ body {
       rgba(26, 26, 26, 0.85) 100%
     );
   }
-  .lifestyle-content { padding: 0 1.5rem; gap: 2rem; }
+  .lifestyle-content { padding: 0 1.5rem; }
   .lifestyle-title { font-size: clamp(2rem, 8vw, 3rem); }
   .lifestyle-description { font-size: 0.9rem; }
-  .lifestyle-products { height: 280px; }
-  .product-phone { width: 130px; }
-  .product-buds { width: 110px; }
-  .buds-case { width: 60px; height: 45px; border-radius: 15px; }
-  .bud-left, .bud-right { width: 22px; height: 22px; }
-  .bud-left { left: -15px; }
-  .bud-right { right: -15px; }
   .deco-circle-1 { width: 250px; height: 250px; }
   .deco-circle-2 { display: none; }
 }
 
 @media (max-width: 480px) {
   .lifestyle-section { padding: 2rem 0; }
-  .lifestyle-content { padding: 0 1rem; gap: 1.5rem; }
+  .lifestyle-content { padding: 0 1rem; }
   .lifestyle-title { font-size: clamp(1.75rem, 9vw, 2.5rem); }
   .lifestyle-description { font-size: 0.8rem; line-height: 1.5; }
-  .lifestyle-products { height: 220px; }
-  .product-phone { width: 110px; }
-  .product-buds { width: 90px; }
   .feature-label { font-size: 0.6rem; }
 }
 

@@ -3,19 +3,6 @@ import { useEffect, useRef, useState } from 'react'
 export default function LifestyleSection() {
   const sectionRef = useRef(null)
   const [scrollProgress, setScrollProgress] = useState(0)
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-    const el = sectionRef.current
-    if (!el) return
-
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsVisible(entry.isIntersecting),
-      { threshold: 0.1 }
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [])
 
   useEffect(() => {
     const el = sectionRef.current
@@ -26,7 +13,6 @@ export default function LifestyleSection() {
       const windowHeight = window.innerHeight
       const sectionHeight = el.offsetHeight
 
-      // Progress: 0 when section enters, 1 when it leaves
       const start = windowHeight
       const end = -sectionHeight
       const scrolled = start - rect.top
@@ -39,9 +25,6 @@ export default function LifestyleSection() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Parallax offsets
-  const phoneY = scrollProgress * 100 - 50
-  const budsY = scrollProgress * -80 + 40
   const textOpacity = Math.min(1, scrollProgress * 4) * Math.min(1, (1 - scrollProgress) * 4)
 
   return (
@@ -58,7 +41,7 @@ export default function LifestyleSection() {
       <div className="lifestyle-overlay" />
 
       <div className="lifestyle-content">
-        {/* Left: text content */}
+        {/* Text content */}
         <div
           className="lifestyle-text"
           style={{
@@ -90,47 +73,11 @@ export default function LifestyleSection() {
             </div>
           </div>
         </div>
-
-        {/* Right: floating products */}
-        <div className="lifestyle-products">
-          {/* Phone */}
-          <div
-            className="product-phone"
-            style={{
-              transform: `translateY(${phoneY}px)`,
-              opacity: Math.min(1, scrollProgress * 3) * Math.min(1, (1 - scrollProgress) * 3 + 0.5),
-            }}
-          >
-            <div className="phone-glow" />
-            <img
-              src="/phones/white.webp"
-              alt="Nothing Phone transparent design"
-            />
-          </div>
-
-          {/* Earbuds */}
-          <div
-            className="product-buds"
-            style={{
-              transform: `translateY(${budsY}px)`,
-              opacity: Math.min(1, (scrollProgress - 0.2) * 3) * Math.min(1, (1 - scrollProgress) * 3 + 0.5),
-            }}
-          >
-            <div className="buds-glow" />
-            <div className="buds-case">
-              <span className="buds-led buds-led-green" />
-              <span className="buds-led buds-led-red" />
-            </div>
-            <div className="bud-left" />
-            <div className="bud-right" />
-          </div>
-        </div>
       </div>
 
       {/* Decorative elements */}
       <div className="lifestyle-deco">
         <div className="deco-circle deco-circle-1" />
-        <div className="deco-circle deco-circle-2" />
         <div className="deco-line" />
       </div>
     </section>
