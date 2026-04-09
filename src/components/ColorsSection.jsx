@@ -9,8 +9,8 @@ const PHONE_CONFIGS = [
 
 // Dot grid background
 function DotGrid({ hoverColor }) {
-  const cols = 30
-  const rows = 40
+  const cols = 50
+  const rows = 60
   const dotSpacing = 32
   const totalWidth = cols * dotSpacing
   const totalHeight = rows * dotSpacing
