@@ -183,15 +183,31 @@ export default function ColorsSection() {
             const s = phoneStates[i]
             const isHovered = hoverColor === cfg.color
 
+            // When hovering, override opacity and filter for hovered phone
+            let finalOpacity = s.opacity
+            let finalFilter = s.blur > 0 ? `blur(${s.blur}px)` : 'none'
+
+            if (hoverColor !== null) {
+              if (isHovered) {
+                // Hovered phone: always fully visible, bright, no blur
+                finalOpacity = Math.max(s.opacity, 1)
+                finalFilter = 'none'
+              } else {
+                // Non-hovered phones: dimmed but still visible
+                finalOpacity = Math.max(s.opacity * 0.15, 0)
+                finalFilter = 'grayscale(60%) brightness(0.6)'
+              }
+            }
+
             return (
               <PhoneItem
                 key={cfg.color}
                 config={cfg}
                 style={{
                   ...pos,
-                  opacity: isHovered ? Math.max(s.opacity, 0.8) : s.opacity,
+                  opacity: finalOpacity,
                   transform: `translate(${s.offsetX}px, ${s.offsetY}px) rotate(${s.rotation}deg)`,
-                  filter: s.blur > 0 ? `blur(${s.blur}px)` : hoverColor && !isHovered ? 'grayscale(80%) brightness(0.7)' : 'none',
+                  filter: finalFilter,
                   transition: 'none',
                   zIndex: isHovered ? 5 : 1,
                 }}
