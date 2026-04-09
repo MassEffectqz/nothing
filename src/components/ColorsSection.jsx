@@ -7,13 +7,14 @@ const PHONE_CONFIGS = [
   { color: 'blue', rotation: 15, hex: '#7eb8d4', flyFrom: { x: 200, y: 250 }, finalTop: '60%', finalLeft: '50%' },
 ]
 
-// Floating animation parameters (amplitude px, speed multiplier)
 const FLOAT_PARAMS = [
   { amplitude: 14, speed: 0.4 },
   { amplitude: 18, speed: 0.5 },
   { amplitude: 12, speed: 0.45 },
   { amplitude: 20, speed: 0.55 },
 ]
+
+const INDICATOR_OFFSET_TOP = 96 // 6rem in px
 
 function PhoneItem({ config, style }) {
   return (
@@ -41,7 +42,6 @@ function ColorIndicatorItem({ config, isHovered, isActive, onHover, onLeave }) {
         }}
       />
       <span className="color-name">{config.color}</span>
-      {/* Active indicator line */}
       <span className={`color-active-line ${isHovered ? 'visible' : ''}`} />
     </button>
   )
@@ -63,7 +63,11 @@ export default function ColorsSection() {
     }))
   )
 
-  const animRef = useRef({ frameId: null, startTime: null, finishedTime: [null, null, null, null] })
+  const animRef = useRef({
+    frameId: null,
+    startTime: null,
+    finishedTime: [null, null, null, null],
+  })
 
   const handleHover = useCallback((color) => setHoverColor(color), [])
   const handleLeave = useCallback(() => setHoverColor(null), [])
@@ -92,7 +96,7 @@ export default function ColorsSection() {
       const windowHeight = window.innerHeight
       const sectionHeight = el.offsetHeight
 
-      // Scroll progress
+      // Scroll progress for phones
       const startThreshold = windowHeight * 0.8
       const endThreshold = -sectionHeight * 0.3
       const progress = Math.max(0, Math.min(1, (startThreshold - rect.top) / (startThreshold - endThreshold)))
@@ -100,33 +104,32 @@ export default function ColorsSection() {
       // Title visibility
       setTitleVisible(progress > 0.05)
 
-      // Move indicators with scroll (sticky behavior via JS)
+      // ===== Indicators sticky behavior =====
       const indicatorsEl = indicatorsRef.current
       if (indicatorsEl) {
         const sectionTop = rect.top
         const sectionBottom = rect.bottom
-        const indicatorTargetTop = 96 // 6rem in px
 
-        // Natural viewport Y of indicators = sectionTop + indicatorTargetTop
-        // To pin them at indicatorTargetTop: translateY = indicatorTargetTop - (sectionTop + indicatorTargetTop) = -sectionTop
         let translateY = 0
-        let visible = true
+        let hidden = false
 
-        if (sectionTop > windowHeight) {
-          // Section completely below viewport
-          translateY = -windowHeight
-          visible = false
-        } else if (sectionBottom < 0) {
-          // Section completely above viewport
-          translateY = -windowHeight
-          visible = false
-        } else {
-          // Section is in viewport - pin indicators at 6rem from top
+        if (sectionTop > INDICATOR_OFFSET_TOP) {
+          // Section hasn't reached pin point — indicators follow naturally
+          translateY = 0
+        } else if (sectionBottom > 0) {
+          // Section is in viewport past pin point — pin indicators at 6rem from viewport top
+          // indicator viewport Y = sectionTop + INDICATOR_OFFSET_TOP + translateY
+          // We want: indicator viewport Y = INDICATOR_OFFSET_TOP
+          // So: translateY = INDICATOR_OFFSET_TOP - (sectionTop + INDICATOR_OFFSET_TOP) = -sectionTop
           translateY = -sectionTop
+        } else {
+          // Section has scrolled completely off top — hide
+          hidden = true
         }
 
         indicatorsEl.style.transform = `translateY(${translateY}px)`
-        indicatorsEl.style.opacity = visible ? '1' : '0'
+        indicatorsEl.style.opacity = hidden ? '0' : '1'
+        indicatorsEl.style.visibility = hidden ? 'hidden' : 'visible'
       }
 
       // Phone states
@@ -168,7 +171,9 @@ export default function ColorsSection() {
     }
 
     anim.frameId = requestAnimationFrame(tick)
-    return () => { if (anim.frameId) cancelAnimationFrame(anim.frameId) }
+    return () => {
+      if (anim.frameId) cancelAnimationFrame(anim.frameId)
+    }
   }, [isMobile])
 
   return (
@@ -200,17 +205,14 @@ export default function ColorsSection() {
             const s = phoneStates[i]
             const isHovered = hoverColor === cfg.color
 
-            // When hovering, override opacity and filter for hovered phone
             let finalOpacity = s.opacity
             let finalFilter = s.blur > 0 ? `blur(${s.blur}px)` : 'none'
 
             if (hoverColor !== null) {
               if (isHovered) {
-                // Hovered phone: always fully visible, bright, no blur
                 finalOpacity = Math.max(s.opacity, 1)
                 finalFilter = 'none'
               } else {
-                // Non-hovered phones: dimmed but still visible
                 finalOpacity = Math.max(s.opacity * 0.15, 0)
                 finalFilter = 'grayscale(60%) brightness(0.6)'
               }
