@@ -48,8 +48,13 @@ export default function Header() {
   // Scroll to active when it changes
   useEffect(() => {
     const timer = setTimeout(scrollToActive, 300)
-    return () => clearTimeout(timer)
-  }, [activeSection, scrollToActive])
+    // Update pill position after scroll animation completes
+    const pillTimer = setTimeout(updatePill, 700)
+    return () => {
+      clearTimeout(timer)
+      clearTimeout(pillTimer)
+    }
+  }, [activeSection, scrollToActive, updatePill])
 
   const updatePill = useCallback(() => {
     const nav = navRef.current
@@ -60,9 +65,10 @@ export default function Header() {
 
     const navRect = nav.getBoundingClientRect()
     const linkRect = activeLink.getBoundingClientRect()
+    const scrollLeft = nav.scrollLeft
 
     setPillStyle({
-      left: linkRect.left - navRect.left,
+      left: linkRect.left - navRect.left + scrollLeft,
       width: linkRect.width,
     })
   }, [])
@@ -80,6 +86,14 @@ export default function Header() {
   useEffect(() => {
     window.addEventListener('resize', updatePill)
     return () => window.removeEventListener('resize', updatePill)
+  }, [updatePill])
+
+  // Update pill on nav scroll (mobile horizontal scroll)
+  useEffect(() => {
+    const nav = navRef.current
+    if (!nav) return
+    nav.addEventListener('scroll', updatePill, { passive: true })
+    return () => nav.removeEventListener('scroll', updatePill)
   }, [updatePill])
 
   // Initial position
