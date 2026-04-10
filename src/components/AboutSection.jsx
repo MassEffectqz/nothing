@@ -68,36 +68,18 @@ export default function AboutSection() {
           ))}
         </div>
 
-        {/* Main product visual */}
+        {/* Giant product visual */}
         <div className={`about-visual-main ${animatedItems ? 'visible' : ''}`}>
           <div className="about-visual-ring" />
           <div className="about-visual-ring about-visual-ring-sm" />
           <img
             src="/media/devices/nothing-phone-4a-pro-white.png"
-            alt="Nothing Phone"
+            alt="Nothing Phone 4a Pro"
             className="about-visual-product"
           />
         </div>
 
-        {/* Stats bar */}
-        <div className={`about-stats-bar ${animatedItems ? 'visible' : ''}`}>
-          <div className="about-stat-item">
-            <span className="about-stat-value">47</span>
-            <span className="about-stat-label">Projects</span>
-          </div>
-          <div className="about-stat-divider" />
-          <div className="about-stat-item">
-            <span className="about-stat-value">12</span>
-            <span className="about-stat-label">Awards</span>
-          </div>
-          <div className="about-stat-divider" />
-          <div className="about-stat-item">
-            <span className="about-stat-value">8+</span>
-            <span className="about-stat-label">Years</span>
-          </div>
-        </div>
-
-        {/* Accent line */}
+        {/* Accent bar */}
         <div className="about-accent-bar" />
       </div>
 
