@@ -1,25 +1,14 @@
-import Header from './components/Header'
-import Hero from './components/Hero'
-import ColorsSection from './components/ColorsSection'
-import LifestyleSection from './components/LifestyleSection'
-import AboutSection from './components/AboutSection'
-import WorkSection from './components/WorkSection'
-import Footer from './components/Footer'
+import { Routes, Route } from 'react-router-dom'
+import Home from './pages/Home'
+import ProductPage from './pages/ProductPage'
 import './styles/index.scss'
 
 function App() {
   return (
-    <>
-      <Header />
-      <main className="main-content">
-        <Hero />
-        <ColorsSection />
-        <LifestyleSection />
-        <AboutSection />
-        <WorkSection />
-      </main>
-      <Footer />
-    </>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/product/:slug" element={<ProductPage />} />
+    </Routes>
   )
 }
 

@@ -1,4 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
+
+const slugMap = {
+  1: 'phone-3',
+  2: 'phone-3a',
+  3: 'phone-3a-lite',
+  4: 'phone-4a-pro',
+  5: 'phone-4a',
+  6: 'ear-3',
+}
 
 const projects = [
   {
@@ -55,7 +65,7 @@ function ProjectCard({ project, index }) {
   const cardRef = useRef(null)
 
   return (
-    <a href="#" className="project-card" ref={cardRef} style={{ '--delay': `${index * 0.1}s` }}>
+    <Link to={`/product/${slugMap[project.id]}`} className="project-card" ref={cardRef} style={{ '--delay': `${index * 0.1}s` }}>
       <div className="project-card-image">
         <img src={project.image} alt={project.name} loading="lazy" />
         <div className="project-card-overlay" />
@@ -66,7 +76,7 @@ function ProjectCard({ project, index }) {
         </div>
       </div>
       <div className="project-card-year">{project.year}</div>
-    </a>
+    </Link>
   )
 }
 
