@@ -45,17 +45,6 @@ export default function Header() {
     return () => observer.disconnect()
   }, [])
 
-  // Scroll to active when it changes
-  useEffect(() => {
-    const timer = setTimeout(scrollToActive, 300)
-    // Update pill position after scroll animation completes
-    const pillTimer = setTimeout(updatePill, 700)
-    return () => {
-      clearTimeout(timer)
-      clearTimeout(pillTimer)
-    }
-  }, [activeSection, scrollToActive, updatePill])
-
   const updatePill = useCallback(() => {
     const nav = navRef.current
     if (!nav) return
@@ -72,6 +61,17 @@ export default function Header() {
       width: linkRect.width,
     })
   }, [])
+
+  // Scroll to active when it changes
+  useEffect(() => {
+    const timer = setTimeout(scrollToActive, 300)
+    // Update pill position after scroll animation completes
+    const pillTimer = setTimeout(updatePill, 700)
+    return () => {
+      clearTimeout(timer)
+      clearTimeout(pillTimer)
+    }
+  }, [activeSection, scrollToActive, updatePill])
 
   // Update pill when active section changes
   useEffect(() => {
