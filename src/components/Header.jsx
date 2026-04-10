@@ -97,8 +97,6 @@ export default function Header() {
     { label: 'Contact', href: '#contact' },
   ]
 
-  const mobileNavItems = navItems.slice(0, 4) // Home, Colors, PureSound, About
-
   const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 768)
 
   useEffect(() => {
@@ -106,8 +104,6 @@ export default function Header() {
     window.addEventListener('resize', check)
     return () => window.removeEventListener('resize', check)
   }, [])
-
-  const displayItems = isMobile ? mobileNavItems : navItems
 
   return (
     <header className="corner-header">
@@ -120,7 +116,7 @@ export default function Header() {
             width: `${pillStyle.width}px`,
           }}
         />
-        {displayItems.map((item) => (
+        {navItems.map((item) => (
           <a
             key={item.label}
             href={item.href}
