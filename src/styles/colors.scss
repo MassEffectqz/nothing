@@ -60,7 +60,7 @@
   color: $color-text-primary;
 }
 
-// Color Indicators — fixed vertically centered
+// Color Indicators — fixed vertically centered, always visible
 .color-indicators {
   position: fixed;
   top: 50%;
@@ -71,14 +71,6 @@
   gap: 0;
   z-index: 50;
   pointer-events: auto;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.4s ease, visibility 0.4s ease;
-
-  &.visible {
-    opacity: 1;
-    visibility: visible;
-  }
 
   @include mobile {
     top: auto;
