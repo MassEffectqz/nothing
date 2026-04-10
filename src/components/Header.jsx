@@ -1,12 +1,15 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { useLocation } from 'react-router-dom'
 import LanguageSwitcher from './LanguageSwitcher'
 import { useLanguage } from '../hooks/useLanguage.jsx'
 
 export default function Header() {
-  const [activeSection, setActiveSection] = useState('hero')
+  const [activeSection, setActiveSection] = useState('')
   const [pillStyle, setPillStyle] = useState({ left: 0, width: 0 })
   const navRef = useRef(null)
   const pillTimeoutRef = useRef(null)
+  const location = useLocation()
+  const onHome = location.pathname === '/'
 
   // Scroll active link into view on mobile
   const scrollToActive = useCallback(() => {
@@ -23,7 +26,15 @@ export default function Header() {
 
   const { t, lang } = useLanguage()
 
+  const sectionKeys = ['hero', 'colors', 'lifestyle', 'about', 'work', 'contact']
+
+  // Observe sections — re-observe when returning to home page
   useEffect(() => {
+    if (!onHome) {
+      setActiveSection('')
+      return
+    }
+
     const sections = ['hero', 'colors', 'lifestyle', 'about', 'work', 'contact']
 
     const observer = new IntersectionObserver(
@@ -46,14 +57,18 @@ export default function Header() {
     })
 
     return () => observer.disconnect()
-  }, [])
+  }, [onHome])
 
   const updatePill = useCallback(() => {
     const nav = navRef.current
     if (!nav) return
 
-    const activeLink = nav.querySelector(`.corner-nav-link.active`)
-    if (!activeLink) return
+    const activeLink = nav.querySelector('.corner-nav-link.active')
+    if (!activeLink) {
+      // Fallback: hide pill if no active link
+      setPillStyle({ left: 0, width: 0 })
+      return
+    }
 
     const navRect = nav.getBoundingClientRect()
     const linkRect = activeLink.getBoundingClientRect()
@@ -105,13 +120,13 @@ export default function Header() {
     return () => nav.removeEventListener('scroll', updatePill)
   }, [updatePill])
 
-  // Initial position
+  // Reposition pill after DOM settles
   useEffect(() => {
-    const timer = setTimeout(updatePill, 100)
-    return () => clearTimeout(timer)
+    const frame = requestAnimationFrame(() => {
+      requestAnimationFrame(updatePill)
+    })
+    return () => cancelAnimationFrame(frame)
   }, [updatePill])
-
-  const sectionKeys = ['hero', 'colors', 'lifestyle', 'about', 'work', 'contact']
 
   const navItems = [
     { label: t.navHome, key: 'hero', href: '#hero' },
