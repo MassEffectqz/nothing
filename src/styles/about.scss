@@ -59,11 +59,15 @@
   }
 
   @include tablet {
-    font-size: clamp(4rem, 18vw, 12rem);
+    font-size: clamp(3rem, 18vw, 8rem);
   }
 
   @include mobile {
-    font-size: clamp(3rem, 20vw, 8rem);
+    font-size: clamp(2rem, 20vw, 5rem);
+  }
+
+  @include small {
+    font-size: clamp(1.5rem, 22vw, 3.5rem);
   }
 }
 
@@ -143,6 +147,14 @@
   transition: filter 1s $transition-smooth, transform 1s $transition-smooth;
   object-fit: contain;
   object-position: center center;
+
+  @include mobile {
+    height: 150%;
+  }
+
+  @include small {
+    height: 120%;
+  }
 }
 
 .about-visual-main:hover .about-visual-product {
@@ -160,12 +172,32 @@
   animation: ringRotate 50s linear infinite;
   z-index: 1;
 
+  @include mobile {
+    width: 350px;
+    height: 350px;
+  }
+
+  @include small {
+    width: 250px;
+    height: 250px;
+  }
+
   &-sm {
     width: 500px;
     height: 500px;
     border-color: rgba(229, 0, 0, 0.05);
     animation-direction: reverse;
     animation-duration: 40s;
+
+    @include mobile {
+      width: 250px;
+      height: 250px;
+    }
+
+    @include small {
+      width: 180px;
+      height: 180px;
+    }
   }
 }
 
@@ -646,4 +678,13 @@
   height: 400px;
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.02);
+
+  @include mobile {
+    width: 200px;
+    height: 200px;
+  }
+
+  @include small {
+    display: none;
+  }
 }

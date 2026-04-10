@@ -58,6 +58,14 @@
   font-weight: 700;
   letter-spacing: -0.02em;
   color: $color-text-primary;
+
+  @include mobile {
+    font-size: clamp(1.25rem, 5vw, 2rem);
+  }
+
+  @include small {
+    font-size: clamp(1rem, 6vw, 1.5rem);
+  }
 }
 
 // Color Indicators — absolute within Colors section, vertically centered
@@ -101,6 +109,12 @@
   padding: 0;
   border-radius: 12px;
 
+  @include mobile {
+    width: 60px;
+    height: 60px;
+    gap: 0.5rem;
+  }
+
   &::before {
     content: '';
     position: absolute;
@@ -132,6 +146,12 @@
   opacity: 0.4;
   transition: all 0.5s $transition-smooth;
 
+  @include mobile {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+  }
+
   .color-indicator[data-color="white"] & {
     border: 1px solid $color-border;
   }
@@ -152,6 +172,11 @@
   color: $color-text-secondary;
   text-transform: uppercase;
   transition: color 0.4s $transition-smooth;
+
+  @include mobile {
+    font-size: 0.45rem;
+    letter-spacing: 0.1em;
+  }
 
   .color-indicator:hover &,
   .color-indicator.active & {
@@ -191,6 +216,19 @@
   max-width: 1000px;
   height: 800px;
   overflow: hidden;
+
+  @include tablet {
+    height: 600px;
+  }
+
+  @include mobile {
+    height: 500px;
+    max-width: 600px;
+  }
+
+  @include small {
+    height: 400px;
+  }
 }
 
 .phone-item {
@@ -200,10 +238,22 @@
   will-change: transform, opacity, filter;
   z-index: 1;
 
+  @include tablet {
+    width: 200px;
+  }
+
+  @include mobile {
+    width: 150px;
+  }
+
   img {
     width: 100%;
     height: auto;
     display: block;
     filter: drop-shadow(0 30px 80px rgba(0, 0, 0, 0.12));
+
+    @include mobile {
+      filter: drop-shadow(0 15px 40px rgba(0, 0, 0, 0.15));
+    }
   }
 }

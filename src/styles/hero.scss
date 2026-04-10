@@ -136,11 +136,12 @@
   }
 
   @include mobile {
-    padding: 4rem 1.5rem 3rem;
+    padding: 3rem 1.5rem 5rem;
+    min-height: auto;
   }
 
   @include small {
-    padding: 3rem 1rem 2rem;
+    padding: 2.5rem 1rem 4.5rem;
   }
 }
 
@@ -410,6 +411,10 @@
   @include tablet {
     gap: 1.25rem;
   }
+
+  @include mobile {
+    display: none;
+  }
 }
 
 .nothing-mobile {
@@ -504,6 +509,10 @@
   z-index: 1;
 
   @include tablet { left: 2rem; }
+
+  @include mobile {
+    display: none;
+  }
 }
 
 .scroll-indicator {
@@ -551,6 +560,15 @@
   z-index: 1;
 
   @include tablet { right: 2rem; }
+
+  @include mobile {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    margin-top: 2rem;
+    justify-content: center;
+    gap: 1.5rem;
+  }
 }
 
 .stat {

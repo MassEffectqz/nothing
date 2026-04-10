@@ -109,14 +109,13 @@
   }
 }
 
-// Project grid
+// Project grid — tight layout, no center gaps
 .work-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
 
   @include tablet {
-    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
   }
 
@@ -140,13 +139,10 @@
   animation: projectCardReveal 0.7s $transition-smooth forwards;
   animation-delay: var(--delay, 0s);
 
+  // Wide cards span full width (first and last rows)
   &:nth-child(1),
-  &:nth-child(4) {
-    grid-column: 1 / 3;
-
-    @include tablet {
-      grid-column: auto;
-    }
+  &:nth-child(6) {
+    grid-column: 1 / -1;
   }
 }
 
@@ -163,22 +159,28 @@
   padding-bottom: 55%;
   overflow: hidden;
 
+  // Wide cards (first & last rows) — shorter aspect ratio
   .project-card:nth-child(1) &,
-  .project-card:nth-child(4) & {
-    padding-bottom: 28%;
+  .project-card:nth-child(6) & {
+    padding-bottom: 35%;
   }
 
   @include tablet {
     padding-bottom: 70%;
 
     .project-card:nth-child(1) &,
-    .project-card:nth-child(4) & {
+    .project-card:nth-child(6) & {
       padding-bottom: 70%;
     }
   }
 
   @include mobile {
     padding-bottom: 65%;
+
+    .project-card:nth-child(1) &,
+    .project-card:nth-child(6) & {
+      padding-bottom: 65%;
+    }
   }
 
   img {
@@ -193,12 +195,6 @@
     object-position: center center;
     transition: transform 0.8s $transition-smooth, filter 0.8s $transition-smooth;
     filter: grayscale(100%) brightness(0.9);
-
-    .project-card:nth-child(1) &,
-    .project-card:nth-child(4) & {
-      height: 90%;
-      width: auto;
-    }
   }
 
   .project-card:hover & img {
@@ -230,8 +226,9 @@
   background: linear-gradient(90deg, rgba(248, 248, 246, 0.95) 0%, rgba(248, 248, 246, 0.95) 70%, transparent 100%);
   max-width: 60%;
 
+  // Wide cards — text top-left
   .project-card:nth-child(1) &,
-  .project-card:nth-child(4) & {
+  .project-card:nth-child(6) & {
     top: 1.25rem;
     transform: none;
     max-width: 50%;

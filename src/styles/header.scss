@@ -13,8 +13,11 @@
   }
 
   @include mobile {
-    top: 1rem;
-    right: 1rem;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0;
   }
 }
 
@@ -30,7 +33,12 @@
   overflow: hidden;
 
   @include mobile {
-    padding: 0.35rem;
+    border-radius: 0;
+    padding: 0.5rem 0.25rem;
+    width: 100%;
+    justify-content: space-evenly;
+    border: none;
+    border-top: 1px solid $color-border;
   }
 }
 
@@ -49,6 +57,12 @@
     border-radius 0.5s $transition-spring;
   z-index: 0;
   animation: pillMorph 0.6s ease-in-out;
+
+  @include mobile {
+    top: 0.35rem;
+    bottom: 0.35rem;
+    border-radius: 8px;
+  }
 }
 
 @keyframes pillMorph {
@@ -75,8 +89,10 @@
   z-index: 1;
 
   @include mobile {
-    padding: 0.5rem 0.9rem;
-    font-size: 0.65rem;
+    padding: 0.5rem 0.65rem;
+    font-size: 0.55rem;
+    letter-spacing: 0.03em;
+    border-radius: 8px;
   }
 
   &:hover {
@@ -103,9 +119,7 @@
   border-radius: 100px;
 
   @include mobile {
-    top: 1rem;
-    left: 1rem;
-    padding: 0.35rem 0.9rem;
+    display: none;
   }
 }
 
@@ -128,4 +142,15 @@
 @keyframes recBlink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
+}
+
+// Mobile bottom nav spacing — prevent content from being hidden behind the bottom nav
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 4rem;
+  }
+
+  .footer {
+    padding-bottom: 5rem !important;
+  }
 }
