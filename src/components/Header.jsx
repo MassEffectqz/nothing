@@ -21,7 +21,7 @@ export default function Header() {
     })
   }, [])
 
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
 
   useEffect(() => {
     const sections = ['hero', 'colors', 'lifestyle', 'about', 'work', 'contact']
@@ -90,6 +90,12 @@ export default function Header() {
     window.addEventListener('resize', updatePill)
     return () => window.removeEventListener('resize', updatePill)
   }, [updatePill])
+
+  // Update pill when language changes (nav item widths change)
+  useEffect(() => {
+    const timer = setTimeout(updatePill, 50)
+    return () => clearTimeout(timer)
+  }, [lang, updatePill])
 
   // Update pill on nav scroll (mobile horizontal scroll)
   useEffect(() => {
