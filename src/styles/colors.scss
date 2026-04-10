@@ -60,9 +60,9 @@
   color: $color-text-primary;
 }
 
-// Color Indicators — fixed vertically centered, always visible
+// Color Indicators — absolute within Colors section, vertically centered
 .color-indicators {
-  position: fixed;
+  position: absolute;
   top: 50%;
   right: 2rem;
   transform: translateY(-50%);
