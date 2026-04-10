@@ -131,16 +131,18 @@
   }
 }
 
-// Giant product image
+// Giant product image — MASSIVE, fills entire left column
 .about-visual-product {
   position: relative;
   z-index: 2;
-  height: 140%;
-  width: auto;
-  min-width: 500px;
+  height: 200%;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
   filter: grayscale(100%) brightness(0.7);
   transition: filter 1s $transition-smooth, transform 1s $transition-smooth;
   object-fit: contain;
+  object-position: center center;
 }
 
 .about-visual-main:hover .about-visual-product {
@@ -148,22 +150,22 @@
   transform: scale(1.02);
 }
 
-// Decorative rings behind the phone
+// Decorative rings behind the phone — LARGER
 .about-visual-ring {
   position: absolute;
-  width: 500px;
-  height: 500px;
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  width: 700px;
+  height: 700px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
   border-radius: 50%;
-  animation: ringRotate 40s linear infinite;
+  animation: ringRotate 50s linear infinite;
   z-index: 1;
 
   &-sm {
-    width: 350px;
-    height: 350px;
-    border-color: rgba(229, 0, 0, 0.06);
+    width: 500px;
+    height: 500px;
+    border-color: rgba(229, 0, 0, 0.05);
     animation-direction: reverse;
-    animation-duration: 30s;
+    animation-duration: 40s;
   }
 }
 
