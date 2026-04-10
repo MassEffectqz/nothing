@@ -45,26 +45,7 @@ export default function AboutSection() {
       </div>
 
       {/* Left: visual column */}
-      <div className="about-image-col">
-        {/* Decorative grid pattern */}
-        <div className="about-left-grid">
-          {[...Array(60)].map((_, i) => (
-            <div key={i} className="about-grid-dot" />
-          ))}
-        </div>
-
-        {/* Giant initials visual */}
-        <div className={`about-visual-main ${animatedItems ? 'visible' : ''}`}>
-          <div className="about-visual-ring" />
-          <div className="about-visual-ring about-visual-ring-sm" />
-          <div className="about-visual-initials">
-            <span>A</span><span>e</span><span>z</span>
-          </div>
-        </div>
-
-        {/* Accent bar */}
-        <div className="about-accent-bar" />
-      </div>
+      <div className="about-image-col" />
 
       {/* Right: content column */}
       <div className="about-content">

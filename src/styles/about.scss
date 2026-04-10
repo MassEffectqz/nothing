@@ -73,22 +73,15 @@
   }
 }
 
-// Left: visual column
+// Left: visual column — abstract monogram
 .about-image-col {
   position: relative;
   background: $color-surface-darker;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0;
   overflow: hidden;
   border-right: 1px solid $color-border-light;
 
   @include tablet {
-    padding: 3rem 2rem;
-    min-height: 350px;
-    justify-content: center;
+    min-height: 300px;
     background: transparent;
     border-right: none;
     border-bottom: 1px solid $color-border-light;
@@ -97,6 +90,110 @@
   @include mobile {
     display: none;
   }
+}
+
+.about-left-visual {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  opacity: 0;
+  transition: opacity 1.2s ease 0.3s;
+
+  &.visible {
+    opacity: 1;
+  }
+}
+
+.about-left-monogram {
+  display: flex;
+  gap: 0.3em;
+  line-height: 1;
+
+  span {
+    font-family: $font-display;
+    font-size: clamp(8rem, 20vw, 16rem);
+    font-weight: 700;
+    color: $color-dot;
+    opacity: 0.15;
+    line-height: 1;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    transform: translateY(20px);
+
+    .about-left-visual.visible & {
+      opacity: 0.25;
+      transform: translateY(0);
+    }
+
+    &:nth-child(2) {
+      transition-delay: 0.15s;
+    }
+  }
+
+  &:hover span {
+    opacity: 0.4;
+  }
+}
+
+.about-left-lines {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+
+  span {
+    height: 1px;
+    background: rgba(229, 0, 0, 0.2);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.8s ease;
+
+    &:nth-child(1) {
+      width: 60px;
+      .about-left-visual.visible & {
+        transform: scaleX(1);
+        transition-delay: 0.4s;
+      }
+    }
+
+    &:nth-child(2) {
+      width: 12px;
+      height: 12px;
+      background: $color-dot;
+      border-radius: 50%;
+      transform: scale(0);
+      .about-left-visual.visible & {
+        transform: scale(1);
+        transition-delay: 0.6s;
+      }
+    }
+
+    &:nth-child(3) {
+      width: 60px;
+      .about-left-visual.visible & {
+        transform: scaleX(1);
+        transition-delay: 0.8s;
+      }
+    }
+  }
+}
+
+// Remove old visual styles
+.about-ascii-visual,
+.about-ascii-art,
+.about-left-grid,
+.about-visual-main,
+.about-visual-ring,
+.about-visual-dots,
+.about-vdot,
+.about-visual-line,
+.about-visual-line-v,
+.about-visual-initials,
+.about-accent-bar,
+.about-visual-product {
+  display: none;
 }
 
 // Dot grid pattern
@@ -349,6 +446,28 @@
   background: rgba(255, 255, 255, 0.06);
   border-radius: 50%;
   margin: auto;
+}
+
+// ========== BACKGROUND DEPTH LAYERS ==========
+.about-bg-depth {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+// Subtle grain/noise overlay — on inner content so it sits above the grid
+.about-content-inner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.12;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+  background-repeat: repeat;
 }
 
 .about-content-inner {
