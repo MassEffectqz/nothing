@@ -61,47 +61,44 @@ export default function AboutSection() {
 
       {/* Left: visual column */}
       <div className="about-image-col">
-        {/* Floating dots */}
-        <div className="about-left-dots">
-          <div className="left-dot" />
-          <div className="left-dot" />
-          <div className="left-dot" />
-          <div className="left-dot" />
-          <div className="left-dot" />
+        {/* Decorative grid pattern */}
+        <div className="about-left-grid">
+          {[...Array(60)].map((_, i) => (
+            <div key={i} className="about-grid-dot" />
+          ))}
         </div>
 
-        {/* Large number */}
-        <div className="about-col-number">04</div>
+        {/* Main product visual */}
+        <div className={`about-visual-main ${animatedItems ? 'visible' : ''}`}>
+          <div className="about-visual-ring" />
+          <div className="about-visual-ring about-visual-ring-sm" />
+          <img
+            src="/media/devices/nothing-phone-4a-pro-white.png"
+            alt="Nothing Phone"
+            className="about-visual-product"
+          />
+        </div>
 
-        {/* Product showcase */}
-        <div className={`about-visual-stack ${animatedItems ? 'visible' : ''}`}>
-          <div className="visual-item visual-earbuds">
-            <img src="/media/accessories/nothing-ear-3-white.png" alt="Nothing Ear" />
+        {/* Stats bar */}
+        <div className={`about-stats-bar ${animatedItems ? 'visible' : ''}`}>
+          <div className="about-stat-item">
+            <span className="about-stat-value">47</span>
+            <span className="about-stat-label">Projects</span>
           </div>
-          <div className="visual-item visual-phone">
-            <img src="/media/devices/nothing-phone-4a-white.png" alt="Nothing Phone" />
+          <div className="about-stat-divider" />
+          <div className="about-stat-item">
+            <span className="about-stat-value">12</span>
+            <span className="about-stat-label">Awards</span>
+          </div>
+          <div className="about-stat-divider" />
+          <div className="about-stat-item">
+            <span className="about-stat-value">8+</span>
+            <span className="about-stat-label">Years</span>
           </div>
         </div>
 
-        {/* Stats */}
-        <div className={`about-side-stats ${animatedItems ? 'visible' : ''}`}>
-          <div className="side-stat">
-            <span className="side-stat-value">47</span>
-            <span className="side-stat-label">Projects</span>
-          </div>
-          <div className="side-stat">
-            <span className="side-stat-value">12</span>
-            <span className="side-stat-label">Awards</span>
-          </div>
-          <div className="side-stat">
-            <span className="side-stat-value">8+</span>
-            <span className="side-stat-label">Years</span>
-          </div>
-        </div>
-
-        {/* Decorative line */}
-        <div className="about-col-line" />
-        <div className="about-red-accent" />
+        {/* Accent line */}
+        <div className="about-accent-bar" />
       </div>
 
       {/* Right: content column */}

@@ -6,7 +6,7 @@
   position: relative;
   min-height: 100vh;
   display: grid;
-  grid-template-columns: 380px 1fr;
+  grid-template-columns: 360px 1fr;
   gap: 0;
   background: $color-surface-dark;
   overflow: hidden;
@@ -72,48 +72,58 @@
   position: relative;
   background: $color-surface-darker;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 4rem;
+  padding: 4rem 3rem;
   overflow: hidden;
   border-right: 1px solid $color-border-light;
 
   @include tablet {
     padding: 3rem 2rem;
-    min-height: 300px;
-    flex-direction: column;
-    align-items: center;
+    min-height: 350px;
   }
 
   @include mobile {
-    min-height: 250px;
+    min-height: 280px;
     padding: 2.5rem 1.5rem;
   }
 
   @include small {
-    min-height: 200px;
+    min-height: 220px;
     padding: 2rem 1rem;
   }
 }
 
-.about-col-number {
+// Dot grid pattern
+.about-left-grid {
   position: absolute;
-  top: 2rem;
-  left: 2rem;
-  font-family: $font-display;
-  font-size: 6rem;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.03);
-  line-height: 1;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(10, 1fr);
   pointer-events: none;
+  opacity: 0.3;
 }
 
-.about-visual-stack {
+.about-grid-dot {
+  width: 3px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  margin: auto;
+}
+
+// Main product visual with rings
+.about-visual-main {
   position: relative;
-  width: 260px;
-  height: 360px;
+  width: 200px;
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(20px);
   transition: opacity 0.8s ease 0.2s, transform 0.8s $transition-smooth 0.2s;
 
   &.visible {
@@ -122,144 +132,95 @@
   }
 }
 
-.visual-item {
+.about-visual-ring {
   position: absolute;
-  transition: transform 0.6s $transition-smooth;
+  width: 220px;
+  height: 220px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 50%;
+  animation: ringRotate 20s linear infinite;
 
-  img {
-    width: 100%;
-    height: auto;
-    filter: grayscale(100%) brightness(0.85);
-    transition: filter 0.6s $transition-smooth;
-  }
-
-  .about-visual-stack:hover & img {
-    filter: grayscale(0%) brightness(1);
-  }
-
-  &.visual-earbuds {
-    top: 0;
-    left: -20px;
-    width: 140px;
-    transform: rotate(-12deg);
-    z-index: 2;
-
-    .about-visual-stack:hover & {
-      transform: rotate(-18deg) translateY(-15px);
-    }
-  }
-
-  &.visual-phone {
-    bottom: 10px;
-    right: -10px;
+  &-sm {
     width: 160px;
-    transform: rotate(8deg);
-    z-index: 1;
-
-    .about-visual-stack:hover & {
-      transform: rotate(3deg) translateY(-8px);
-    }
+    height: 160px;
+    border-color: rgba(255, 255, 255, 0.04);
+    animation-direction: reverse;
+    animation-duration: 15s;
   }
 }
 
-.about-side-stats {
+@keyframes ringRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.about-visual-product {
+  position: relative;
+  z-index: 2;
+  width: 120px;
+  height: auto;
+  filter: grayscale(80%) brightness(0.9);
+  transition: filter 0.6s $transition-smooth, transform 0.6s $transition-smooth;
+}
+
+.about-visual-main:hover .about-visual-product {
+  filter: grayscale(0%) brightness(1);
+  transform: scale(1.05);
+}
+
+// Stats bar
+.about-stats-bar {
   display: flex;
   gap: 2rem;
-  margin-top: 3rem;
+  margin-top: 2.5rem;
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(15px);
   transition: opacity 0.6s ease 0.5s, transform 0.6s $transition-smooth 0.5s;
 
   &.visible {
     opacity: 1;
     transform: translateY(0);
   }
-
-  @include tablet {
-    margin-top: 2rem;
-    justify-content: center;
-  }
-
-  @include small {
-    gap: 1.5rem;
-  }
 }
 
-.side-stat {
+.about-stat-item {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
-  text-align: center;
-
-  &-value {
-    font-family: $font-display;
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: $color-dot;
-    line-height: 1;
-
-    @include small {
-      font-size: 1.5rem;
-    }
-  }
-
-  &-label {
-    font-family: $font-display;
-    font-size: 0.5rem;
-    letter-spacing: 0.15em;
-    color: rgba(255, 255, 255, 0.3);
-    text-transform: uppercase;
-  }
+  align-items: center;
+  gap: 0.35rem;
 }
 
-.about-col-line {
-  position: absolute;
-  bottom: 3rem;
-  left: 50%;
-  transform: translateX(-50%);
+.about-stat-value {
+  font-family: $font-display;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: $color-dot;
+  line-height: 1;
+}
+
+.about-stat-label {
+  font-family: $font-display;
+  font-size: 0.45rem;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.3);
+  text-transform: uppercase;
+}
+
+.about-stat-divider {
   width: 1px;
-  height: 60px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, transparent 100%);
+  height: 40px;
+  background: rgba(255, 255, 255, 0.06);
 }
 
-.about-red-accent {
+// Accent bar
+.about-accent-bar {
   position: absolute;
-  bottom: 2.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 6px;
-  height: 6px;
-  background: $color-dot;
-  border-radius: 50%;
-  animation: accentPulse 3s ease-in-out infinite;
-}
-
-// Decorative floating dots in left column
-.about-left-dots {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-
-  .left-dot {
-    position: absolute;
-    width: 3px;
-    height: 3px;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 50%;
-    animation: floatDot 6s ease-in-out infinite;
-
-    &:nth-child(1) { top: 15%; left: 20%; animation-delay: 0s; }
-    &:nth-child(2) { top: 40%; right: 15%; animation-delay: 1s; }
-    &:nth-child(3) { bottom: 30%; left: 25%; animation-delay: 2s; }
-    &:nth-child(4) { top: 60%; right: 25%; animation-delay: 3s; width: 4px; height: 4px; }
-    &:nth-child(5) { top: 80%; left: 15%; animation-delay: 4s; }
-  }
-}
-
-@keyframes floatDot {
-  0%, 100% { transform: translateY(0) scale(1); opacity: 0.5; }
-  50% { transform: translateY(-10px) scale(1.2); opacity: 1; }
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, $color-dot 50%, transparent 100%);
+  opacity: 0.4;
 }
 
 // Right: content column
