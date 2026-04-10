@@ -95,18 +95,7 @@
   }
 
   @include mobile {
-    min-height: 300px;
-    max-height: 350px;
-    padding: 2rem 1rem;
-    background: transparent;
-    overflow: visible;
-    justify-content: center;
-  }
-
-  @include small {
-    min-height: 250px;
-    max-height: 300px;
-    padding: 1.5rem 0.75rem;
+    display: none;
   }
 }
 

@@ -6,6 +6,19 @@ export default function Header() {
   const navRef = useRef(null)
   const pillTimeoutRef = useRef(null)
 
+  // Scroll active link into view on mobile
+  const scrollToActive = useCallback(() => {
+    const nav = navRef.current
+    if (!nav) return
+    const activeLink = nav.querySelector('.corner-nav-link.active')
+    if (!activeLink) return
+    activeLink.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'center',
+    })
+  }, [])
+
   useEffect(() => {
     const sections = ['hero', 'colors', 'lifestyle', 'about', 'work', 'contact']
     const labels = ['Home', 'Colors', 'PureSound', 'About', 'Work', 'Contact']
@@ -15,7 +28,9 @@ export default function Header() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const idx = sections.indexOf(entry.target.id)
-            if (idx !== -1) setActiveSection(labels[idx])
+            if (idx !== -1) {
+              setActiveSection(labels[idx])
+            }
           }
         })
       },
@@ -29,6 +44,12 @@ export default function Header() {
 
     return () => observer.disconnect()
   }, [])
+
+  // Scroll to active when it changes
+  useEffect(() => {
+    const timer = setTimeout(scrollToActive, 300)
+    return () => clearTimeout(timer)
+  }, [activeSection, scrollToActive])
 
   const updatePill = useCallback(() => {
     const nav = navRef.current

@@ -153,10 +153,15 @@
 // Mobile bottom nav spacing — prevent content from being hidden behind the bottom nav
 @media (max-width: 768px) {
   body {
-    padding-bottom: 3.5rem;
+    padding-bottom: 0;
   }
 
   .footer {
-    padding-bottom: 5rem !important;
+    padding-bottom: 4rem !important;
+  }
+
+  // Ensure last section has enough space above the bottom nav
+  section:last-of-type {
+    margin-bottom: 0;
   }
 }
