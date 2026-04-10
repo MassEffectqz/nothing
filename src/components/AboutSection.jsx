@@ -1,33 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
-
-const WORDS = ['TRANSPARENT', 'RADICAL', 'ESSENTIAL', 'BOLD', 'MINIMAL', 'PURE']
-
-const MILESTONES = [
-  { year: '2018', title: 'Started Design Journey', desc: 'First freelance projects in UI/UX' },
-  { year: '2020', title: 'Joined Nothing', desc: 'Lead designer for Nothing OS' },
-  { year: '2022', title: 'Phone (1) Launch', desc: 'Glyph interface design system' },
-  { year: '2024', title: 'Creative Director', desc: 'Leading brand identity team' },
-]
-
-const TOOLS = ['Figma', 'React', 'TypeScript', 'Framer', 'Blender', 'After Effects', 'Next.js', 'Tailwind']
-
-const PHILOSOPHY = [
-  { title: 'Transparency', desc: 'Design that reveals its nature. No hidden complexity, no unnecessary decoration.' },
-  { title: 'Essentialism', desc: 'Every element must earn its place. If it doesn\'t serve a purpose, it doesn\'t exist.' },
-  { title: 'Craft', desc: 'Attention to the smallest detail. Pixels, timing, motion — everything matters.' },
-]
+import { useLanguage } from '../hooks/useLanguage.jsx'
 
 export default function AboutSection() {
+  const { t } = useLanguage()
   const sectionRef = useRef(null)
   const [visibleWord, setVisibleWord] = useState(0)
   const [animatedItems, setAnimatedItems] = useState(false)
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setVisibleWord((p) => (p + 1) % WORDS.length)
+      setVisibleWord((p) => (p + 1) % t.aboutWords.length)
     }, 2500)
     return () => clearInterval(interval)
-  }, [])
+  }, [t.aboutWords.length])
 
   useEffect(() => {
     const el = sectionRef.current
@@ -49,7 +34,7 @@ export default function AboutSection() {
     <section ref={sectionRef} className="about-section" id="about">
       {/* Cycling background word */}
       <div className="about-bg-word">
-        {WORDS.map((word, i) => (
+        {t.aboutWords.map((word, i) => (
           <span
             key={word}
             className={`about-bg-word-item ${i === visibleWord ? 'active' : ''}`}
@@ -68,15 +53,13 @@ export default function AboutSection() {
           ))}
         </div>
 
-        {/* Giant product visual */}
+        {/* Giant initials visual */}
         <div className={`about-visual-main ${animatedItems ? 'visible' : ''}`}>
           <div className="about-visual-ring" />
           <div className="about-visual-ring about-visual-ring-sm" />
-          <img
-            src="/media/devices/nothing-phone-4a-pro-white.png"
-            alt="Nothing Phone 4a Pro"
-            className="about-visual-product"
-          />
+          <div className="about-visual-initials">
+            <span>A</span><span>e</span><span>z</span>
+          </div>
         </div>
 
         {/* Accent bar */}
@@ -94,29 +77,30 @@ export default function AboutSection() {
 
         {/* Content */}
         <div className="about-content-inner">
-          <span className="about-number">04</span>
-          <h2 className="about-title">ABOUT</h2>
+          <span className="about-number">{t.aboutNum}</span>
+          <h2 className="about-title">{t.aboutTitle}</h2>
           <div className="about-accent-line" />
 
           {/* Bio */}
           <div className={`about-bio ${animatedItems ? 'visible' : ''}`}>
             <p className="about-bio-line">
-              Multi-disciplinary <span className="text-red">designer</span> and{' '}
-              <span className="text-red">developer</span> crafting digital experiences
-              with a focus on transparency, simplicity, and purpose.
+              {t.aboutBio1Before} <span className="text-red">{t.aboutBio1Designer}</span>{' '}{t.aboutBio1And}{' '}
+              <span className="text-red">{t.aboutBio1Developer}</span>{' '}{t.aboutBio1After}
             </p>
             <p className="about-bio-line">
-              Currently leading creative direction at Nothing, where we strip away
-              the unnecessary to reveal what truly matters. Every pixel intentional,
-              every interaction purposeful.
+              {t.aboutBio2}
             </p>
           </div>
 
           {/* Design philosophy */}
           <div className={`about-philosophy ${animatedItems ? 'visible' : ''}`}>
-            <span className="philosophy-label">Philosophy</span>
+            <span className="philosophy-label">{t.philosophy}</span>
             <div className="philosophy-grid">
-              {PHILOSOPHY.map((p, i) => (
+              {[
+                { title: t.transparency, desc: t.transparencyDesc },
+                { title: t.essentialism, desc: t.essentialismDesc },
+                { title: t.craft, desc: t.craftDesc },
+              ].map((p, i) => (
                 <div key={p.title} className="philosophy-item" style={{ '--delay': `${i * 0.1}s` }}>
                   <h4 className="philosophy-title">{p.title}</h4>
                   <p className="philosophy-desc">{p.desc}</p>
@@ -127,9 +111,9 @@ export default function AboutSection() {
 
           {/* Tools */}
           <div className={`about-tools ${animatedItems ? 'visible' : ''}`}>
-            <span className="tools-label">Toolkit</span>
+            <span className="tools-label">{t.toolkit}</span>
             <div className="tools-list">
-              {TOOLS.map((tool) => (
+              {t.tools.map((tool) => (
                 <span key={tool} className="tool-badge">{tool}</span>
               ))}
             </div>
@@ -137,8 +121,8 @@ export default function AboutSection() {
 
           {/* Timeline */}
           <div className={`about-timeline ${animatedItems ? 'visible' : ''}`}>
-            <span className="timeline-section-label">Journey</span>
-            {MILESTONES.map((ms, i) => (
+            <span className="timeline-section-label">{t.journey}</span>
+            {t.milestones.map((ms, i) => (
               <div key={ms.year} className="timeline-item" style={{ '--delay': `${i * 0.15}s` }}>
                 <span className="timeline-year">{ms.year}</span>
                 <div className="timeline-dot" />
@@ -154,17 +138,17 @@ export default function AboutSection() {
           <div className={`about-stats ${animatedItems ? 'visible' : ''}`}>
             <div className="about-stat">
               <span className="about-stat-number text-red">47</span>
-              <span className="about-stat-label">Projects</span>
+              <span className="about-stat-label">{t.projects}</span>
             </div>
             <div className="about-stat-divider" />
             <div className="about-stat">
               <span className="about-stat-number text-red">8+</span>
-              <span className="about-stat-label">Years</span>
+              <span className="about-stat-label">{t.years}</span>
             </div>
             <div className="about-stat-divider" />
             <div className="about-stat">
               <span className="about-stat-number text-red">∞</span>
-              <span className="about-stat-label">Curiosity</span>
+              <span className="about-stat-label">{t.curiosity}</span>
             </div>
           </div>
         </div>

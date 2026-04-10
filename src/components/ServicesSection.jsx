@@ -6,28 +6,28 @@ const SERVICES = [
     number: '01',
     title: 'UI/UX Design',
     description: 'Interfaces stripped to their essence. Every pixel purposeful, every interaction intentional.',
-    image: '/media/wallpapers/nothing-lifestyle-02.jpg',
+    image: '/media/wallpapers/nothing-wallpaper-japan-pagoda.jpg',
   },
   {
     id: 2,
     number: '02',
     title: 'Frontend Development',
     description: 'Clean, performant code. React, Next.js, TypeScript — built to last, designed to delight.',
-    image: '/media/wallpapers/nothing-lifestyle-06.jpg',
+    image: '/media/wallpapers/nothing-wallpaper-ski-mountains.jpg',
   },
   {
     id: 3,
     number: '03',
     title: 'Brand Identity',
     description: 'Visual systems that speak without shouting. Logos, typography, color — a complete language.',
-    image: '/media/wallpapers/nothing-lifestyle-10.jpg',
+    image: '/media/lifestyle/nothing-lifestyle-giant-phone.jpg',
   },
   {
     id: 4,
     number: '04',
     title: 'Motion Design',
     description: 'Animation as communication. Micro-interactions, transitions, and moments of delight.',
-    image: '/media/wallpapers/nothing-lifestyle-15.jpg',
+    image: '/media/lifestyle/nothing-lifestyle-astronauts.jpg',
   },
 ]
 

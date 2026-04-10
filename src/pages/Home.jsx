@@ -1,4 +1,3 @@
-import Header from '../components/Header'
 import Hero from '../components/Hero'
 import ColorsSection from '../components/ColorsSection'
 import LifestyleSection from '../components/LifestyleSection'
@@ -9,7 +8,6 @@ import Footer from '../components/Footer'
 export default function Home() {
   return (
     <>
-      <Header />
       <main className="main-content">
         <Hero />
         <ColorsSection />

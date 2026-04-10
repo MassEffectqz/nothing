@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import LanguageSwitcher from './LanguageSwitcher'
+import { useLanguage } from '../hooks/useLanguage.jsx'
 
 export default function Header() {
   const [activeSection, setActiveSection] = useState('hero')
@@ -19,17 +21,18 @@ export default function Header() {
     })
   }, [])
 
+  const { t } = useLanguage()
+
   useEffect(() => {
     const sections = ['hero', 'colors', 'lifestyle', 'about', 'work', 'contact']
-    const labels = ['Home', 'Colors', 'PureSound', 'About', 'Work', 'Contact']
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const idx = sections.indexOf(entry.target.id)
+            const idx = sectionKeys.indexOf(entry.target.id)
             if (idx !== -1) {
-              setActiveSection(labels[idx])
+              setActiveSection(sectionKeys[idx])
             }
           }
         })
@@ -102,13 +105,15 @@ export default function Header() {
     return () => clearTimeout(timer)
   }, [updatePill])
 
+  const sectionKeys = ['hero', 'colors', 'lifestyle', 'about', 'work', 'contact']
+
   const navItems = [
-    { label: 'Home', href: '#hero' },
-    { label: 'Colors', href: '#colors' },
-    { label: 'PureSound', href: '#lifestyle' },
-    { label: 'About', href: '#about' },
-    { label: 'Work', href: '#work' },
-    { label: 'Contact', href: '#contact' },
+    { label: t.navHome, key: 'hero', href: '#hero' },
+    { label: t.navColors, key: 'colors', href: '#colors' },
+    { label: t.navPureSound, key: 'lifestyle', href: '#lifestyle' },
+    { label: t.navAbout, key: 'about', href: '#about' },
+    { label: t.navWork, key: 'work', href: '#work' },
+    { label: t.navContact, key: 'contact', href: '#contact' },
   ]
 
   const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 768)
@@ -120,26 +125,36 @@ export default function Header() {
   }, [])
 
   return (
-    <header className="corner-header">
-      <nav className="corner-nav" ref={navRef}>
-        {/* Animated pill indicator */}
-        <span
-          className="nav-pill"
-          style={{
-            transform: `translateX(${pillStyle.left}px)`,
-            width: `${pillStyle.width}px`,
-          }}
-        />
-        {navItems.map((item) => (
-          <a
-            key={item.label}
-            href={item.href}
-            className={`corner-nav-link ${activeSection === item.label ? 'active' : ''}`}
-          >
-            {item.label}
-          </a>
-        ))}
-      </nav>
-    </header>
+    <>
+      {/* Mobile language switcher (top-right) */}
+      <div className="lang-switcher-mobile">
+        <LanguageSwitcher />
+      </div>
+
+      <header className="corner-header">
+        <div className="header-group">
+          <nav className="corner-nav" ref={navRef}>
+            {/* Animated pill indicator */}
+            <span
+              className="nav-pill"
+              style={{
+                transform: `translateX(${pillStyle.left}px)`,
+                width: `${pillStyle.width}px`,
+              }}
+            />
+            {navItems.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                className={`corner-nav-link ${activeSection === item.key ? 'active' : ''}`}
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
+          <LanguageSwitcher />
+        </div>
+      </header>
+    </>
   )
 }

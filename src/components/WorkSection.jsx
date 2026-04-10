@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useLanguage } from '../hooks/useLanguage.jsx'
 
 const slugMap = {
   1: 'phone-3',
@@ -25,7 +26,7 @@ const projects = [
     name: 'Phone (3a)',
     category: 'Smartphone · New',
     year: '2025',
-    image: '/phones/phone-3a-white.png',
+    image: '/media/devices/nothing-phone-3a.png',
   },
   {
     id: 3,
@@ -81,6 +82,7 @@ function ProjectCard({ project, index }) {
 }
 
 export default function WorkSection() {
+  const { t } = useLanguage()
   const sectionRef = useRef(null)
   const [titleVisible, setTitleVisible] = useState(false)
 
@@ -103,10 +105,10 @@ export default function WorkSection() {
   return (
     <section ref={sectionRef} className="work" id="work">
       <div className="work-header">
-        <span className="work-section-number">05</span>
+        <span className="work-section-number">{t.workNum}</span>
         <div className="work-header-title">
-          <h2 className="work-title">WORK</h2>
-          <p className="work-subtitle">Selected projects from 2023–2026</p>
+          <h2 className="work-title">{t.workTitle}</h2>
+          <p className="work-subtitle">{t.workSubtitle}</p>
         </div>
         <div className={`work-accent-line ${titleVisible ? 'visible' : ''}`} />
       </div>
@@ -126,8 +128,8 @@ export default function WorkSection() {
           <span className="work-dot" />
         </div>
         <a href="#" className="work-link">
-          <span>ALL PROJECTS</span>
-          <span className="work-link-count">(47)</span>
+          <span>{t.allProjects}</span>
+          <span className="work-link-count">{t.projectsCount}</span>
         </a>
       </div>
     </section>

@@ -21,6 +21,40 @@
   }
 }
 
+.header-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+// Language switcher - desktop
+.corner-header .lang-switcher {
+  flex-shrink: 0;
+  padding: 0.5rem 0.85rem;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+
+  @include mobile {
+    display: none;
+  }
+}
+
+// Language switcher - mobile (top-right)
+.lang-switcher-mobile {
+  display: none;
+
+  @include mobile {
+    display: flex;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 300;
+  }
+}
+
 .corner-nav {
   display: flex;
   align-items: center;
@@ -180,4 +214,41 @@
     padding-bottom: 4.5rem !important;
     transition: padding-bottom 0.3s ease;
   }
+}
+
+// ========== LANGUAGE SWITCHER ==========
+.lang-switcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.45rem 0.75rem;
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 100px;
+  color: rgba(255, 255, 255, 0.4);
+  font-family: $font-display;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: rgba(229, 0, 0, 0.3);
+    color: rgba(255, 255, 255, 0.7);
+  }
+}
+
+.lang-opt {
+  transition: color 0.2s ease;
+
+  &.active {
+    color: #fff;
+  }
+}
+
+.lang-sep {
+  color: rgba(255, 255, 255, 0.15);
+  margin: 0 0.1rem;
 }

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
+import { useLanguage } from '../hooks/useLanguage.jsx'
 
 const PHONE_CONFIGS = [
   { color: 'black', rotation: -30, hex: '#1a1a1a', flyFrom: { x: -200, y: -250 }, finalTop: '10%', finalLeft: '15%' },
@@ -24,7 +25,7 @@ function PhoneItem({ config, style }) {
   )
 }
 
-function ColorIndicatorItem({ config, isHovered, isActive, onHover, onLeave }) {
+function ColorIndicatorItem({ config, colorName, isHovered, isActive, onHover, onLeave }) {
   return (
     <button
       className={`color-indicator ${isActive ? 'active' : ''}`}
@@ -32,7 +33,7 @@ function ColorIndicatorItem({ config, isHovered, isActive, onHover, onLeave }) {
       onMouseEnter={() => onHover(config.color)}
       onMouseLeave={onLeave}
       onClick={() => onHover(config.color)}
-      aria-label={`${config.color} phone`}
+      aria-label={`${colorName} phone`}
     >
       <span
         className="color-dot-indicator"
@@ -41,19 +42,20 @@ function ColorIndicatorItem({ config, isHovered, isActive, onHover, onLeave }) {
           ...(config.color === 'white' ? { border: '1px solid var(--color-border)' } : {}),
         }}
       />
-      <span className="color-name">{config.color}</span>
+      <span className="color-name">{colorName}</span>
       <span className={`color-active-line ${isHovered ? 'visible' : ''}`} />
     </button>
   )
 }
 
 export default function ColorsSection() {
+  const { t } = useLanguage()
   const sectionRef = useRef(null)
   const [hoverColor, setHoverColor] = useState(null)
   const [titleVisible, setTitleVisible] = useState(false)
   const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 768)
   const [phoneStates, setPhoneStates] = useState(() =>
-    PHONE_CONFIGS.map((cfg, i) => ({
+    PHONE_CONFIGS.map((cfg) => ({
       opacity: 0,
       offsetX: cfg.flyFrom.x,
       offsetY: cfg.flyFrom.y,
@@ -151,15 +153,14 @@ export default function ColorsSection() {
     <section ref={sectionRef} className="phones-showcase" id="colors">
       <div className="phones-showcase-content">
         <div className={`phones-header ${titleVisible ? 'visible' : ''}`}>
-          <span className="phones-section-number">02</span>
+          <span className="phones-section-number">{t.colorsSectionNum}</span>
           <div className="phones-header-text">
-            <h2 className="phones-title">COLORS Nothing Phone 4a</h2>
+            <h2 className="phones-title">{t.colorsTitle} {t.colorsSubtitle}</h2>
             <p className="phones-subtitle">
-              Iconic transparent design, available in four essential colours.
-              Choose yours.
+              {t.colorsDesc}
             </p>
             <a href="#" className="phones-cta">
-              <span>SHOP NOW</span>
+              <span>{t.shopNow}</span>
               <span className="phones-cta-arrow">→</span>
             </a>
           </div>
@@ -170,6 +171,7 @@ export default function ColorsSection() {
             <ColorIndicatorItem
               key={cfg.color}
               config={cfg}
+              colorName={t.colorNames[i]}
               isHovered={hoverColor === cfg.color}
               isActive={hoverColor !== null}
               onHover={handleHover}

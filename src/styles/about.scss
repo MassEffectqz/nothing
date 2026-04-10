@@ -166,6 +166,48 @@
   }
 }
 
+// Initials display
+.about-visual-initials {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  height: 200%;
+  width: 100%;
+
+  span {
+    font-family: $font-display;
+    font-size: 6rem;
+    font-weight: 700;
+    color: $color-dot;
+    text-shadow: 0 0 60px rgba(229, 0, 0, 0.4);
+    line-height: 1;
+    transition: transform 0.6s $transition-smooth;
+  }
+
+  &:hover span {
+    transform: scale(1.05);
+  }
+
+  @include tablet {
+    height: 150%;
+
+    span {
+      font-size: 4rem;
+    }
+  }
+
+  @include mobile {
+    height: auto;
+
+    span {
+      font-size: 3rem;
+    }
+  }
+}
+
 .about-visual-main:hover .about-visual-product {
   filter: grayscale(30%) brightness(0.85);
   transform: scale(1.02);

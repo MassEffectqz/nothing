@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
+import { useLanguage } from '../hooks/useLanguage.jsx'
 
 export default function LifestyleSection() {
+  const { t } = useLanguage()
   const sectionRef = useRef(null)
   const [scrollProgress, setScrollProgress] = useState(0)
 
@@ -49,27 +51,26 @@ export default function LifestyleSection() {
             transform: `translateY(${(1 - textOpacity) * 40}px)`,
           }}
         >
-          <span className="lifestyle-section-number">03</span>
+          <span className="lifestyle-section-number">{t.lifestyleNum}</span>
           <h2 className="lifestyle-title">
-            PURE
-            <span className="text-red">SOUND</span>
+            <span>{t.lifestyleTitle1}</span>
+            <span className="text-red">{t.lifestyleTitle2}</span>
           </h2>
           <p className="lifestyle-description">
-            Nothing Ear and Phone — designed as one ecosystem.
-            Transparent design, powerful audio, seamless connection.
+            {t.lifestyleDesc}
           </p>
           <div className="lifestyle-features">
             <div className="feature-item">
               <span className="feature-icon">◉</span>
-              <span className="feature-label">Active Noise Cancellation</span>
+              <span className="feature-label">{t.featureANC}</span>
             </div>
             <div className="feature-item">
               <span className="feature-icon">◉</span>
-              <span className="feature-label">Transparent Design</span>
+              <span className="feature-label">{t.featureTransparent}</span>
             </div>
             <div className="feature-item">
               <span className="feature-icon">◉</span>
-              <span className="feature-label">Hi-Res Audio</span>
+              <span className="feature-label">{t.featureHiRes}</span>
             </div>
           </div>
         </div>

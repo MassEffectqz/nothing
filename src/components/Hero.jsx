@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import RecIndicator from './RecIndicator'
+import { useLanguage } from '../hooks/useLanguage.jsx'
 
 export default function Hero() {
   const videoRef = useRef(null)
   const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 768)
+  const { t } = useLanguage()
 
   useEffect(() => {
     const checkMobile = () => {
@@ -15,7 +17,6 @@ export default function Hero() {
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
-  // Video: on desktop always play, on mobile pause when not visible (battery saving)
   useEffect(() => {
     const video = videoRef.current
     if (!video) return
@@ -35,8 +36,6 @@ export default function Hero() {
     return () => observer.disconnect()
   }, [])
 
-  const letters = ['N', 'O', 'T', 'H', 'I', 'N', 'G']
-
   return (
     <section className="hero" id="hero">
       <RecIndicator />
@@ -51,9 +50,7 @@ export default function Hero() {
           preload="metadata"
           className={isMobile ? 'mobile-video' : ''}
         />
-        {/* Animated gradient overlay */}
         <div className="hero-gradient-overlay" />
-        {/* Scan line effect */}
         <div className="hero-scanlines" />
       </div>
 
@@ -61,38 +58,36 @@ export default function Hero() {
         <div className="hero-content">
           <div className="hero-tag">
             <span className="tag-line" />
-            <span>AVAILABLE FOR PROJECTS</span>
+            <span>{t.availableForProjects}</span>
           </div>
 
           <h1 className="hero-title">
-            <span className="title-line title-line-1">DESIGNER</span>
+            <span className="title-line title-line-1">{t.designer}</span>
             <span className="title-line title-line-2">&</span>
-            <span className="title-line title-line-3">DEVELOPER</span>
+            <span className="title-line title-line-3">{t.developer}</span>
           </h1>
 
           <p className="hero-description">
-            Crafting digital experiences through the lens of radical
-            simplicity. Code and design,{' '}
-            <span className="text-red">stripped to their essence</span>.
+            {t.heroDesc}{' '}
+            <span className="text-red">{t.heroDescHighlight}</span>
           </p>
 
           <div className="hero-cta">
             <a href="#work" className="btn-primary">
-              <span>VIEW WORK</span>
+              <span>{t.viewWork}</span>
               <span className="btn-arrow">→</span>
             </a>
             <a href="#contact" className="btn-secondary">
-              <span>GET IN TOUCH</span>
+              <span>{t.getInTouch}</span>
             </a>
           </div>
         </div>
 
         <div className="hero-visual">
           <div className="visual-container">
-            {/* Desktop: vertical NOTHING */}
             <div className="nothing-desktop">
               <div className="nothing-vertical">
-                {letters.map((letter, i) => (
+                {t.nothingLetters.map((letter, i) => (
                   <span
                     key={i}
                     className="nothing-letter"
@@ -109,7 +104,6 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* Mobile: horizontal compact NOTHING */}
             <div className="nothing-mobile">
               <span className="nothing-mobile-label">NOTHING</span>
               <div className="nothing-mobile-dots">
@@ -125,24 +119,24 @@ export default function Hero() {
       <div className="hero-scroll">
         <div className="scroll-indicator">
           <div className="scroll-line" />
-          <span>SCROLL</span>
+          <span>{t.scroll}</span>
         </div>
       </div>
 
       <div className="hero-stats">
         <div className="stat">
           <span className="stat-number text-red">47</span>
-          <span className="stat-label">Projects</span>
+          <span className="stat-label">{t.projects}</span>
         </div>
         <div className="stat-divider" />
         <div className="stat">
           <span className="stat-number text-red">8+</span>
-          <span className="stat-label">Years</span>
+          <span className="stat-label">{t.years}</span>
         </div>
         <div className="stat-divider" />
         <div className="stat">
           <span className="stat-number text-red">∞</span>
-          <span className="stat-label">Curiosity</span>
+          <span className="stat-label">{t.curiosity}</span>
         </div>
       </div>
     </section>
