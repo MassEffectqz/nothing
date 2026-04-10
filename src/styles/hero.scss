@@ -1,126 +1,6 @@
 @use 'variables' as *;
 @use 'mixins' as *;
 
-// ========== CORNER HEADER ==========
-.corner-header {
-  position: fixed;
-  top: 2rem;
-  right: 2rem;
-  z-index: 200;
-}
-
-.corner-nav {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  background: $color-surface;
-  border: 1px solid $color-border;
-  border-radius: 100px;
-  padding: 0.5rem;
-  position: relative;
-  overflow: hidden;
-
-  @include mobile {
-    padding: 0.35rem;
-  }
-}
-
-// Animated pill / liquid indicator
-.nav-pill {
-  position: absolute;
-  top: 0.35rem;
-  bottom: 0.35rem;
-  left: 0;
-  height: auto;
-  background: $color-text-primary;
-  border-radius: 100px;
-  transition:
-    transform 0.5s $transition-spring,
-    width 0.4s $transition-smooth,
-    border-radius 0.5s $transition-spring;
-  z-index: 0;
-  animation: pillMorph 0.6s ease-in-out;
-}
-
-@keyframes pillMorph {
-  0% { border-radius: 100px; }
-  25% { border-radius: 60px 100px 100px 60px; }
-  50% { border-radius: 80px 60px 60px 80px; }
-  75% { border-radius: 100px 80px 80px 100px; }
-  100% { border-radius: 100px; }
-}
-
-.corner-nav-link {
-  display: block;
-  padding: 0.6rem 1.25rem;
-  text-decoration: none;
-  color: $color-text-secondary;
-  font-family: $font-body;
-  font-size: 0.75rem;
-  font-weight: 400;
-  letter-spacing: 0.05em;
-  border-radius: 100px;
-  transition: color 0.3s $transition-smooth;
-  white-space: nowrap;
-  position: relative;
-  z-index: 1;
-
-  @include mobile {
-    padding: 0.5rem 0.9rem;
-    font-size: 0.65rem;
-  }
-
-  &:hover {
-    color: $color-text-primary;
-  }
-
-  &.active {
-    color: $color-bg;
-  }
-}
-
-// ========== REC INDICATOR ==========
-.rec-indicator {
-  position: absolute;
-  top: 2rem;
-  left: 2rem;
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  z-index: 200;
-  padding: 0.5rem 1.25rem;
-  background: $color-surface;
-  border: 1px solid $color-border;
-  border-radius: 100px;
-
-  @include mobile {
-    top: 1rem;
-    left: 1rem;
-    padding: 0.35rem 0.9rem;
-  }
-}
-
-.rec-dot {
-  width: 10px;
-  height: 10px;
-  background: $color-dot;
-  border-radius: 2px;
-  animation: recBlink 1.5s ease-in-out infinite;
-}
-
-.rec-label {
-  font-family: $font-display;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  color: $color-dot;
-}
-
-@keyframes recBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
 // ========== HERO ==========
 .hero {
   min-height: 100vh;
@@ -137,7 +17,7 @@
 
   @include mobile {
     padding: 3rem 1.5rem 5rem;
-    min-height: auto;
+    min-height: 100vh;
   }
 
   @include small {

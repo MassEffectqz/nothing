@@ -10,16 +10,19 @@
   background: $color-surface-dark;
 
   @include tablet {
-    height: auto;
-    min-height: auto;
-    padding: 4rem 0;
+    height: 80vh;
+    min-height: 600px;
   }
 
   @include mobile {
+    height: 85vh;
+    min-height: 550px;
     padding: 3rem 0;
   }
 
   @include small {
+    height: 80vh;
+    min-height: 480px;
     padding: 2rem 0;
   }
 }

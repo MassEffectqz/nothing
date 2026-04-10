@@ -87,16 +87,20 @@
     padding: 3rem 2rem;
     min-height: 350px;
     justify-content: center;
+    background: transparent;
+    border-right: none;
+    border-bottom: 1px solid $color-border-light;
   }
 
   @include mobile {
-    min-height: 280px;
-    padding: 2.5rem 1.5rem;
+    min-height: 220px;
+    padding: 2rem 1rem;
+    background: transparent;
   }
 
   @include small {
-    min-height: 220px;
-    padding: 2rem 1rem;
+    min-height: 180px;
+    padding: 1.5rem 0.75rem;
   }
 }
 
@@ -274,11 +278,12 @@
   }
 
   @include mobile {
-    padding: 2.5rem 1.5rem;
+    padding: 2rem 1.5rem;
+    overflow-y: visible;
   }
 
   @include small {
-    padding: 2rem 1rem;
+    padding: 1.5rem 1rem;
   }
 }
 
