@@ -34,11 +34,18 @@
 
   @include mobile {
     border-radius: 0;
-    padding: 0.35rem 0.1rem;
+    padding: 0.4rem 0.5rem;
     width: 100%;
-    justify-content: space-evenly;
+    justify-content: flex-start;
+    gap: 0.25rem;
     border: none;
     border-top: 1px solid $color-border;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar { display: none; }
   }
 }
 
@@ -62,6 +69,9 @@
     top: 0.35rem;
     bottom: 0.35rem;
     border-radius: 8px;
+    transition:
+      transform 0.4s $transition-smooth,
+      width 0.3s $transition-smooth;
   }
 }
 
@@ -89,10 +99,13 @@
   z-index: 1;
 
   @include mobile {
-    padding: 0.4rem 0.35rem;
-    font-size: 0.48rem;
-    letter-spacing: 0.02em;
-    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.04em;
+    border-radius: 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    scroll-snap-align: center;
   }
 
   &:hover {
@@ -157,11 +170,7 @@
   }
 
   .footer {
-    padding-bottom: 4rem !important;
-  }
-
-  // Ensure last section has enough space above the bottom nav
-  section:last-of-type {
-    margin-bottom: 0;
+    padding-bottom: 4.5rem !important;
+    transition: padding-bottom 0.3s ease;
   }
 }
