@@ -152,7 +152,17 @@ export default function ColorsSection() {
       <div className="phones-showcase-content">
         <div className={`phones-header ${titleVisible ? 'visible' : ''}`}>
           <span className="phones-section-number">02</span>
-          <h2 className="phones-title">COLORS Nothing Phone 4a</h2>
+          <div className="phones-header-text">
+            <h2 className="phones-title">COLORS Nothing Phone 4a</h2>
+            <p className="phones-subtitle">
+              Iconic transparent design, available in four essential colours.
+              Choose yours.
+            </p>
+            <a href="#" className="phones-cta">
+              <span>SHOP NOW</span>
+              <span className="phones-cta-arrow">→</span>
+            </a>
+          </div>
         </div>
 
         <div className="color-indicators">

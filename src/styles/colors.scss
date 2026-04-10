@@ -45,6 +45,12 @@
   }
 }
 
+.phones-header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 .phones-section-number {
   font-family: $font-display;
   font-size: 0.7rem;
@@ -58,6 +64,7 @@
   font-weight: 700;
   letter-spacing: -0.02em;
   color: $color-text-primary;
+  margin: 0;
 
   @include mobile {
     font-size: clamp(1.25rem, 5vw, 2rem);
@@ -65,6 +72,59 @@
 
   @include small {
     font-size: clamp(1rem, 6vw, 1.5rem);
+  }
+}
+
+.phones-subtitle {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: $color-text-secondary;
+  max-width: 360px;
+  margin: 0;
+
+  @include mobile {
+    font-size: 0.8rem;
+    max-width: 280px;
+  }
+
+  @include small {
+    font-size: 0.75rem;
+  }
+}
+
+.phones-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.5rem;
+  background: $color-accent;
+  color: $color-bg;
+  text-decoration: none;
+  font-family: $font-display;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  border: none;
+  cursor: pointer;
+  border-radius: 100px;
+  transition: all 0.3s $transition-smooth;
+  width: fit-content;
+
+  @include mobile {
+    padding: 0.7rem 1.25rem;
+    font-size: 0.6rem;
+  }
+
+  &:hover {
+    background: $color-dot;
+  }
+
+  &-arrow {
+    transition: transform 0.3s $transition-smooth;
+  }
+
+  &:hover &-arrow {
+    transform: translateX(3px);
   }
 }
 
