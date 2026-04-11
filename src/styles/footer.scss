@@ -133,8 +133,8 @@
 }
 
 .footer-social {
-  width: 40px;
-  height: 40px;
+  width: 44px; // Touch-friendly
+  height: 44px; // Touch-friendly
   display: flex;
   align-items: center;
   justify-content: center;
@@ -150,6 +150,12 @@
     border-color: $color-dot;
     color: $color-dot;
     background: rgba(229, 0, 0, 0.1);
+  }
+
+  // Меньше на очень маленьких экранах
+  @include small {
+    width: 40px;
+    height: 40px;
   }
 }
 
@@ -175,14 +181,17 @@
 }
 
 .footer-copyright {
-  font-size: 0.75rem;
+  font-size: clamp(0.7rem, 1.5vw, 0.75rem); // Адаптивная типографика
   color: rgba(255, 255, 255, 0.25);
 }
 
 .footer-back-top {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
+  min-height: 44px; // Touch-friendly
+  padding: 0 1rem;
   color: rgba(255, 255, 255, 0.4);
   text-decoration: none;
   font-family: $font-display;
@@ -190,8 +199,13 @@
   letter-spacing: 0.15em;
   text-transform: uppercase;
   transition: color 0.3s $transition-smooth;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 100px;
 
-  &:hover { color: $color-dot; }
+  &:hover {
+    color: $color-dot;
+    border-color: $color-dot;
+  }
 
   &-arrow {
     transition: transform 0.3s $transition-smooth;

@@ -414,17 +414,26 @@ function HeroParallax({ image, number, name, category }) {
   const { ref, scrollY, offset } = useParallax(0.3)
 
   return (
-    <div className="product-hero">
+    <div className="product-hero" role="region" aria-label={`Продукт: ${name}`}>
       <div
         className="product-hero-image"
         ref={ref}
         style={{ transform: `translateY(${scrollY * offset}px) scale(1.1)` }}
       >
-        <img src={image} alt={name} />
+        <img
+          src={image}
+          alt={name}
+          loading="eager"
+          decoding="async"
+          fetchPriority="high"
+          width="1200"
+          height="800"
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 1200px"
+        />
       </div>
-      <div className="product-hero-overlay" />
+      <div className="product-hero-overlay" aria-hidden="true" />
       <div className="product-hero-content">
-        <div className="product-hero-number">{number}</div>
+        <div className="product-hero-number" aria-hidden="true">{number}</div>
         <h1 className="product-hero-title font-ru">{name}</h1>
         <p className="product-hero-category">{category}</p>
       </div>
@@ -479,12 +488,20 @@ function HorizontalScroll({ images, title }) {
   const scrollRef = useRef(null)
 
   return (
-    <section className="product-horizontal-scroll">
+    <section className="product-horizontal-scroll" aria-label={title}>
       <h3 className="product-h-scroll-title">{title}</h3>
-      <div className="product-h-scroll-track" ref={scrollRef}>
+      <div className="product-h-scroll-track" ref={scrollRef} role="list" aria-label="Галерея изображений">
         {images.map((img, i) => (
-          <div key={i} className="product-h-scroll-item">
-            <img src={img} alt={`Slide ${i + 1}`} />
+          <div key={i} className="product-h-scroll-item" role="listitem">
+            <img
+              src={img}
+              alt={`Изображение ${i + 1}`}
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="400"
+              sizes="(max-width: 768px) 80vw, 600px"
+            />
           </div>
         ))}
       </div>
@@ -494,12 +511,20 @@ function HorizontalScroll({ images, title }) {
 
 function SplitImageSection({ left, right, reverse }) {
   return (
-    <section className={`product-split-section ${reverse ? 'reverse' : ''}`}>
+    <section className={`product-split-section ${reverse ? 'reverse' : ''}`} aria-label={right.title}>
       <div className="product-split-image">
-        <img src={left} alt="Detail" />
+        <img
+          src={left}
+          alt={right.title}
+          loading="lazy"
+          decoding="async"
+          width="600"
+          height="400"
+          sizes="(max-width: 768px) 100vw, 50vw"
+        />
       </div>
       <div className="product-split-content">
-        <div className="product-split-number">{right.number}</div>
+        <div className="product-split-number" aria-hidden="true">{right.number}</div>
         <h3 className="product-split-title">{right.title}</h3>
         <p className="product-split-desc">{right.desc}</p>
       </div>
@@ -523,12 +548,22 @@ function FeaturesList({ features }) {
 function BigNumberSection({ number, label, image }) {
   const { ref, isVisible } = useScrollAnimation({ threshold: 0.3 })
   return (
-    <section className={`product-big-number ${isVisible ? 'visible' : ''}`} ref={ref}>
-      <div className="product-big-number-bg">
-        {image && <img src={image} alt="" />}
+    <section className={`product-big-number ${isVisible ? 'visible' : ''}`} ref={ref} aria-label={label}>
+      <div className="product-big-number-bg" aria-hidden="true">
+        {image && (
+          <img
+            src={image}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            width="1200"
+            height="600"
+            sizes="100vw"
+          />
+        )}
       </div>
       <div className="product-big-number-content">
-        <span className="product-big-num">{number}</span>
+        <span className="product-big-num" aria-hidden="true">{number}</span>
         <span className="product-big-label">{label}</span>
       </div>
     </section>
@@ -546,11 +581,20 @@ function WallpaperBreak({ index, quote }) {
         opacity: isVisible ? 1 : 0,
         transition: 'opacity 1s ease',
       }}
+      aria-label={quote || "Декоративное изображение"}
     >
-      <div className="product-wallpaper-break-bg">
-        <img src={wp} alt="" />
+      <div className="product-wallpaper-break-bg" aria-hidden="true">
+        <img
+          src={wp}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          width="1200"
+          height="800"
+          sizes="100vw"
+        />
       </div>
-      <div className="product-wallpaper-break-overlay" />
+      <div className="product-wallpaper-break-overlay" aria-hidden="true" />
       <div className="product-wallpaper-break-content">
         {quote && <p className="product-wallpaper-break-quote">{quote}</p>}
       </div>

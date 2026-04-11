@@ -19,6 +19,18 @@ $color-dot-green: #00ff88;
 $font-display: 'Nothing Dot', monospace;
 $font-body: 'IBM Plex Mono', monospace;
 
+// ========== ADAPTIVE TYPOGRAPHY (Fluid Type) ==========
+// Использование clamp() для плавного масштабирования
+$font-xs: clamp(0.7rem, 0.8vw, 0.75rem);
+$font-sm: clamp(0.8rem, 1vw, 0.875rem);
+$font-base: clamp(0.9rem, 1.2vw, 1rem);
+$font-md: clamp(1.1rem, 1.5vw, 1.25rem);
+$font-lg: clamp(1.3rem, 2vw, 1.5rem);
+$font-xl: clamp(1.5rem, 2.5vw, 2rem);
+$font-2xl: clamp(2rem, 4vw, 3rem);
+$font-3xl: clamp(2.5rem, 5vw, 4rem);
+$font-4xl: clamp(3rem, 7vw, 6rem);
+
 // ========== TRANSITIONS ==========
 $transition-smooth: cubic-bezier(0.22, 1, 0.36, 1);
 $transition-spring: cubic-bezier(0.34, 1.56, 0.64, 1);

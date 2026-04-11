@@ -66,18 +66,33 @@ function ProjectCard({ project, index }) {
   const cardRef = useRef(null)
 
   return (
-    <Link to={`/product/${slugMap[project.id]}`} className="project-card" ref={cardRef} style={{ '--delay': `${index * 0.1}s` }}>
+    <article
+      to={`/product/${slugMap[project.id]}`}
+      as={Link}
+      className="project-card"
+      ref={cardRef}
+      style={{ '--delay': `${index * 0.1}s` }}
+      aria-label={`Проект: ${project.name}`}
+    >
       <div className="project-card-image">
-        <img src={project.image} alt={project.name} loading="lazy" />
+        <img
+          src={project.image}
+          alt={project.name}
+          loading="lazy"
+          decoding="async"
+          width="400"
+          height="300"
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        />
         <div className="project-card-overlay" />
         <div className="project-card-reveal">
-          <span className="project-card-number">{project.number}</span>
+          <span className="project-card-number" aria-hidden="true">{project.number}</span>
           <h3 className="project-card-name">{project.name}</h3>
           <p className="project-card-category">{project.category}</p>
         </div>
       </div>
-      <div className="project-card-year">{project.year}</div>
-    </Link>
+      <div className="project-card-year" aria-label={`Год выпуска: ${project.year}`}>{project.year}</div>
+    </article>
   )
 }
 

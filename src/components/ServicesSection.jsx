@@ -77,28 +77,38 @@ export default function ServicesSection() {
         </div>
 
         {/* Service cards grid */}
-        <div className="services-grid">
+        <div className="services-grid" role="list" aria-label="Список услуг">
           {SERVICES.map((service) => (
-            <div
+            <article
               key={service.id}
               className={`service-card ${hoveredService === service.id ? 'active' : ''}`}
               onMouseEnter={() => setHoveredService(service.id)}
               onMouseLeave={() => setHoveredService(null)}
+              role="listitem"
+              aria-label={service.title}
             >
               <div className="service-card-image">
-                <img src={service.image} alt={service.title} loading="lazy" />
+                <img
+                  src={service.image}
+                  alt={service.title}
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="300"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
                 <div className="service-card-overlay" />
               </div>
               <div className="service-card-content">
-                <span className="service-card-number">{service.number}</span>
+                <span className="service-card-number" aria-hidden="true">{service.number}</span>
                 <h3 className="service-card-title">{service.title}</h3>
                 <p className="service-card-desc">{service.description}</p>
-                <div className="service-card-arrow">
+                <div className="service-card-arrow" aria-hidden="true">
                   <span className="arrow-line" />
                   <span className="arrow-head">→</span>
                 </div>
               </div>
-            </div>
+            </article>
           ))}
         </div>
 

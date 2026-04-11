@@ -37,9 +37,9 @@ export default function Hero() {
   }, [])
 
   return (
-    <section className="hero" id="hero">
+    <section className="hero" id="hero" aria-label="Главный экран портфолио">
       <RecIndicator />
-      <div className="hero-video-bg">
+      <div className="hero-video-bg" aria-hidden="true">
         <video
           ref={videoRef}
           src="/hero-bg.mp4"
@@ -48,22 +48,27 @@ export default function Hero() {
           loop
           playsInline
           preload="metadata"
+          poster="/hero-poster.jpg"
           className={isMobile ? 'mobile-video' : ''}
-        />
+          aria-label="Фоновое видео"
+        >
+          <track kind="captions" src="/captions/hero-en.vtt" srcLang="en" label="English" />
+          <track kind="captions" src="/captions/hero-ru.vtt" srcLang="ru" label="Русский" />
+        </video>
         <div className="hero-gradient-overlay" />
         <div className="hero-scanlines" />
       </div>
 
       <div className="hero-grid">
-        <div className="hero-content">
+        <div className="hero-content" role="region" aria-label="Информация о дизайнере">
           <div className="hero-tag">
-            <span className="tag-line" />
+            <span className="tag-line" aria-hidden="true" />
             <span>{t.availableForProjects}</span>
           </div>
 
-          <h1 className="hero-title">
+          <h1 className="hero-title" aria-label="Дизайнер и разработчик">
             <span className="title-line title-line-1">{t.designer}</span>
-            <span className="title-line title-line-2">&</span>
+            <span className="title-line title-line-2" aria-hidden="true">&</span>
             <span className="title-line title-line-3">{t.developer}</span>
           </h1>
 
@@ -72,18 +77,18 @@ export default function Hero() {
             <span className="text-red">{t.heroDescHighlight}</span>
           </p>
 
-          <div className="hero-cta">
-            <a href="#work" className="btn-primary">
+          <div className="hero-cta" role="group" aria-label="Основные действия">
+            <a href="#work" className="btn-primary" role="button" aria-label="Посмотреть работы">
               <span>{t.viewWork}</span>
-              <span className="btn-arrow">→</span>
+              <span className="btn-arrow" aria-hidden="true">→</span>
             </a>
-            <a href="#contact" className="btn-secondary">
+            <a href="#contact" className="btn-secondary" role="button" aria-label="Связаться">
               <span>{t.getInTouch}</span>
             </a>
           </div>
         </div>
 
-        <div className="hero-visual">
+        <div className="hero-visual" aria-hidden="true">
           <div className="visual-container">
             <div className="nothing-desktop">
               <div className="nothing-vertical">
@@ -92,6 +97,7 @@ export default function Hero() {
                     key={i}
                     className="nothing-letter"
                     style={{ animationDelay: `${0.8 + i * 0.08}s` }}
+                    aria-hidden="true"
                   >
                     {letter}
                   </span>
@@ -116,25 +122,25 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="hero-scroll">
+      <div className="hero-scroll" aria-hidden="true">
         <div className="scroll-indicator">
           <div className="scroll-line" />
           <span>{t.scroll}</span>
         </div>
       </div>
 
-      <div className="hero-stats">
-        <div className="stat">
+      <div className="hero-stats" role="region" aria-label="Статистика">
+        <div className="stat" role="group" aria-label="Проекты">
           <span className="stat-number text-red">47</span>
           <span className="stat-label">{t.projects}</span>
         </div>
-        <div className="stat-divider" />
-        <div className="stat">
+        <div className="stat-divider" aria-hidden="true" />
+        <div className="stat" role="group" aria-label="Опыт">
           <span className="stat-number text-red">8+</span>
           <span className="stat-label">{t.years}</span>
         </div>
-        <div className="stat-divider" />
-        <div className="stat">
+        <div className="stat-divider" aria-hidden="true" />
+        <div className="stat" role="group" aria-label="Любопытство">
           <span className="stat-number text-red">∞</span>
           <span className="stat-label">{t.curiosity}</span>
         </div>

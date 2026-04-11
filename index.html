@@ -1,13 +1,102 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-    <title>Portfolio — Designer & Developer</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#f5f5f3" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+    
+    <!-- Viewport & Responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Portfolio" />
+    
+    <!-- Primary SEO -->
+    <title>Portfolio — Designer & Developer | Nothing Design Philosophy</title>
+    <meta name="title" content="Portfolio — Designer & Developer | Nothing Design Philosophy" />
+    <meta name="description" content="Creative portfolio showcasing minimalist design philosophy inspired by Nothing. Product design, UI/UX development, and innovative digital experiences. Available for projects worldwide." />
+    <meta name="keywords" content="portfolio, designer, developer, nothing design, minimalist, UI/UX, product design, web development, interface design" />
+    <meta name="author" content="Axiom developer" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <link rel="canonical" href="https://axiom-nothing.netlify.app/" />
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" as="style" />
+    <link rel="preload" href="/fonts/NothingDot.woff2" as="font" type="font/woff2" crossorigin />
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://axiom-nothing.netlify.app/" />
+    <meta property="og:site_name" content="Portfolio — Designer & Developer" />
+    <meta property="og:title" content="Portfolio — Designer & Developer | Nothing Design Philosophy" />
+    <meta property="og:description" content="Creative portfolio showcasing minimalist design philosophy inspired by Nothing. Product design, UI/UX development, and innovative digital experiences." />
+    <meta property="og:image" content="https://axiom-nothing.netlify.app/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Portfolio preview — Designer & Developer" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://axiom-nothing.netlify.app/" />
+    <meta name="twitter:title" content="Portfolio — Designer & Developer | Nothing Design Philosophy" />
+    <meta name="twitter:description" content="Creative portfolio showcasing minimalist design philosophy inspired by Nothing. Product design, UI/UX development, and innovative digital experiences." />
+    <meta name="twitter:image" content="https://axiom-nothing.netlify.app/og-image.jpg" />
+    <meta name="twitter:image:alt" content="Portfolio preview — Designer & Developer" />
+    
+    <!-- Additional SEO -->
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="application-name" content="Portfolio" />
+    <meta name="msapplication-TileColor" content="#f5f5f3" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Axiom developer",
+      "url": "https://axiom-nothing.netlify.app",
+      "image": "https://axiom-nothing.netlify.app/og-image.jpg",
+      "jobTitle": "Designer & Developer",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Axiom developer"
+      },
+      "sameAs": [
+        "https://t.me/Aezqsm"
+      ],
+      "knowsAbout": ["UI/UX Design", "Web Development", "Product Design", "Nothing Design Philosophy"]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Portfolio — Designer & Developer",
+      "url": "https://axiom-nothing.netlify.app",
+      "description": "Creative portfolio showcasing minimalist design philosophy inspired by Nothing",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://axiom-nothing.netlify.app/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

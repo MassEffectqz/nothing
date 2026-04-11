@@ -148,13 +148,13 @@ export default function Header() {
   return (
     <>
       {/* Mobile language switcher (top-right) */}
-      <div className="lang-switcher-mobile">
+      <div className="lang-switcher-mobile" role="region" aria-label="Выбор языка">
         <LanguageSwitcher />
       </div>
 
-      <header className="corner-header">
+      <header className="corner-header" role="banner" aria-label="Главная навигация">
         <div className="header-group">
-          <nav className="corner-nav" ref={navRef}>
+          <nav className="corner-nav" ref={navRef} role="navigation" aria-label="Навигация по разделам" aria-expanded="true">
             {/* Animated pill indicator */}
             <span
               className="nav-pill"
@@ -162,17 +162,33 @@ export default function Header() {
                 transform: `translateX(${pillStyle.left}px)`,
                 width: `${pillStyle.width}px`,
               }}
+              aria-hidden="true"
             />
             {navItems.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
                 className={`corner-nav-link ${activeSection === item.key ? 'active' : ''}`}
+                aria-current={activeSection === item.key ? 'location' : undefined}
+                aria-label={item.label}
               >
                 {item.label}
               </a>
             ))}
           </nav>
+          {/* Mobile menu toggle button */}
+          <button
+            className="header-mobile-toggle"
+            aria-label="Открыть меню навигации"
+            aria-expanded="false"
+            aria-controls="mobile-nav-menu"
+          >
+            <span className="hamburger-icon" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+            </span>
+          </button>
           <LanguageSwitcher />
         </div>
       </header>
