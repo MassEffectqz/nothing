@@ -36,14 +36,3 @@
   [headers.values]
     Cache-Control = "public, max-age=86400"
 
-# Compress assets
-[[headers]]
-  for = "*.js"
-  [headers.values]
-    Content-Encoding = "br"
-
-[[headers]]
-  for = "*.css"
-  [headers.values]
-    Content-Encoding = "br"
-
