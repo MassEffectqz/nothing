@@ -66,9 +66,8 @@ function ProjectCard({ project, index }) {
   const cardRef = useRef(null)
 
   return (
-    <article
+    <Link
       to={`/product/${slugMap[project.id]}`}
-      as={Link}
       className="project-card"
       ref={cardRef}
       style={{ '--delay': `${index * 0.1}s` }}
@@ -92,7 +91,7 @@ function ProjectCard({ project, index }) {
         </div>
       </div>
       <div className="project-card-year" aria-label={`Год выпуска: ${project.year}`}>{project.year}</div>
-    </article>
+    </Link>
   )
 }
 
